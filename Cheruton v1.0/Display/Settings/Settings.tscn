@@ -1,34 +1,34 @@
 [gd_scene load_steps=13 format=2]
 
 [ext_resource path="res://Display/Settings/Settings.gd" type="Script" id=1]
-[ext_resource path="res://Display/Settings/Sprites/Base/SettingsBase.png" type="Texture" id=2]
-[ext_resource path="res://Effects/white_screen.png" type="Texture" id=3]
-[ext_resource path="res://Display/MainMenu/Sprites/MainMenuselect.png" type="Texture" id=4]
-[ext_resource path="res://Display/Settings/Sprites/Bars/bar_under.png" type="Texture" id=5]
-[ext_resource path="res://Display/Settings/Sprites/Bars/bar_progress.png" type="Texture" id=6]
-[ext_resource path="res://Display/Settings/Sprites/Slots/HorizontalTabSelect.png" type="Texture" id=7]
-[ext_resource path="res://Display/Font/UAV-OSD-Mono-13.ttf" type="DynamicFontData" id=11]
-[ext_resource path="res://Display/Font/eight-bit-dragon.otf" type="DynamicFontData" id=12]
+[ext_resource path="res://Display/Settings/Sprites/Base/SettingsBase.png" type="Texture2D" id=2]
+[ext_resource path="res://Effects/white_screen.png" type="Texture2D" id=3]
+[ext_resource path="res://Display/MainMenu/Sprites/MainMenuselect.png" type="Texture2D" id=4]
+[ext_resource path="res://Display/Settings/Sprites/Bars/bar_under.png" type="Texture2D" id=5]
+[ext_resource path="res://Display/Settings/Sprites/Bars/bar_progress.png" type="Texture2D" id=6]
+[ext_resource path="res://Display/Settings/Sprites/Slots/HorizontalTabSelect.png" type="Texture2D" id=7]
+[ext_resource path="res://Display/Font/UAV-OSD-Mono-13.ttf" type="FontFile" id=11]
+[ext_resource path="res://Display/Font/eight-bit-dragon.otf" type="FontFile" id=12]
 
-[sub_resource type="DynamicFont" id=1]
+[sub_resource type="FontFile" id=1]
 size = 70
 outline_size = 3
 outline_color = Color( 0, 0, 0, 1 )
 extra_spacing_char = 1
 font_data = ExtResource( 11 )
 
-[sub_resource type="DynamicFont" id=2]
+[sub_resource type="FontFile" id=2]
 size = 50
 font_data = ExtResource( 12 )
 
-[sub_resource type="DynamicFont" id=3]
+[sub_resource type="FontFile" id=3]
 size = 50
 font_data = ExtResource( 12 )
 
 [node name="Settings" type="Control"]
-pause_mode = 2
-rect_min_size = Vector2( 480, 270 )
-rect_scale = Vector2( 4, 4 )
+process_mode = 3
+custom_minimum_size = Vector2( 480, 270 )
+scale = Vector2( 4, 4 )
 script = ExtResource( 1 )
 __meta__ = {
 "_edit_use_anchors_": false
@@ -41,10 +41,10 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-margin_left = -151.5
-margin_top = -47.0
-margin_right = 151.5
-margin_bottom = 119.0
+offset_left = -151.5
+offset_top = -47.0
+offset_right = 151.5
+offset_bottom = 119.0
 texture = ExtResource( 2 )
 patch_margin_left = 50
 patch_margin_top = 50
@@ -56,28 +56,28 @@ __meta__ = {
 
 [node name="Slider" type="NinePatchRect" parent="Settings"]
 visible = false
-margin_left = 22.0
-margin_top = 36.0
-margin_right = 84.0
-margin_bottom = 48.0
+offset_left = 22.0
+offset_top = 36.0
+offset_right = 84.0
+offset_bottom = 48.0
 texture = ExtResource( 4 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="Container" type="TextureRect" parent="Settings"]
-margin_left = 19.0
-margin_top = 9.0
-margin_right = 1680.0
-margin_bottom = 944.0
-rect_scale = Vector2( 0.16, 0.16 )
+offset_left = 19.0
+offset_top = 9.0
+offset_right = 1680.0
+offset_bottom = 944.0
+scale = Vector2( 0.16, 0.16 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="LMargin" type="Label" parent="Settings/Container"]
-margin_right = 80.0
-margin_bottom = 14.0
+offset_right = 80.0
+offset_bottom = 14.0
 size_flags_horizontal = 5
 size_flags_vertical = 0
 text = "                    "
@@ -94,57 +94,57 @@ __meta__ = {
 }
 
 [node name="TMargin" type="Label" parent="Settings/Container/Main"]
-margin_right = 1661.0
-margin_bottom = 31.0
+offset_right = 1661.0
+offset_bottom = 31.0
 text = "
 "
 
 [node name="Settings" type="Label" parent="Settings/Container/Main"]
-margin_top = 35.0
-margin_right = 495.0
-margin_bottom = 115.0
-rect_min_size = Vector2( 0, 40 )
+offset_top = 35.0
+offset_right = 495.0
+offset_bottom = 115.0
+custom_minimum_size = Vector2( 0, 40 )
 size_flags_horizontal = 0
-custom_fonts/font = SubResource( 1 )
+theme_override_fonts/font = SubResource( 1 )
 text = "Settings"
 valign = 2
 
 [node name="DividerMain" type="TextureRect" parent="Settings/Container/Main"]
-margin_top = 119.0
-margin_right = 1661.0
-margin_bottom = 129.0
-rect_min_size = Vector2( 0, 10 )
+offset_top = 119.0
+offset_right = 1661.0
+offset_bottom = 129.0
+custom_minimum_size = Vector2( 0, 10 )
 texture = ExtResource( 3 )
 expand = true
 
 [node name="Contents" type="HBoxContainer" parent="Settings/Container/Main"]
-margin_top = 133.0
-margin_right = 1661.0
-margin_bottom = 900.0
+offset_top = 133.0
+offset_right = 1661.0
+offset_bottom = 900.0
 size_flags_vertical = 3
 
 [node name="OLMargin" type="Label" parent="Settings/Container/Main/Contents"]
-margin_bottom = 14.0
+offset_bottom = 14.0
 size_flags_vertical = 0
 
 [node name="Options" type="VBoxContainer" parent="Settings/Container/Main/Contents"]
-margin_left = 4.0
-margin_right = 421.0
-margin_bottom = 767.0
+offset_left = 4.0
+offset_right = 421.0
+offset_bottom = 767.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 size_flags_stretch_ratio = 0.36
-custom_constants/separation = 0
+theme_override_constants/separation = 0
 
 [node name="OTMargin" type="Label" parent="Settings/Container/Main/Contents/Options"]
-margin_right = 417.0
-margin_bottom = 14.0
+offset_right = 417.0
+offset_bottom = 14.0
 
 [node name="Controls" type="TextureButton" parent="Settings/Container/Main/Contents/Options"]
-margin_top = 14.0
-margin_right = 417.0
-margin_bottom = 135.0
-rect_min_size = Vector2( 0, 23 )
+offset_top = 14.0
+offset_right = 417.0
+offset_bottom = 135.0
+custom_minimum_size = Vector2( 0, 23 )
 size_flags_vertical = 3
 expand = true
 
@@ -153,11 +153,11 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-margin_left = -130.0
-margin_top = -25.0
-margin_right = 130.0
-margin_bottom = 25.0
-custom_fonts/font = SubResource( 2 )
+offset_left = -130.0
+offset_top = -25.0
+offset_right = 130.0
+offset_bottom = 25.0
+theme_override_fonts/font = SubResource( 2 )
 text = "Controls"
 align = 1
 valign = 1
@@ -166,10 +166,10 @@ __meta__ = {
 }
 
 [node name="Audio" type="TextureButton" parent="Settings/Container/Main/Contents/Options"]
-margin_top = 135.0
-margin_right = 417.0
-margin_bottom = 256.0
-rect_min_size = Vector2( 0, 23 )
+offset_top = 135.0
+offset_right = 417.0
+offset_bottom = 256.0
+custom_minimum_size = Vector2( 0, 23 )
 size_flags_vertical = 3
 expand = true
 
@@ -178,11 +178,11 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-margin_left = -78.0
-margin_top = -25.0
-margin_right = 78.0
-margin_bottom = 25.0
-custom_fonts/font = SubResource( 2 )
+offset_left = -78.0
+offset_top = -25.0
+offset_right = 78.0
+offset_bottom = 25.0
+theme_override_fonts/font = SubResource( 2 )
 text = "Audio"
 align = 1
 valign = 1
@@ -191,10 +191,10 @@ __meta__ = {
 }
 
 [node name="Game" type="TextureButton" parent="Settings/Container/Main/Contents/Options"]
-margin_top = 256.0
-margin_right = 417.0
-margin_bottom = 377.0
-rect_min_size = Vector2( 0, 23 )
+offset_top = 256.0
+offset_right = 417.0
+offset_bottom = 377.0
+custom_minimum_size = Vector2( 0, 23 )
 size_flags_vertical = 3
 expand = true
 
@@ -203,11 +203,11 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-margin_left = -72.5
-margin_top = -25.0
-margin_right = 72.5
-margin_bottom = 25.0
-custom_fonts/font = SubResource( 2 )
+offset_left = -72.5
+offset_top = -25.0
+offset_right = 72.5
+offset_bottom = 25.0
+theme_override_fonts/font = SubResource( 2 )
 align = 1
 valign = 1
 __meta__ = {
@@ -215,9 +215,9 @@ __meta__ = {
 }
 
 [node name="OBMargin" type="Label" parent="Settings/Container/Main/Contents/Options"]
-margin_top = 377.0
-margin_right = 417.0
-margin_bottom = 646.0
+offset_top = 377.0
+offset_right = 417.0
+offset_bottom = 646.0
 text = "
 
 
@@ -236,9 +236,9 @@ text = "
 "
 
 [node name="Back" type="TextureButton" parent="Settings/Container/Main/Contents/Options"]
-margin_top = 646.0
-margin_right = 417.0
-margin_bottom = 767.0
+offset_top = 646.0
+offset_right = 417.0
+offset_bottom = 767.0
 size_flags_vertical = 3
 expand = true
 
@@ -247,11 +247,11 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-margin_left = -70.0
-margin_top = -25.0
-margin_right = 70.0
-margin_bottom = 25.0
-custom_fonts/font = SubResource( 2 )
+offset_left = -70.0
+offset_top = -25.0
+offset_right = 70.0
+offset_bottom = 25.0
+theme_override_fonts/font = SubResource( 2 )
 text = "Back"
 align = 1
 valign = 1
@@ -260,85 +260,85 @@ __meta__ = {
 }
 
 [node name="ORMargin2" type="Label" parent="Settings/Container/Main/Contents"]
-margin_left = 425.0
-margin_right = 425.0
-margin_bottom = 14.0
+offset_left = 425.0
+offset_right = 425.0
+offset_bottom = 14.0
 size_flags_vertical = 0
 
 [node name="DividerSub" type="TextureRect" parent="Settings/Container/Main/Contents"]
-margin_left = 429.0
-margin_right = 439.0
-margin_bottom = 767.0
-rect_min_size = Vector2( 10, 0 )
+offset_left = 429.0
+offset_right = 439.0
+offset_bottom = 767.0
+custom_minimum_size = Vector2( 10, 0 )
 size_flags_vertical = 3
 texture = ExtResource( 3 )
 expand = true
 
 [node name="SLMargin" type="Label" parent="Settings/Container/Main/Contents"]
-margin_left = 443.0
-margin_right = 463.0
-margin_bottom = 14.0
+offset_left = 443.0
+offset_right = 463.0
+offset_bottom = 14.0
 size_flags_vertical = 2
 text = "     "
 
 [node name="BaseControls" type="VBoxContainer" parent="Settings/Container/Main/Contents"]
 visible = false
-margin_left = 290.0
-margin_right = 957.0
-margin_bottom = 767.0
+offset_left = 290.0
+offset_right = 957.0
+offset_bottom = 767.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
 [node name="TMargin" type="Label" parent="Settings/Container/Main/Contents/BaseControls"]
-margin_right = 667.0
-margin_bottom = 48.0
+offset_right = 667.0
+offset_bottom = 48.0
 text = "
 
 "
 
 [node name="Scroll" type="ScrollContainer" parent="Settings/Container/Main/Contents/BaseControls"]
-margin_top = 52.0
-margin_right = 667.0
-margin_bottom = 767.0
+offset_top = 52.0
+offset_right = 667.0
+offset_bottom = 767.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
 [node name="Column" type="HBoxContainer" parent="Settings/Container/Main/Contents/BaseControls/Scroll"]
-margin_right = 667.0
-margin_bottom = 715.0
+offset_right = 667.0
+offset_bottom = 715.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
 [node name="Action" type="VBoxContainer" parent="Settings/Container/Main/Contents/BaseControls/Scroll/Column"]
-margin_right = 372.0
-margin_bottom = 715.0
+offset_right = 372.0
+offset_bottom = 715.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 size_flags_stretch_ratio = 1.2
-custom_constants/separation = 60
+theme_override_constants/separation = 60
 
 [node name="Mapping" type="VBoxContainer" parent="Settings/Container/Main/Contents/BaseControls/Scroll/Column"]
-margin_left = 376.0
-margin_right = 655.0
-margin_bottom = 715.0
+offset_left = 376.0
+offset_right = 655.0
+offset_bottom = 715.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 size_flags_stretch_ratio = 0.9
-custom_constants/separation = 60
+theme_override_constants/separation = 60
 
 [node name="Label" type="Label" parent="Settings/Container/Main/Contents/BaseControls/Scroll/Column"]
-margin_left = 659.0
-margin_top = 350.0
-margin_right = 667.0
-margin_bottom = 364.0
+offset_left = 659.0
+offset_top = 350.0
+offset_right = 667.0
+offset_bottom = 364.0
 text = "  "
 
 [node name="Message" type="Label" parent="Settings/Container/Main/Contents/BaseControls"]
 visible = false
-margin_top = 663.0
-margin_right = 940.0
-margin_bottom = 713.0
-custom_fonts/font = SubResource( 2 )
+offset_top = 663.0
+offset_right = 940.0
+offset_bottom = 713.0
+theme_override_fonts/font = SubResource( 2 )
 text = "Please resolve conflicting keys!"
 align = 1
 valign = 1
@@ -348,21 +348,21 @@ __meta__ = {
 
 [node name="Button" type="TextureRect" parent="Settings/Container/Main/Contents/BaseControls"]
 visible = false
-margin_top = 717.0
-margin_right = 667.0
-margin_bottom = 767.0
-rect_min_size = Vector2( 0, 50 )
+offset_top = 717.0
+offset_right = 667.0
+offset_bottom = 767.0
+custom_minimum_size = Vector2( 0, 50 )
 
 [node name="Reset" type="TextureButton" parent="Settings/Container/Main/Contents/BaseControls/Button"]
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-margin_left = -96.5
-margin_top = -25.0
-margin_right = 143.5
-margin_bottom = 45.0
-rect_min_size = Vector2( 240, 70 )
+offset_left = -96.5
+offset_top = -25.0
+offset_right = 143.5
+offset_bottom = 45.0
+custom_minimum_size = Vector2( 240, 70 )
 texture_hover = ExtResource( 7 )
 expand = true
 __meta__ = {
@@ -374,11 +374,11 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-margin_left = -96.5
-margin_top = -25.0
-margin_right = 96.5
-margin_bottom = 25.0
-custom_fonts/font = SubResource( 2 )
+offset_left = -96.5
+offset_top = -25.0
+offset_right = 96.5
+offset_bottom = 25.0
+theme_override_fonts/font = SubResource( 2 )
 text = "Reset"
 align = 1
 valign = 1
@@ -388,60 +388,60 @@ __meta__ = {
 
 [node name="BaseAudio" type="VBoxContainer" parent="Settings/Container/Main/Contents"]
 visible = false
-margin_left = 423.0
-margin_right = 1460.0
-margin_bottom = 767.0
+offset_left = 423.0
+offset_right = 1460.0
+offset_bottom = 767.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
 [node name="BATMargin" type="Label" parent="Settings/Container/Main/Contents/BaseAudio"]
-margin_right = 1037.0
-margin_bottom = 65.0
+offset_right = 1037.0
+offset_bottom = 65.0
 text = "
 
 
 "
 
 [node name="Rect" type="TextureRect" parent="Settings/Container/Main/Contents/BaseAudio"]
-margin_top = 69.0
-margin_right = 1037.0
-margin_bottom = 749.0
+offset_top = 69.0
+offset_right = 1037.0
+offset_bottom = 749.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
 [node name="SoundType" type="VBoxContainer" parent="Settings/Container/Main/Contents/BaseAudio/Rect"]
-margin_right = 296.0
-margin_bottom = 1784.0
+offset_right = 296.0
+offset_bottom = 1784.0
 size_flags_horizontal = 3
-custom_constants/separation = 44
+theme_override_constants/separation = 44
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="Master" type="Label" parent="Settings/Container/Main/Contents/BaseAudio/Rect/SoundType"]
-margin_right = 296.0
-margin_bottom = 50.0
-custom_fonts/font = SubResource( 3 )
+offset_right = 296.0
+offset_bottom = 50.0
+theme_override_fonts/font = SubResource( 3 )
 text = "Master"
 align = 1
 valign = 1
 autowrap = true
 
 [node name="Music" type="Label" parent="Settings/Container/Main/Contents/BaseAudio/Rect/SoundType"]
-margin_top = 94.0
-margin_right = 296.0
-margin_bottom = 144.0
-custom_fonts/font = SubResource( 3 )
+offset_top = 94.0
+offset_right = 296.0
+offset_bottom = 144.0
+theme_override_fonts/font = SubResource( 3 )
 text = "Music"
 align = 1
 valign = 1
 autowrap = true
 
 [node name="SFX" type="Label" parent="Settings/Container/Main/Contents/BaseAudio/Rect/SoundType"]
-margin_top = 188.0
-margin_right = 296.0
-margin_bottom = 238.0
-custom_fonts/font = SubResource( 3 )
+offset_top = 188.0
+offset_right = 296.0
+offset_bottom = 238.0
+theme_override_fonts/font = SubResource( 3 )
 text = "SFX"
 align = 1
 valign = 1
@@ -449,71 +449,71 @@ autowrap = true
 
 [node name="Contents" type="HBoxContainer" parent="Settings/Container/Main/Contents/BaseAudio/Rect"]
 anchor_right = 1.0
-margin_left = 312.625
-margin_top = 20.3125
-margin_right = -29.375
-margin_bottom = 224.313
+offset_left = 312.625
+offset_top = 20.3125
+offset_right = -29.375
+offset_bottom = 224.313
 size_flags_horizontal = 0
 size_flags_vertical = 0
-custom_constants/separation = 46
+theme_override_constants/separation = 46
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="SoundBar" type="VBoxContainer" parent="Settings/Container/Main/Contents/BaseAudio/Rect/Contents"]
-margin_right = 543.0
-margin_bottom = 198.0
+offset_right = 543.0
+offset_bottom = 198.0
 size_flags_vertical = 0
-custom_constants/separation = 75
+theme_override_constants/separation = 75
 alignment = 1
 
-[node name="MainVolBar" type="TextureProgress" parent="Settings/Container/Main/Contents/BaseAudio/Rect/Contents/SoundBar"]
-margin_right = 543.0
-margin_bottom = 16.0
+[node name="MainVolBar" type="TextureProgressBar" parent="Settings/Container/Main/Contents/BaseAudio/Rect/Contents/SoundBar"]
+offset_right = 543.0
+offset_bottom = 16.0
 value = 50.0
 texture_under = ExtResource( 5 )
 texture_progress = ExtResource( 6 )
 tint_under = Color( 0, 0, 0, 1 )
 
-[node name="MusicVolBar" type="TextureProgress" parent="Settings/Container/Main/Contents/BaseAudio/Rect/Contents/SoundBar"]
-margin_top = 91.0
-margin_right = 543.0
-margin_bottom = 107.0
+[node name="MusicVolBar" type="TextureProgressBar" parent="Settings/Container/Main/Contents/BaseAudio/Rect/Contents/SoundBar"]
+offset_top = 91.0
+offset_right = 543.0
+offset_bottom = 107.0
 texture_under = ExtResource( 5 )
 texture_progress = ExtResource( 6 )
 tint_under = Color( 0, 0, 0, 1 )
 
-[node name="SFXVolBar" type="TextureProgress" parent="Settings/Container/Main/Contents/BaseAudio/Rect/Contents/SoundBar"]
-margin_top = 182.0
-margin_right = 543.0
-margin_bottom = 198.0
+[node name="SFXVolBar" type="TextureProgressBar" parent="Settings/Container/Main/Contents/BaseAudio/Rect/Contents/SoundBar"]
+offset_top = 182.0
+offset_right = 543.0
+offset_bottom = 198.0
 texture_under = ExtResource( 5 )
 texture_progress = ExtResource( 6 )
 tint_under = Color( 0, 0, 0, 1 )
 
 [node name="SoundControlDown" type="VBoxContainer" parent="Settings/Container/Main/Contents/BaseAudio/Rect/Contents"]
-margin_left = 589.0
-margin_right = 619.0
-margin_bottom = 204.0
+offset_left = 589.0
+offset_right = 619.0
+offset_bottom = 204.0
 size_flags_stretch_ratio = 0.05
-custom_constants/separation = 57
+theme_override_constants/separation = 57
 
 [node name="MainVolDown" type="TextureButton" parent="Settings/Container/Main/Contents/BaseAudio/Rect/Contents/SoundControlDown"]
-margin_right = 30.0
-margin_bottom = 30.0
-rect_min_size = Vector2( 30, 30 )
+offset_right = 30.0
+offset_bottom = 30.0
+custom_minimum_size = Vector2( 30, 30 )
 
 [node name="Minus" type="Label" parent="Settings/Container/Main/Contents/BaseAudio/Rect/Contents/SoundControlDown/MainVolDown"]
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-margin_left = -15.0
-margin_top = -78.0
-margin_right = 15.0
-margin_bottom = 78.0
-rect_min_size = Vector2( 30, 30 )
-custom_fonts/font = SubResource( 3 )
+offset_left = -15.0
+offset_top = -78.0
+offset_right = 15.0
+offset_bottom = 78.0
+custom_minimum_size = Vector2( 30, 30 )
+theme_override_fonts/font = SubResource( 3 )
 text = "-"
 align = 1
 valign = 1
@@ -523,22 +523,22 @@ __meta__ = {
 }
 
 [node name="MusicVolDown" type="TextureButton" parent="Settings/Container/Main/Contents/BaseAudio/Rect/Contents/SoundControlDown"]
-margin_top = 87.0
-margin_right = 30.0
-margin_bottom = 117.0
-rect_min_size = Vector2( 30, 30 )
+offset_top = 87.0
+offset_right = 30.0
+offset_bottom = 117.0
+custom_minimum_size = Vector2( 30, 30 )
 
 [node name="Minus" type="Label" parent="Settings/Container/Main/Contents/BaseAudio/Rect/Contents/SoundControlDown/MusicVolDown"]
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-margin_left = -15.0
-margin_top = -78.0
-margin_right = 15.0
-margin_bottom = 78.0
-rect_min_size = Vector2( 30, 30 )
-custom_fonts/font = SubResource( 3 )
+offset_left = -15.0
+offset_top = -78.0
+offset_right = 15.0
+offset_bottom = 78.0
+custom_minimum_size = Vector2( 30, 30 )
+theme_override_fonts/font = SubResource( 3 )
 text = "-"
 align = 1
 valign = 1
@@ -548,22 +548,22 @@ __meta__ = {
 }
 
 [node name="SFXVolDown" type="TextureButton" parent="Settings/Container/Main/Contents/BaseAudio/Rect/Contents/SoundControlDown"]
-margin_top = 174.0
-margin_right = 30.0
-margin_bottom = 204.0
-rect_min_size = Vector2( 30, 30 )
+offset_top = 174.0
+offset_right = 30.0
+offset_bottom = 204.0
+custom_minimum_size = Vector2( 30, 30 )
 
 [node name="Minus" type="Label" parent="Settings/Container/Main/Contents/BaseAudio/Rect/Contents/SoundControlDown/SFXVolDown"]
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-margin_left = -15.0
-margin_top = -78.0
-margin_right = 15.0
-margin_bottom = 78.0
-rect_min_size = Vector2( 30, 30 )
-custom_fonts/font = SubResource( 3 )
+offset_left = -15.0
+offset_top = -78.0
+offset_right = 15.0
+offset_bottom = 78.0
+custom_minimum_size = Vector2( 30, 30 )
+theme_override_fonts/font = SubResource( 3 )
 text = "-"
 align = 1
 valign = 1
@@ -573,27 +573,27 @@ __meta__ = {
 }
 
 [node name="SoundControlUp" type="VBoxContainer" parent="Settings/Container/Main/Contents/BaseAudio/Rect/Contents"]
-margin_left = 665.0
-margin_right = 695.0
-margin_bottom = 204.0
+offset_left = 665.0
+offset_right = 695.0
+offset_bottom = 204.0
 size_flags_stretch_ratio = 0.05
-custom_constants/separation = 57
+theme_override_constants/separation = 57
 
 [node name="MainVolUp" type="TextureButton" parent="Settings/Container/Main/Contents/BaseAudio/Rect/Contents/SoundControlUp"]
-margin_right = 30.0
-margin_bottom = 30.0
-rect_min_size = Vector2( 30, 30 )
+offset_right = 30.0
+offset_bottom = 30.0
+custom_minimum_size = Vector2( 30, 30 )
 
 [node name="Plus" type="Label" parent="Settings/Container/Main/Contents/BaseAudio/Rect/Contents/SoundControlUp/MainVolUp"]
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-margin_left = -15.0
-margin_top = -78.0
-margin_right = 15.0
-margin_bottom = 78.0
-custom_fonts/font = SubResource( 3 )
+offset_left = -15.0
+offset_top = -78.0
+offset_right = 15.0
+offset_bottom = 78.0
+theme_override_fonts/font = SubResource( 3 )
 text = "+"
 align = 1
 valign = 1
@@ -603,22 +603,22 @@ __meta__ = {
 }
 
 [node name="MusicVolUp" type="TextureButton" parent="Settings/Container/Main/Contents/BaseAudio/Rect/Contents/SoundControlUp"]
-margin_top = 87.0
-margin_right = 30.0
-margin_bottom = 117.0
-rect_min_size = Vector2( 30, 30 )
+offset_top = 87.0
+offset_right = 30.0
+offset_bottom = 117.0
+custom_minimum_size = Vector2( 30, 30 )
 
 [node name="Plus" type="Label" parent="Settings/Container/Main/Contents/BaseAudio/Rect/Contents/SoundControlUp/MusicVolUp"]
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-margin_left = -17.0
-margin_top = -78.0
-margin_right = 17.0
-margin_bottom = 78.0
-rect_min_size = Vector2( 30, 0 )
-custom_fonts/font = SubResource( 3 )
+offset_left = -17.0
+offset_top = -78.0
+offset_right = 17.0
+offset_bottom = 78.0
+custom_minimum_size = Vector2( 30, 0 )
+theme_override_fonts/font = SubResource( 3 )
 text = "+"
 align = 1
 valign = 1
@@ -628,22 +628,22 @@ __meta__ = {
 }
 
 [node name="SFXVolUp" type="TextureButton" parent="Settings/Container/Main/Contents/BaseAudio/Rect/Contents/SoundControlUp"]
-margin_top = 174.0
-margin_right = 30.0
-margin_bottom = 204.0
-rect_min_size = Vector2( 30, 30 )
+offset_top = 174.0
+offset_right = 30.0
+offset_bottom = 204.0
+custom_minimum_size = Vector2( 30, 30 )
 
 [node name="Plus" type="Label" parent="Settings/Container/Main/Contents/BaseAudio/Rect/Contents/SoundControlUp/SFXVolUp"]
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-margin_left = -15.0
-margin_top = -78.0
-margin_right = 15.0
-margin_bottom = 78.0
-rect_min_size = Vector2( 30, 30 )
-custom_fonts/font = SubResource( 3 )
+offset_left = -15.0
+offset_top = -78.0
+offset_right = 15.0
+offset_bottom = 78.0
+custom_minimum_size = Vector2( 30, 30 )
+theme_override_fonts/font = SubResource( 3 )
 text = "+"
 align = 1
 valign = 1
@@ -653,44 +653,44 @@ __meta__ = {
 }
 
 [node name="BABMargin" type="Label" parent="Settings/Container/Main/Contents/BaseAudio"]
-margin_top = 753.0
-margin_right = 1037.0
-margin_bottom = 767.0
+offset_top = 753.0
+offset_right = 1037.0
+offset_bottom = 767.0
 size_flags_vertical = 1
 
 [node name="BaseGame" type="VBoxContainer" parent="Settings/Container/Main/Contents"]
 visible = false
-margin_left = 689.0
-margin_right = 1156.0
-margin_bottom = 767.0
+offset_left = 689.0
+offset_right = 1156.0
+offset_bottom = 767.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
 [node name="BaseEmpty" type="VBoxContainer" parent="Settings/Container/Main/Contents"]
-margin_left = 467.0
-margin_right = 1628.0
-margin_bottom = 767.0
+offset_left = 467.0
+offset_right = 1628.0
+offset_bottom = 767.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
 [node name="SRMargin" type="Label" parent="Settings/Container/Main/Contents"]
-margin_left = 1632.0
-margin_right = 1660.0
-margin_bottom = 14.0
+offset_left = 1632.0
+offset_right = 1660.0
+offset_bottom = 14.0
 size_flags_vertical = 2
 text = "       "
 
 [node name="BMargin" type="Label" parent="Settings/Container/Main"]
-margin_top = 904.0
-margin_right = 1661.0
-margin_bottom = 935.0
+offset_top = 904.0
+offset_right = 1661.0
+offset_bottom = 935.0
 text = "
 "
 
 [node name="RMargin" type="Label" parent="Settings/Container"]
-margin_left = 1581.0
-margin_right = 1661.0
-margin_bottom = 14.0
+offset_left = 1581.0
+offset_right = 1661.0
+offset_bottom = 14.0
 size_flags_horizontal = 5
 size_flags_vertical = 0
 text = "                    "

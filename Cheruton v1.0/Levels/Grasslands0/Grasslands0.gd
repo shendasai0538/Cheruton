@@ -1,7 +1,7 @@
 extends Level
 
-onready var save_position = $player.position
-onready var cut_scene_player = $CutScenePlayer
+@onready var save_position = $player.position
+@onready var cut_scene_player = $CutScenePlayer
 
 var cur_cut_scene_completed = false
 var flying_sword
@@ -94,7 +94,7 @@ func handle_death_zone(body):
 
 func start_falling_rock():
 	var falling_rock = load("res://Levels/Grasslands0/fallingRock/fallingRock.tscn")
-	var fallling_rock_node = falling_rock.instance()
+	var fallling_rock_node = falling_rock.instantiate()
 	fallling_rock_node.global_position = $NPCs/moneygirl/rock.global_position
 	add_child(fallling_rock_node)
 
@@ -109,7 +109,7 @@ func _on_NextCutsceneTriger_body_entered(body):
 
 func start_glove_throw():
 	var glove = load("res://Levels/Grasslands0/Glove/Glove.tscn")
-	var glove_node = glove.instance()
+	var glove_node = glove.instantiate()
 	glove_node.global_position = $NPCs/moneygirl.global_position
 	glove_node.velocity = Vector2(-1500 , -540)
 	glove_node.level = self
@@ -118,11 +118,11 @@ func start_glove_throw():
 
 func instance_flying_sword():
 	var load_sword = load("res://Player/PlayerBody/FlyingSword/flyingSword.tscn")
-	flying_sword = load_sword.instance()
+	flying_sword = load_sword.instantiate()
 
-	flying_sword.connect("sword_result", player, "on_sword_result")
-	flying_sword.connect("sword_result", self, "on_sword_result")
-	player.connect("flying_sword_command", flying_sword, "_on_flyingSword_command")
+	flying_sword.connect("sword_result", Callable(player, "on_sword_result"))
+	flying_sword.connect("sword_result", Callable(self, "on_sword_result"))
+	player.connect("flying_sword_command", Callable(flying_sword, "_on_flyingSword_command"))
 
 	flying_sword.hide()
 	add_child(flying_sword)
@@ -141,7 +141,7 @@ func on_sword_result(result, vector1, vector2):
 		next_cutscene()
 
 func _on_Exit0_area_entered(area):
-	SceneControl.change_scene(self, "res://Levels/Grasslands2/Grasslands2.tscn")
+	SceneControl.change_scene_to_file(self, "res://Levels/Grasslands2/Grasslands2.tscn")
 	
 func silence_bgm():
 	prev_bg_volume = bg_music_stream.volume_db

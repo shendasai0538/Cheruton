@@ -5,19 +5,19 @@ const WHITE = Color(1,1,1,1)
 
 enum item{TYPE = 0, NAME = 1, AMOUNT = 2}
 
-onready var beam = preload("res://Display/MouseDesign/beam.png")
-onready var mmenu_music_file = preload("res://Music/Background/Time Trip.wav")
+@onready var beam = preload("res://Display/MouseDesign/beam.png")
+@onready var mmenu_music_file = preload("res://Music/Background/Time Trip.wav")
 
-onready var levels = $Levels
-onready var hud_elements = $HudLayer/Hud
-onready var pop_up_gui = $popUpGui
-onready var bg_music = $BgMusic
-onready var load_layer = $LoadLayer/Load
-onready var settings_layer = $SettingsLayer/Settings
-onready var button_click = $ButtonClick
-onready var scene_change = $SceneChange
-onready var canvas = $CanvasModulate
-onready var scene_modulate = $LoadLayer/Load/SceneModulate
+@onready var levels = $Levels
+@onready var hud_elements = $HudLayer/Hud
+@onready var pop_up_gui = $popUpGui
+@onready var bg_music = $BgMusic
+@onready var load_layer = $LoadLayer/Load
+@onready var settings_layer = $SettingsLayer/Settings
+@onready var button_click = $ButtonClick
+@onready var scene_change = $SceneChange
+@onready var canvas = $CanvasModulate
+@onready var scene_modulate = $LoadLayer/Load/SceneModulate
 
 var cur_story
 var cur_dialog
@@ -63,14 +63,14 @@ func change_music(new_music):
 	bg_music.stream = new_music
 	bg_music.play()
 
-func change_scene(old_scene : Node, new_scene : String):
+func change_scene_to_file(old_scene : Node, new_scene : String):
 	if(prev_scene_path == new_scene):
 		return 
 	prev_scene_path = new_scene	
 	get_tree().paused = true
 	
 	old_level = old_scene
-	new_level = load(new_scene).instance()
+	new_level = load(new_scene).instantiate()
 	
 	if(old_scene.name == "MainMenu"):
 		scene_change.play("mmenu_out")
@@ -138,7 +138,7 @@ func loot_selector(map_name):
 			loot.append(DataResource.dict_item_spawn[map_name]["ItemType"+ str(index)])
 			loot.append(DataResource.dict_item_spawn[map_name]["ItemName"+ str(index)])
 			#Randomize the qty of the item to be found
-			loot.append(int(rand_range(float(DataResource.dict_item_spawn[map_name]["ItemMinQ" + str(index)]), float(DataResource.dict_item_spawn[map_name]["ItemMaxQ"+ str(index)]))))
+			loot.append(int(randf_range(float(DataResource.dict_item_spawn[map_name]["ItemMinQ" + str(index)]), float(DataResource.dict_item_spawn[map_name]["ItemMaxQ"+ str(index)]))))
 			loot_dict[loot_dict.size() + 1] = loot
 
 		index += 1
@@ -198,7 +198,7 @@ func insert_data(item_id, insert_index):
 ########
 func _input(_ev):
 	if Input.is_action_just_pressed("toggle_fullscreen"):
-		OS.window_fullscreen = !OS.window_fullscreen
+		get_window().mode = Window.MODE_EXCLUSIVE_FULLSCREEN if (!((get_window().mode == Window.MODE_EXCLUSIVE_FULLSCREEN) or (get_window().mode == Window.MODE_FULLSCREEN))) else Window.MODE_WINDOWED
 	if Input.is_action_just_pressed("save_player"):
 		if(enable_save):
 			DataResource.save_player()

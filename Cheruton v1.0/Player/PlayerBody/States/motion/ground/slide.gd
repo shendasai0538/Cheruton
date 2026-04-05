@@ -3,7 +3,7 @@ extends groundState
 const MIN_VEL = 420 # should somewhat higher than min run speed (to not goto idle straight away)(in $run) before turning to run
 const SLIDE_PWR = 100# 50 is normal
 const SLIDE_DURATION = 1.5 # in seconds
-export (Curve) var slide_curve
+@export var slide_curve: Curve
 
 var initial_vel
 var relative_vel
@@ -43,13 +43,13 @@ func update(delta):
 			owner.play_anim("slide_continious")
 
 	curve_timer = clamp(curve_timer + delta/SLIDE_DURATION,0 , 1)
-	relative_vel = slide_curve.interpolate(curve_timer)
+	relative_vel = slide_curve.sample(curve_timer)
 	owner.velocity = initial_vel * (1-relative_vel) + Vector2(0,10)
 
 	owner.move()
 
 	owner.volume("slide", clamp(abs(owner.velocity.x/80)-30, -30 , 0)) # volume proportional to speed
-	.update(delta)
+	super.update(delta)
 
 func exit():
 	owner.play_anim("slide_recover")

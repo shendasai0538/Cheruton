@@ -1,19 +1,19 @@
 [gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://Player/Stats/ExpBar/ExpBar.gd" type="Script" id=1]
-[ext_resource path="res://Player/Stats/HealthBar/HealthBar.png" type="Texture" id=2]
-[ext_resource path="res://Player/Stats/HealthBar/HealthBarFill.png" type="Texture" id=3]
-[ext_resource path="res://Display/Font/eight-bit-dragon.otf" type="DynamicFontData" id=4]
+[ext_resource path="res://Player/Stats/HealthBar/HealthBar.png" type="Texture2D" id=2]
+[ext_resource path="res://Player/Stats/HealthBar/HealthBarFill.png" type="Texture2D" id=3]
+[ext_resource path="res://Display/Font/eight-bit-dragon.otf" type="FontFile" id=4]
 
-[sub_resource type="DynamicFont" id=1]
+[sub_resource type="FontFile" id=1]
 size = 30
 font_data = ExtResource( 4 )
 
 [node name="ExpBar" type="Control"]
 visible = false
-margin_right = 200.0
-margin_bottom = 50.0
-rect_min_size = Vector2( 200, 50 )
+offset_right = 200.0
+offset_bottom = 50.0
+custom_minimum_size = Vector2( 200, 50 )
 script = ExtResource( 1 )
 __meta__ = {
 "_edit_use_anchors_": false
@@ -22,31 +22,31 @@ __meta__ = {
 [node name="Tween" type="Tween" parent="."]
 
 [node name="ExpRect" type="VBoxContainer" parent="."]
-margin_left = 10.0
-margin_right = 194.0
-margin_bottom = 53.0
+offset_left = 10.0
+offset_right = 194.0
+offset_bottom = 53.0
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="ExpStats" type="HBoxContainer" parent="ExpRect"]
-margin_right = 263.0
-margin_bottom = 52.0
+offset_right = 263.0
+offset_bottom = 52.0
 
 [node name="Value2" type="Label" parent="ExpRect/ExpStats"]
-margin_top = 11.0
-margin_right = 63.0
-margin_bottom = 41.0
-custom_fonts/font = SubResource( 1 )
+offset_top = 11.0
+offset_right = 63.0
+offset_bottom = 41.0
+theme_override_fonts/font = SubResource( 1 )
 text = "EXP"
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="ExpBar" type="TextureProgress" parent="ExpRect/ExpStats"]
-margin_left = 67.0
-margin_right = 259.0
-margin_bottom = 52.0
+[node name="ExpBar" type="TextureProgressBar" parent="ExpRect/ExpStats"]
+offset_left = 67.0
+offset_right = 259.0
+offset_bottom = 52.0
 value = 10.0
 texture_under = ExtResource( 2 )
 texture_progress = ExtResource( 3 )
@@ -57,10 +57,10 @@ __meta__ = {
 }
 
 [node name="Value" type="Label" parent="ExpRect/ExpStats"]
-margin_left = 263.0
-margin_top = 19.0
-margin_right = 263.0
-margin_bottom = 33.0
+offset_left = 263.0
+offset_top = 19.0
+offset_right = 263.0
+offset_bottom = 33.0
 __meta__ = {
 "_edit_use_anchors_": false
 }

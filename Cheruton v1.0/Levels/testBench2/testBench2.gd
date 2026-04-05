@@ -1,6 +1,6 @@
 extends Level
 
-onready var save_position = $player.position
+@onready var save_position = $player.position
 
 func _ready():
 	player.set_isInputEnabled(true)

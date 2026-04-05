@@ -1,37 +1,37 @@
-extends KinematicBody2D
+extends CharacterBody2D
 
 const LEG_MOVE_COOLDOWN = .35
 
 # Leg references
-onready var a_legs = $ALegs.get_children()
-onready var b_legs = $BLegs.get_children()
-onready var legs = a_legs + b_legs
-onready var front_left_leg = b_legs[0]
-onready var front_right_leg = a_legs[0]
+@onready var a_legs = $ALegs.get_children()
+@onready var b_legs = $BLegs.get_children()
+@onready var legs = a_legs + b_legs
+@onready var front_left_leg = b_legs[0]
+@onready var front_right_leg = a_legs[0]
 
 # Sprites
-onready var head_sprite = $head
-onready var feelers_sprite = $head/feelers
-onready var mid_body_sprite = $midBody
-onready var butt_sprite = $butt
+@onready var head_sprite = $head
+@onready var feelers_sprite = $head/feelers
+@onready var mid_body_sprite = $midBody
+@onready var butt_sprite = $butt
 var desired_head_pos : Vector2
 var desired_feeler_pos : Vector2
 var desired_mid_body_pos : Vector2
 var desired_butt_pos : Vector2
 
 # Raycasts/collisions
-onready var ground_check = $groundCheck
-onready var next_pos_col_check = $nextPosColCheck
-onready var body_collision = $bodyCollision
-onready var small_body_collision = $smallBodyCollision
-onready var smaller_body_collision = $smallerBodyCollision
-onready var jump_hurt_box_col_shape = $jumpHurtBox/CollisionShape2D
+@onready var ground_check = $groundCheck
+@onready var next_pos_col_check = $nextPosColCheck
+@onready var body_collision = $bodyCollision
+@onready var small_body_collision = $smallBodyCollision
+@onready var smaller_body_collision = $smallerBodyCollision
+@onready var jump_hurt_box_col_shape = $jumpHurtBox/CollisionShape2D
 
 # General
-onready var shockwave = $CanvasLayer/Shockwave
-onready var mouth_pos = $head/mouthPos
-onready var anim_player = $AnimationPlayer
-onready var default_sprite_pos = []
+@onready var shockwave = $CanvasLayer/Shockwave
+@onready var mouth_pos = $head/mouthPos
+@onready var anim_player = $AnimationPlayer
+@onready var default_sprite_pos = []
 
 var player
 var level
@@ -59,8 +59,8 @@ func _ready():
 
 	set_body_collision(0)
 
-	$smallPlayerLookArea.connect("body_entered", self, "on_player_entered_small_area")
-	$smallPlayerLookArea.connect("body_exited", self, "on_player_exited_small_area")
+	$smallPlayerLookArea.connect("body_entered", Callable(self, "on_player_entered_small_area"))
+	$smallPlayerLookArea.connect("body_exited", Callable(self, "on_player_exited_small_area"))
 
 	add_to_group("needs_player_ref", true)
 	add_to_group("needs_level_ref", true)
@@ -72,14 +72,19 @@ func init_leg(leg):
 
 # UNIVERSAL MOVE FUNCTION
 func move():
-	velocity = move_and_slide(velocity, Vector2.UP, false, 16) # don't snap it makes it bugs when moving away from snapped position
+	set_velocity(velocity)
+	set_up_direction(Vector2.UP)
+	set_floor_stop_on_slope_enabled(false)
+	set_max_slides(16)
+	move_and_slide()
+	velocity = velocity # don't snap it makes it bugs when moving away from snapped position
 
 # moves the parts of the body according to the velocity
 func move_body_sprites():
-	desired_head_pos = default_sprite_pos[0] + (velocity * 0.03).clamped(100)
-	desired_feeler_pos = default_sprite_pos[1] + (velocity * 0.01).clamped(0)
-	desired_mid_body_pos = default_sprite_pos[2] + velocity.clamped(0)
-	desired_butt_pos = default_sprite_pos[3] - (velocity * 0.034).clamped(60)
+	desired_head_pos = default_sprite_pos[0] + (velocity * 0.03).limit_length(100)
+	desired_feeler_pos = default_sprite_pos[1] + (velocity * 0.01).limit_length(0)
+	desired_mid_body_pos = default_sprite_pos[2] + velocity.limit_length(0)
+	desired_butt_pos = default_sprite_pos[3] - (velocity * 0.034).limit_length(60)
 
 func _process(delta):
 	head_sprite.position = lerp (head_sprite.position, desired_head_pos, delta * sprite_move_speed_modifier)
@@ -88,12 +93,12 @@ func _process(delta):
 	butt_sprite.position = lerp (butt_sprite.position, desired_butt_pos, delta * sprite_move_speed_modifier)
 
 	var mouth_uv = mouth_pos.get_global_transform_with_canvas().origin# get position on screen of mouth area
-	var screen_res = Vector2(ProjectSettings.get("display/window/size/width"), ProjectSettings.get("display/window/size/height"))
+	var screen_res = Vector2(ProjectSettings.get("display/window/size/viewport_width"), ProjectSettings.get("display/window/size/viewport_height"))
 
 	mouth_uv /= screen_res
 	mouth_uv.x = clamp(mouth_uv.x, 0.0, 1.0)
 	mouth_uv.y = 1.0 - clamp(mouth_uv.y, 0.0, 1.0)
-	shockwave.material.set_shader_param("center", mouth_uv)
+	shockwave.material.set_shader_parameter("center", mouth_uv)
 
 # ANIMATINOS:
 func play_anim(string : String):

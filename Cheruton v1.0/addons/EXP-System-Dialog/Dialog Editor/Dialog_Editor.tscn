@@ -5,7 +5,7 @@
 [node name="Dialog_Editor" type="Control"]
 anchor_right = 1.0
 anchor_bottom = 1.0
-rect_min_size = Vector2( 0, 256 )
+custom_minimum_size = Vector2( 0, 256 )
 script = ExtResource( 1 )
 __meta__ = {
 "_edit_use_anchors_": false
@@ -19,50 +19,50 @@ __meta__ = {
 }
 
 [node name="VBoxContainer" type="HBoxContainer" parent="VBoxContainer"]
-margin_right = 1024.0
-margin_bottom = 20.0
+offset_right = 1024.0
+offset_bottom = 20.0
 
 [node name="Close_BTN" type="Button" parent="VBoxContainer/VBoxContainer"]
-margin_right = 47.0
-margin_bottom = 20.0
-hint_tooltip = "Close the Dialog Editor."
+offset_right = 47.0
+offset_bottom = 20.0
+tooltip_text = "Close the Dialog Editor."
 text = "Close"
 
 [node name="Back_BTN" type="Button" parent="VBoxContainer/VBoxContainer"]
-margin_left = 51.0
-margin_right = 93.0
-margin_bottom = 20.0
-hint_tooltip = "Return to the Story Editor."
+offset_left = 51.0
+offset_right = 93.0
+offset_bottom = 20.0
+tooltip_text = "Return to the Story Editor."
 text = "Back"
 
 [node name="VSeparator" type="VSeparator" parent="VBoxContainer/VBoxContainer"]
-margin_left = 97.0
-margin_right = 101.0
-margin_bottom = 20.0
+offset_left = 97.0
+offset_right = 101.0
+offset_bottom = 20.0
 
 [node name="Add_Node_BTN" type="Button" parent="VBoxContainer/VBoxContainer"]
-margin_left = 105.0
-margin_right = 180.0
-margin_bottom = 20.0
-hint_tooltip = "Add a new node to the graph."
+offset_left = 105.0
+offset_right = 180.0
+offset_bottom = 20.0
+tooltip_text = "Add a new node to the graph."
 text = "Add Node"
 
 [node name="VSeparator2" type="VSeparator" parent="VBoxContainer/VBoxContainer"]
-margin_left = 184.0
-margin_right = 188.0
-margin_bottom = 20.0
+offset_left = 184.0
+offset_right = 188.0
+offset_bottom = 20.0
 
 [node name="Human_Readable_LBL" type="Label" parent="VBoxContainer/VBoxContainer"]
-margin_left = 192.0
-margin_top = 3.0
-margin_right = 378.0
-margin_bottom = 17.0
+offset_left = 192.0
+offset_top = 3.0
+offset_right = 378.0
+offset_bottom = 17.0
 text = "Human Readable Description"
 
 [node name="GraphEdit" type="GraphEdit" parent="VBoxContainer"]
-margin_top = 24.0
-margin_right = 1024.0
-margin_bottom = 600.0
+offset_top = 24.0
+offset_right = 1024.0
+offset_bottom = 600.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 right_disconnects = true

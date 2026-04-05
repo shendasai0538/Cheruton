@@ -1,27 +1,27 @@
-extends KinematicBody2D
+extends CharacterBody2D
 class_name Enemy
 
-onready var damage_val = preload("res://Enemy/DamageVal/DamageVal.tscn")
-onready var hit_effect = preload("res://Effects/MobHit/HitFx.tscn")
+@onready var damage_val = preload("res://Enemy/DamageVal/DamageVal.tscn")
+@onready var hit_effect = preload("res://Effects/MobHit/HitFx.tscn")
 
-onready var animation_player = $AnimationPlayer
-onready var animation_player_fx = $AnimationPlayerFx
-onready var health_bar = $HealthBar
-onready var states = $states
+@onready var animation_player = $AnimationPlayer
+@onready var animation_player_fx = $AnimationPlayerFx
+@onready var health_bar = $HealthBar
+@onready var states = $states
 
 # set by level
 var level
 var player
 
 var velocity = Vector2()
-var health = 15.0 setget set_health
+var health = 15.0: set = set_health
 
 func _ready():
 	add_to_group("needs_level_ref", true)
 	add_to_group("needs_player_ref", true)
 
 func display_damage(damage_value):
-	var damage_text = damage_val.instance()
+	var damage_text = damage_val.instantiate()
 	damage_text.amount = damage_value
 	add_child(damage_text)
 

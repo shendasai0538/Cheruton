@@ -14,39 +14,39 @@ var mouse_node
 var temp_mouse_node
 var delete_status:= false
 
-onready var active_tab_image = preload("res://Player/Inventory/Sprites/Slots/vertTabSelected.png")
-onready var default_tab_image = preload("res://Player/Inventory/Sprites/Slots/vertTabDeselected.png")
-onready var index_bg = preload("res://Player/Inventory/Sprites/Slots/itemSelected.png")
-onready var index_equipped_bg = preload("res://Player/Inventory/Sprites/Slots/itemEquipped.png")
-onready var instance_loc = preload("res://Player/Inventory/101.tscn")
-onready var attack_slot = preload("res://Player/Inventory/Sprites/Slots/empty_attack.png")
-onready var defense_slot = preload("res://Player/Inventory/Sprites/Slots/empty_defense.png")
+@onready var active_tab_image = preload("res://Player/Inventory/Sprites/Slots/vertTabSelected.png")
+@onready var default_tab_image = preload("res://Player/Inventory/Sprites/Slots/vertTabDeselected.png")
+@onready var index_bg = preload("res://Player/Inventory/Sprites/Slots/itemSelected.png")
+@onready var index_equipped_bg = preload("res://Player/Inventory/Sprites/Slots/itemEquipped.png")
+@onready var instance_loc = preload("res://Player/Inventory/101.tscn")
+@onready var attack_slot = preload("res://Player/Inventory/Sprites/Slots/empty_attack.png")
+@onready var defense_slot = preload("res://Player/Inventory/Sprites/Slots/empty_defense.png")
 
-onready var weapons_list = DataResource.dict_inventory.get("Weapons")
-onready var apparel_list = DataResource.dict_inventory.get("Apparel")
-onready var consum_list = DataResource.dict_inventory.get("Consum")
-onready var misc_list = DataResource.dict_inventory.get("Misc")
-onready var key_items_list = DataResource.dict_inventory.get("Key Items")
+@onready var weapons_list = DataResource.dict_inventory.get("Weapons")
+@onready var apparel_list = DataResource.dict_inventory.get("Apparel")
+@onready var consum_list = DataResource.dict_inventory.get("Consum")
+@onready var misc_list = DataResource.dict_inventory.get("Misc")
+@onready var key_items_list = DataResource.dict_inventory.get("Key Items")
 
-onready var base_attack = DataResource.temp_dict_player.attack
-onready var base_defense = DataResource.temp_dict_player.defense
+@onready var base_attack = DataResource.temp_dict_player.attack
+@onready var base_defense = DataResource.temp_dict_player.defense
 
-onready var inventory = self
-onready var shop = get_parent().get_node("shop")
+@onready var inventory = self
+@onready var shop = get_parent().get_node("shop")
 
-onready var tabs = $Border/Bg/Main/Sides/Contents/Tabs
-onready var items = $Border/Bg/Main/Sides/Contents/Items
-onready var coins = $Border/Bg/Main/Sides/Data/Coins
-onready var equipped_coins = $Border/Bg/Main/Sides/Data/EquippedCoins
-onready var button_list = $Border/Bg/Main/Sides/Data/TextureRect
-onready var attack = $Border/Bg/Main/Sides/Data/Attack/Attack
-onready var defense = $Border/Bg/Main/Sides/Data/Defense/Defense
+@onready var tabs = $Border/Bg/Main/Sides/Contents/TabBar
+@onready var items = $Border/Bg/Main/Sides/Contents/Items
+@onready var coins = $Border/Bg/Main/Sides/Data/Coins
+@onready var equipped_coins = $Border/Bg/Main/Sides/Data/EquippedCoins
+@onready var button_list = $Border/Bg/Main/Sides/Data/TextureRect
+@onready var attack = $Border/Bg/Main/Sides/Data/Attack/Attack
+@onready var defense = $Border/Bg/Main/Sides/Data/Defense/Defense
 
-onready var hover_music = $MusicNodes/Hover
-onready var select_music = $MusicNodes/Select
+@onready var hover_music = $MusicNodes/Hover
+@onready var select_music = $MusicNodes/Select
 #onready var equip_music = $MusicNodes/MouseOver3
 #onready var dequip_music = $MusicNodes/MouseOver3
-onready var trash_music = $MusicNodes/Trash
+@onready var trash_music = $MusicNodes/Trash
 #onready var heal_music = $MusicNodes/MouseOver3
 
 signal tab_changed(next_tab)
@@ -63,12 +63,12 @@ func _ready():
 
 # Links the buttons when pressed into the function to change active tab
 func connect_tabs():
-	var _conn1 = connect("tab_changed", inventory, "change_tab_state")
-	tabs.get_node("Weapons/Weapons").connect("pressed",inventory,  "tab_pressed", ["Weapons"])
-	tabs.get_node("Apparel/Apparel").connect("pressed", inventory,  "tab_pressed", ["Apparel"])
-	tabs.get_node("Consum/Consum").connect("pressed", inventory,  "tab_pressed", ["Consum"])
-	tabs.get_node("Misc/Misc").connect("pressed", inventory,  "tab_pressed", ["Misc"])
-	tabs.get_node("KeyItems/KeyItems").connect("pressed", inventory,  "tab_pressed", ["KeyItems"])
+	var _conn1 = connect("tab_changed", Callable(inventory, "change_tab_state"))
+	tabs.get_node("Weapons/Weapons").connect("pressed", Callable(inventory, "tab_pressed").bind("Weapons"))
+	tabs.get_node("Apparel/Apparel").connect("pressed", Callable(inventory, "tab_pressed").bind("Apparel"))
+	tabs.get_node("Consum/Consum").connect("pressed", Callable(inventory, "tab_pressed").bind("Consum"))
+	tabs.get_node("Misc/Misc").connect("pressed", Callable(inventory, "tab_pressed").bind("Misc"))
+	tabs.get_node("KeyItems/KeyItems").connect("pressed", Callable(inventory, "tab_pressed").bind("KeyItems"))
 
 
 func load_data():
@@ -99,12 +99,12 @@ func generate_list(scroll_tab, list_tab, tab_index):
 			scroll_tab.add_child(new_row)
 			var integrated_row = scroll_tab.get_child(scroll_tab.get_child_count() - 1)
 			integrated_row.name = "Row" + str(row_index)
-			integrated_row.add_constant_override("separation", 10)
+			integrated_row.add_theme_constant_override("separation", 10)
 
 		var row = scroll_tab.get_node("Row" + str(row_index))
 
 		# Creates a new box in the particular row
-		var instanced = instance_loc.instance()
+		var instanced = instance_loc.instantiate()
 		row.add_child(instanced)
 		row.get_child(row.get_child_count() - 1).name = str(tab_index + index)
 
@@ -124,13 +124,13 @@ func enable_mouse(new_node, buying:= false):
 	var btn = new_node.get_node("Background/ItemBg/ItemBtn")
 	btn.get_node("Qty").show()
 	if(!btn.get_normal_texture() || buying):
-		var _conn_0 = btn.connect("pressed", inventory, "_on_pressed", [new_node])
-		var _conn_1 = new_node.connect("mouse_entered", inventory, "_on_mouse_entered", [new_node])
-		var _conn_2 = new_node.connect("mouse_exited", inventory, "_on_mouse_exited", [new_node])
+		var _conn_0 = btn.connect("pressed", Callable(inventory, "_on_pressed").bind(new_node))
+		var _conn_1 = new_node.connect("mouse_entered", Callable(inventory, "_on_mouse_entered").bind(new_node))
+		var _conn_2 = new_node.connect("mouse_exited", Callable(inventory, "_on_mouse_exited").bind(new_node))
 
 		# For the TextureButton
-		var _conn_3 = btn.connect("mouse_entered", inventory, "_on_mouse_entered", [new_node])
-		var _conn_4 = btn.connect("mouse_exited", inventory, "_on_mouse_exited", [new_node])
+		var _conn_3 = btn.connect("mouse_entered", Callable(inventory, "_on_mouse_entered").bind(new_node))
+		var _conn_4 = btn.connect("mouse_exited", Callable(inventory, "_on_mouse_exited").bind(new_node))
 
 
 # Generates the specific data relevant to the item node: Name, Qty, Picture
@@ -158,14 +158,14 @@ func set_background():
 
 func display_equipped(name):
 	var type = equipped_coins.get_node(name)
-	var node = items.find_node(str(DataResource.temp_dict_player[name + "_item"]), true, false)
+	var node = items.find_child(str(DataResource.temp_dict_player[name + "_item"]), true, false)
 	type.get_node("Background/ItemBg").texture = index_equipped_bg
 	type.get_node("Background/ItemBg/ItemBtn").set_normal_texture(node.get_node("Background/ItemBg/ItemBtn").get_normal_texture())
 	node.get_node("Background/ItemBg").texture = index_equipped_bg
 
 func set_equipped():
-	var _conn1 = equipped_coins.get_node("Weapons/Background/ItemBg/ItemBtn").connect("pressed", inventory, "_on_pressed", [equipped_coins.get_node("Weapons")])
-	var _conn2 = equipped_coins.get_node("Apparel/Background/ItemBg/ItemBtn").connect("pressed", inventory, "_on_pressed", [equipped_coins.get_node("Apparel")])
+	var _conn1 = equipped_coins.get_node("Weapons/Background/ItemBg/ItemBtn").connect("pressed", Callable(inventory, "_on_pressed").bind(equipped_coins.get_node("Weapons")))
+	var _conn2 = equipped_coins.get_node("Apparel/Background/ItemBg/ItemBtn").connect("pressed", Callable(inventory, "_on_pressed").bind(equipped_coins.get_node("Apparel")))
 
 func init_bars():
 	attack.init_bar("attack")
@@ -225,13 +225,13 @@ func disable_mouse(new_node):
 		btn.get_node("Qty").hide()
 		btn.set_normal_texture(null)
 
-		var _disconn_1 = btn.disconnect("pressed", inventory, "_on_pressed")
-		var _disconn_2 = new_node.disconnect("mouse_entered",inventory, "_on_mouse_entered")
-		var _disconn_3 = new_node.disconnect("mouse_exited", inventory, "_on_mouse_exited")
+		var _disconn_1 = btn.disconnect("pressed", Callable(inventory, "_on_pressed"))
+		var _disconn_2 = new_node.disconnect("mouse_entered", Callable(inventory, "_on_mouse_entered"))
+		var _disconn_3 = new_node.disconnect("mouse_exited", Callable(inventory, "_on_mouse_exited"))
 
 		# For the TextureButton
-		var _disconn_4 = btn.disconnect("mouse_entered", inventory, "_on_mouse_entered")
-		var _disconn_5 = btn.disconnect("mouse_exited", inventory, "_on_mouse_exited")
+		var _disconn_4 = btn.disconnect("mouse_entered", Callable(inventory, "_on_mouse_entered"))
+		var _disconn_5 = btn.disconnect("mouse_exited", Callable(inventory, "_on_mouse_exited"))
 
 
 func _on_mouse_entered(node):
@@ -405,7 +405,7 @@ func delete_item():
 		var main = get_node("Border/Bg/Main/Sides/Contents/Items/" + active_tab.name)
 		if(active_tab.name == "Weapons" || active_tab.name == "Apparel"):
 			if(DataResource.temp_dict_player[active_tab.name + "_item"] == mouse_node.name):
-				item_status(find_node(mouse_node.name, true, false), "DEQUIP")
+				item_status(find_child(mouse_node.name, true, false), "DEQUIP")
 				pass
 		# From deleted item's index upwards, shift affected indexes down by 1
 		var list_tab = DataResource.dict_inventory[active_tab.name]
@@ -414,7 +414,7 @@ func delete_item():
 		for _i in range(element_index, dict_size):
 			DataResource.dict_inventory[active_tab.name]["Item" + str(element_index)] = DataResource.dict_inventory[active_tab.name]["Item" + str(element_index + 1)]
 			var updating_node_index = str(int(mouse_node.name)/100 * 100 + element_index)
-			var updating_node = items.get_node(active_tab.name).find_node(updating_node_index, true, false)
+			var updating_node = items.get_node(active_tab.name).find_child(updating_node_index, true, false)
 
 			generate_specific_data(updating_node, element_index, list_tab)
 			element_index += 1
@@ -422,7 +422,7 @@ func delete_item():
 		# Disabled the last node which is emptied
 		DataResource.dict_inventory[active_tab.name].erase("Item" + str(element_index))
 		var deletion = str(int(mouse_node.name)/100 * 100 + element_index)
-		var emptied_node = items.get_node(active_tab.name).find_node(deletion, true, false)
+		var emptied_node = items.get_node(active_tab.name).find_child(deletion, true, false)
 		check_fixed()
 		disable_mouse(emptied_node)
 
@@ -435,7 +435,7 @@ func item_status(selected_node, status):
 		"EQUIP":
 			var equipped = DataResource.temp_dict_player[active_tab.name + "_item"]
 			if(equipped):
-				items.find_node(equipped, true, false).get_node("Background/ItemBg").texture = null
+				items.find_child(equipped, true, false).get_node("Background/ItemBg").texture = null
 			type.get_node("Background/ItemBg/ItemBtn").set_normal_texture(selected_node.get_node("Background/ItemBg/ItemBtn").get_normal_texture())
 
 			selected_node.get_node("Background/ItemBg").texture = index_equipped_bg
@@ -465,7 +465,7 @@ func item_status(selected_node, status):
 			if(selected_node.name == "Weapons" || selected_node.name == "Apparel"):
 				if(!selected_node.get_node("Background/ItemBg").texture):
 					return
-				var actual = items.get_node(selected_node.name + "/Column").find_node(str(DataResource.temp_dict_player[selected_node.name + "_item"]), true, false)
+				var actual = items.get_node(selected_node.name + "/Column").find_child(str(DataResource.temp_dict_player[selected_node.name + "_item"]), true, false)
 				actual.get_node("Background/ItemBg").texture = null
 				selected_node.get_node("Background/ItemBg/ItemBtn").set_normal_texture(null)
 				selected_node.get_node("Background/ItemBg").texture = null
@@ -519,7 +519,7 @@ func _on_ButtonUse_pressed():
 func _on_Inventory_visibility_changed():
 	if(!visible):
 		check_fixed()
-		var shop_sell = get_parent().find_node("ItemsSell", true, false)
+		var shop_sell = get_parent().find_child("ItemsSell", true, false)
 		update_tab_items(WEAPONS, shop_sell, "Weapons")
 		update_tab_items(APPAREL, shop_sell, "Apparel")
 		update_tab_items(CONSUM, shop_sell, "Consum")
@@ -541,12 +541,12 @@ func update_tab_items(tab_constant, updating_path, tab_name):
 		var updating_node
 		for _i in range(element_index, dict_size):
 			updating_node_index = str(int(tab_constant + element_index))
-			updating_node = updating_path.get_node(tab_name).find_node(updating_node_index, true, false)
+			updating_node = updating_path.get_node(tab_name).find_child(updating_node_index, true, false)
 			generate_specific_data(updating_node, element_index, list_tab)
 			element_index += 1
 		if(element_index == dict_size):
 			updating_node_index = str(int(tab_constant + element_index))
-			updating_node = updating_path.get_node(tab_name).find_node(updating_node_index, true, false)
+			updating_node = updating_path.get_node(tab_name).find_child(updating_node_index, true, false)
 			if(updating_node.get_child(0).get_child(0).name != "ItemName"):
 				shop.disable_mouse(updating_node)
 

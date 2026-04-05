@@ -1,6 +1,6 @@
 [gd_scene load_steps=12 format=2]
 
-[ext_resource path="res://Effects/white_screen.png" type="Texture" id=1]
+[ext_resource path="res://Effects/white_screen.png" type="Texture2D" id=1]
 [ext_resource path="res://Player/Stats/HealthBar/HealthBar.tscn" type="PackedScene" id=2]
 [ext_resource path="res://Player/Stats/ExpBar/ExpBar.tscn" type="PackedScene" id=3]
 [ext_resource path="res://AutoLoad/SceneControl/SceneControl.gd" type="Script" id=4]
@@ -18,8 +18,8 @@ tracks/0/loop_wrap = true
 tracks/0/imported = false
 tracks/0/enabled = true
 tracks/0/keys = {
-"times": PoolRealArray( 0, 0.63, 1.25 ),
-"transitions": PoolRealArray( 4, 0.14, 0.14 ),
+"times": PackedFloat32Array( 0, 0.63, 1.25 ),
+"transitions": PackedFloat32Array( 4, 0.14, 0.14 ),
 "update": 0,
 "values": [ -60.0, -30.0, 0.0 ]
 }
@@ -30,8 +30,8 @@ tracks/1/loop_wrap = true
 tracks/1/imported = false
 tracks/1/enabled = true
 tracks/1/keys = {
-"times": PoolRealArray( 0, 0.63, 1.25 ),
-"transitions": PoolRealArray( 4, 0.14, 0.14 ),
+"times": PackedFloat32Array( 0, 0.63, 1.25 ),
+"transitions": PackedFloat32Array( 4, 0.14, 0.14 ),
 "update": 0,
 "values": [ Color( 0, 0, 0, 1 ), Color( 0.5, 0.5, 0.5, 0.5 ), Color( 1, 1, 1, 1 ) ]
 }
@@ -42,8 +42,8 @@ tracks/2/loop_wrap = true
 tracks/2/imported = false
 tracks/2/enabled = true
 tracks/2/keys = {
-"times": PoolRealArray( 0, 0.63, 1.25 ),
-"transitions": PoolRealArray( 4, 0.14, 0.14 ),
+"times": PackedFloat32Array( 0, 0.63, 1.25 ),
+"transitions": PackedFloat32Array( 4, 0.14, 0.14 ),
 "update": 0,
 "values": [ Color( 0, 0, 0, 1 ), Color( 0, 0, 0, 0.5 ), Color( 0, 0, 0, 0 ) ]
 }
@@ -58,8 +58,8 @@ tracks/0/loop_wrap = true
 tracks/0/imported = false
 tracks/0/enabled = true
 tracks/0/keys = {
-"times": PoolRealArray( 0, 0.63, 1.25 ),
-"transitions": PoolRealArray( 4, 0.14, 0.14 ),
+"times": PackedFloat32Array( 0, 0.63, 1.25 ),
+"transitions": PackedFloat32Array( 4, 0.14, 0.14 ),
 "update": 0,
 "values": [ 0.0, -30.0, -60.0 ]
 }
@@ -70,8 +70,8 @@ tracks/1/loop_wrap = true
 tracks/1/imported = false
 tracks/1/enabled = true
 tracks/1/keys = {
-"times": PoolRealArray( 0, 0.63, 1.25 ),
-"transitions": PoolRealArray( 4, 0.14, 0.14 ),
+"times": PackedFloat32Array( 0, 0.63, 1.25 ),
+"transitions": PackedFloat32Array( 4, 0.14, 0.14 ),
 "update": 0,
 "values": [ Color( 1, 1, 1, 1 ), Color( 0.5, 0.5, 0.5, 0.5 ), Color( 0, 0, 0, 1 ) ]
 }
@@ -82,8 +82,8 @@ tracks/2/loop_wrap = true
 tracks/2/imported = false
 tracks/2/enabled = true
 tracks/2/keys = {
-"times": PoolRealArray( 0, 0.63, 1.25 ),
-"transitions": PoolRealArray( 4, 0.14, 0.14 ),
+"times": PackedFloat32Array( 0, 0.63, 1.25 ),
+"transitions": PackedFloat32Array( 4, 0.14, 0.14 ),
 "update": 0,
 "values": [ Color( 0, 0, 0, 0 ), Color( 0, 0, 0, 0.5 ), Color( 0, 0, 0, 1 ) ]
 }
@@ -98,8 +98,8 @@ tracks/0/loop_wrap = true
 tracks/0/imported = false
 tracks/0/enabled = true
 tracks/0/keys = {
-"times": PoolRealArray( 0, 0.63, 1.25 ),
-"transitions": PoolRealArray( 4, 0.14, 0.14 ),
+"times": PackedFloat32Array( 0, 0.63, 1.25 ),
+"transitions": PackedFloat32Array( 4, 0.14, 0.14 ),
 "update": 0,
 "values": [ -60.0, -30.0, 0.0 ]
 }
@@ -110,8 +110,8 @@ tracks/1/loop_wrap = true
 tracks/1/imported = false
 tracks/1/enabled = true
 tracks/1/keys = {
-"times": PoolRealArray( 0, 2, 3 ),
-"transitions": PoolRealArray( 4, 0.14, 0.14 ),
+"times": PackedFloat32Array( 0, 2, 3 ),
+"transitions": PackedFloat32Array( 4, 0.14, 0.14 ),
 "update": 0,
 "values": [ Color( 0, 0, 0, 1 ), Color( 0, 0, 0, 0.5 ), Color( 0, 0, 0, 0 ) ]
 }
@@ -126,8 +126,8 @@ tracks/0/loop_wrap = true
 tracks/0/imported = false
 tracks/0/enabled = true
 tracks/0/keys = {
-"times": PoolRealArray( 0, 0.63, 1.2 ),
-"transitions": PoolRealArray( 4, 0.14, 0.14 ),
+"times": PackedFloat32Array( 0, 0.63, 1.2 ),
+"transitions": PackedFloat32Array( 4, 0.14, 0.14 ),
 "update": 0,
 "values": [ 0.0, -30.0, -60.0 ]
 }
@@ -138,8 +138,8 @@ tracks/1/loop_wrap = true
 tracks/1/imported = false
 tracks/1/enabled = true
 tracks/1/keys = {
-"times": PoolRealArray( 0, 0.63, 1.2 ),
-"transitions": PoolRealArray( 4, 0.14, 0.14 ),
+"times": PackedFloat32Array( 0, 0.63, 1.2 ),
+"transitions": PackedFloat32Array( 4, 0.14, 0.14 ),
 "update": 0,
 "values": [ Color( 0, 0, 0, 0 ), Color( 0, 0, 0, 0.5 ), Color( 0, 0, 0, 1 ) ]
 }
@@ -148,7 +148,7 @@ tracks/1/keys = {
 script = ExtResource( 4 )
 
 [node name="BgMusic" type="AudioStreamPlayer" parent="."]
-pause_mode = 2
+process_mode = 3
 volume_db = -60.0
 bus = "Music"
 
@@ -165,10 +165,10 @@ visible = false
 [node name="StatBars" type="VBoxContainer" parent="HudLayer/Hud"]
 anchor_right = 1.0
 anchor_bottom = 1.0
-margin_left = 55.1684
-margin_top = 982.05
-margin_right = 265.168
-margin_bottom = 1147.05
+offset_left = 55.1684
+offset_top = 982.05
+offset_right = 265.168
+offset_bottom = 1147.05
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -176,21 +176,21 @@ __meta__ = {
 [node name="HealthBar" parent="HudLayer/Hud/StatBars" instance=ExtResource( 2 )]
 anchor_right = 0.0
 anchor_bottom = 0.0
-margin_right = 209.0
-margin_bottom = 90.0
-rect_min_size = Vector2( 0, 90 )
+offset_right = 209.0
+offset_bottom = 90.0
+custom_minimum_size = Vector2( 0, 90 )
 
 [node name="ExpBar" parent="HudLayer/Hud/StatBars" instance=ExtResource( 3 )]
-margin_top = 94.0
-margin_right = 209.0
-margin_bottom = 144.0
+offset_top = 94.0
+offset_right = 209.0
+offset_bottom = 144.0
 
 [node name="LoadLayer" type="CanvasLayer" parent="."]
 
 [node name="Load" type="Node2D" parent="LoadLayer"]
 visible = false
 
-[node name="SceneModulate" type="Sprite" parent="LoadLayer/Load"]
+[node name="SceneModulate" type="Sprite2D" parent="LoadLayer/Load"]
 modulate = Color( 0, 0, 0, 1 )
 scale = Vector2( 4, 4 )
 texture = ExtResource( 1 )
@@ -215,7 +215,7 @@ modulate = Color( 0, 0, 0, 0 )
 color = Color( 0, 0, 0, 1 )
 
 [node name="SceneChange" type="AnimationPlayer" parent="."]
-pause_mode = 2
+process_mode = 3
 anims/mmenu_in = SubResource( 1 )
 anims/mmenu_out = SubResource( 2 )
 anims/scene_in = SubResource( 3 )

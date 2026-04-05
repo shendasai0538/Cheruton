@@ -14,7 +14,7 @@ func handle_input(event):
 	if Input.is_action_just_pressed("slide"):
 		emit_signal("changeState", "slide")
 
-	.handle_input(event)
+	super.handle_input(event)
 
 func enter():
 	input_direction = get_input_direction()
@@ -44,4 +44,4 @@ func update(delta):
 
 	if not input_direction.x and abs(owner.velocity.x) < MIN_RUN_SPEED :
 		emit_signal("changeState", "idle")
-	.update(delta)
+	super.update(delta)

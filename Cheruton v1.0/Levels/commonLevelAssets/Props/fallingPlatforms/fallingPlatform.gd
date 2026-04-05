@@ -1,12 +1,12 @@
 extends Node2D
 
 
-onready var animation_player = $AnimationPlayer
-onready var timer = $resetTimer
-onready var body = $body
+@onready var animation_player = $AnimationPlayer
+@onready var timer = $resetTimer
+@onready var body = $body
 
-export var reset_time : float = 1.0
-export var gravity = 30
+@export var reset_time : float = 1.0
+@export var gravity = 30
 
 var velocity = Vector2()
 var is_triggered = false
@@ -19,7 +19,7 @@ func _physics_process(delta):
 	body.position += velocity
 
 # called by player
-func handle_collision(collision: KinematicCollision2D, collider : KinematicBody2D):
+func handle_collision(collision: KinematicCollision2D, collider : CharacterBody2D):
 	if !is_triggered:
 		is_triggered = true
 		animation_player.play("obj_land")
@@ -31,11 +31,11 @@ func _on_AnimationPlayer_animation_finished(anim_name):
 
 func _on_resetTimer_timeout():
 	set_physics_process(false)
-	yield(get_tree(), "physics_frame")
+	await get_tree().physics_frame
 	var temp = body.collision_layer
 	body.collision_layer = 0
 	body.position = Vector2() # need to move while no collision else player follow return
-	yield(get_tree(), "physics_frame")
+	await get_tree().physics_frame
 	body.collision_layer = temp
 	is_triggered = false
 

@@ -1,7 +1,7 @@
 [gd_scene load_steps=4 format=2]
 
-[ext_resource path="res://Effects/Fire/fire.shader" type="Shader" id=1]
-[ext_resource path="res://Effects/Water/Transparent_bg.png" type="Texture" id=2]
+[ext_resource path="res://Effects/Fire/fire.gdshader" type="Shader" id=1]
+[ext_resource path="res://Effects/Water/Transparent_bg.png" type="Texture2D" id=2]
 
 
 
@@ -21,7 +21,7 @@ shader_param/OCTAVE = 6
 position = Vector2( 205.36, 130.684 )
 scale = Vector2( 4, 4 )
 
-[node name="Sprite" type="Sprite" parent="."]
+[node name="Sprite2D" type="Sprite2D" parent="."]
 material = SubResource( 1 )
 position = Vector2( 16.2858, 20.6552 )
 scale = Vector2( 2.01786, 2.29095 )

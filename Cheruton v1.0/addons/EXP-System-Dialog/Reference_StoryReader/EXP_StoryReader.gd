@@ -1,4 +1,4 @@
-extends Reference
+extends RefCounted
 
 var _story : Dictionary = {}
 var _names : Dictionary = {}

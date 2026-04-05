@@ -2,12 +2,12 @@ extends Control
 
 var old_level
 
-onready var exp_bar = $ExpRect/ExpStats/ExpBar
-onready var tween = $Tween
+@onready var exp_bar = $ExpRect/ExpStats/ExpBar
+@onready var tween = $Tween
 
 func _ready():
-	var _conn1 = DataResource.connect("update_exp", self, "update_expbar")
-	var _conn2 = SceneControl.connect("init_statbar", self, "init_bar")
+	var _conn1 = DataResource.connect("update_exp", Callable(self, "update_expbar"))
+	var _conn2 = SceneControl.connect("init_statbar", Callable(self, "init_bar"))
 
 
 
@@ -22,7 +22,7 @@ func update_expbar(new_exp, new_exp_max, new_level) -> void:
 
 	while(old_level < new_level):
 		animate_expbar(exp_bar.value, 100)
-		yield(get_tree().create_timer(0.2), "timeout")
+		await get_tree().create_timer(0.2).timeout
 		exp_bar.value = 0
 		old_level+= 1
 

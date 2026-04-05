@@ -4,7 +4,7 @@
 [ext_resource path="res://Player/PlayerBody/FlyingSword/flyingSword.tscn" type="PackedScene" id=2]
 [ext_resource path="res://Levels/commonLevelAssets/GrassLandTilemaps/GrassLandTileMapProps.tscn" type="PackedScene" id=3]
 [ext_resource path="res://Player/PlayerBody/playerBody.tscn" type="PackedScene" id=4]
-[ext_resource path="res://Player/Camera/camera_shake.tscn" type="PackedScene" id=5]
+[ext_resource path="res://Player/Camera3D/camera_shake.tscn" type="PackedScene" id=5]
 [ext_resource path="res://Levels/commonLevelAssets/GrassLandTileMap.tscn" type="PackedScene" id=6]
 [ext_resource path="res://Player/PlayerBody/Hook/grappleHook.tscn" type="PackedScene" id=7]
 [ext_resource path="res://Levels/commonLevelAssets/DeathZone.tscn" type="PackedScene" id=8]
@@ -23,10 +23,10 @@ tile_data = PoolIntArray( -4259814, 0, 0, -4259813, 0, 1, -4259812, 0, 1, -42598
 
 [node name="InvisibleTiles" parent="." instance=ExtResource( 9 )]
 visible = false
-tile_data = PoolIntArray( -393223, 1, 131077, -327687, 1, 131078, -262151, 1, 131078, -196615, 1, 196613, -131079, 1, 196613, -65543, 1, 196613, -7, 1, 196613, 65529, 1, 131078, 131065, 1, 196613, 196601, 1, 196614 )
+tile_data = PackedInt32Array( -393223, 1, 131077, -327687, 1, 131078, -262151, 1, 131078, -196615, 1, 196613, -131079, 1, 196613, -65543, 1, 196613, -7, 1, 196613, 65529, 1, 131078, 131065, 1, 196613, 196601, 1, 196614 )
 
 [node name="Props" parent="." instance=ExtResource( 3 )]
-tile_data = PoolIntArray( -13762090, 5, 0, -12778921, 2, 0, -12778911, 2, 0, -12778900, 2, 0, -11468225, 2, 0, -11402701, 2, 0, -10420123, 17, 0, -10354508, 5, 0, -2817972, 17, 0 )
+tile_data = PackedInt32Array( -13762090, 5, 0, -12778921, 2, 0, -12778911, 2, 0, -12778900, 2, 0, -11468225, 2, 0, -11402701, 2, 0, -10420123, 17, 0, -10354508, 5, 0, -2817972, 17, 0 )
 
 [node name="player" parent="." instance=ExtResource( 4 )]
 position = Vector2( 276, 20 )
@@ -39,10 +39,10 @@ position = Vector2( 276, 20 )
 
 [node name="flyingSword" parent="." instance=ExtResource( 2 )]
 
-[node name="camera_limit_NW" type="Position2D" parent="."]
+[node name="camera_limit_NW" type="Marker2D" parent="."]
 position = Vector2( -176, -4220 )
 
-[node name="camera_limit_SE" type="Position2D" parent="."]
+[node name="camera_limit_SE" type="Marker2D" parent="."]
 position = Vector2( 11224, 1108 )
 
 [node name="DeathZone" parent="." instance=ExtResource( 8 )]

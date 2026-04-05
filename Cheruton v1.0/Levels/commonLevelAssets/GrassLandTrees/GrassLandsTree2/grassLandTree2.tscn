@@ -1,7 +1,7 @@
 [gd_scene load_steps=4 format=2]
 
-[ext_resource path="res://Levels/commonLevelAssets/GrassLandTrees/GrassLandsTree2/GrasslandsTree2.png" type="Texture" id=1]
-[ext_resource path="res://Effects/Wind/Wind.shader" type="Shader" id=2]
+[ext_resource path="res://Levels/commonLevelAssets/GrassLandTrees/GrassLandsTree2/GrasslandsTree2.png" type="Texture2D" id=1]
+[ext_resource path="res://Effects/Wind/Wind.gdshader" type="Shader" id=2]
 
 [sub_resource type="ShaderMaterial" id=1]
 shader = ExtResource( 2 )
@@ -16,12 +16,12 @@ shader_param/heightOffset = 0.0
 
 [node name="grassLandTree2" type="Node2D"]
 
-[node name="Trunk" type="Sprite" parent="."]
+[node name="Trunk" type="Sprite2D" parent="."]
 texture = ExtResource( 1 )
 region_enabled = true
 region_rect = Rect2( 380, 0, 236, 176 )
 
-[node name="Leave" type="Sprite" parent="."]
+[node name="Leave" type="Sprite2D" parent="."]
 material = SubResource( 1 )
 position = Vector2( 4, -140 )
 texture = ExtResource( 1 )

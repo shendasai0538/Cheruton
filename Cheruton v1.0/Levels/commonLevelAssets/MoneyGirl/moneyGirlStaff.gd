@@ -1,6 +1,6 @@
 extends Node2D
 
-onready var anim_player = $AnimationPlayer
+@onready var anim_player = $AnimationPlayer
 
 func play_anim(name):
 	anim_player.clear_queue()

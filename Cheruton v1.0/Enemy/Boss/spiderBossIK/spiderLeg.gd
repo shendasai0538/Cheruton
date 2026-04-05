@@ -1,4 +1,4 @@
-extends Position2D
+extends Marker2D
 
 const MIN_LENGTH = 284 # used so it doesn't disappear when too close 118 min for sss 330 for fabrik
 const DEFAULT_STEP_RATE = 0.4 # actual time in seconds taken to complete a step
@@ -6,18 +6,18 @@ const STEP_HEIGHT = 55
 
 enum legs {UPPER_LEG = 0, MIDDLE_LEG = 1, LOWER_LEG = 2}
 
-onready var joint1 = $joint1
-onready var joint2 = $joint1/joint2
-onready var tip = $joint1/joint2/tip
-onready var hurt_box_col = $joint1/joint2/tip/HurtBox/CollisionShape2D
-onready var dust_ray = $joint1/joint2/tip/DustSpawner/RayCast2D
+@onready var joint1 = $joint1
+@onready var joint2 = $joint1/joint2
+@onready var tip = $joint1/joint2/tip
+@onready var hurt_box_col = $joint1/joint2/tip/HurtBox/CollisionShape2D
+@onready var dust_ray = $joint1/joint2/tip/DustSpawner/RayCast2D
 
 var length_upper = 0
 var length_middle = 0
 var length_lower = 0
 
-export var flipped = true
-export var is_back_leg = false
+@export var flipped = true
+@export var is_back_leg = false
 
 var level
 
@@ -57,7 +57,7 @@ func _ready():
 func step(target_pos):
 	hold = false
 
-	step_rate = DEFAULT_STEP_RATE + clamp(rand_range(0,1000)/1000 * .08 ,-.08,.08)
+	step_rate = DEFAULT_STEP_RATE + clamp(randf_range(0,1000)/1000 * .08 ,-.08,.08)
 	if target_pos == cur_target_pos: return
 
 	is_step_over = false
@@ -92,9 +92,9 @@ func _process(delta):
 	if hold: cur_target_pos = leg_controller.global_position + relative_position
 
 	if step_percent < .5:
-		target_pos = start_pos.linear_interpolate(middle_pos, step_percent * 2)
+		target_pos = start_pos.lerp(middle_pos, step_percent * 2)
 	elif step_percent < 1.0:
-		target_pos = middle_pos.linear_interpolate(cur_target_pos, (step_percent-.5) * 2)
+		target_pos = middle_pos.lerp(cur_target_pos, (step_percent-.5) * 2)
 	else:
 		target_pos = cur_target_pos
 		is_step_over = true

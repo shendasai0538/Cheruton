@@ -4,20 +4,20 @@ const GRAVITY = 2200
 const TERMINAL_VELOCITY = 5000
 const MAX_X_VEL = 300
 
-export (bool) var start_flipped := false
-export (bool) var patrolling := false
-export (float) var patrol_range_x
+@export var start_flipped := false
+@export var patrolling := false
+@export var patrol_range_x: float
 
-onready var body_rot = $bodyPivot/bodyRotate
-onready var body_pivot = $bodyPivot
-onready var hit_box = $hitBox
-onready var attack_area = $attackRangeArea
-onready var sound_parent = $sounds
+@onready var body_rot = $bodyPivot/bodyRotate
+@onready var body_pivot = $bodyPivot
+@onready var hit_box = $hitBox
+@onready var attack_area = $attackRangeArea
+@onready var sound_parent = $sounds
 
-onready var initial_pos = global_position
-onready var dust = preload("res://Effects/Dust/JumpDust/jumpDust.tscn")
+@onready var initial_pos = global_position
+@onready var dust = preload("res://Effects/Dust/JumpDust/jumpDust.tscn")
 
-var look_dir = Vector2(1,0) setget set_look_direction
+var look_dir = Vector2(1,0): set = set_look_direction
 var flip_patrol_end = 1
 var return_to_default = false
 var damage : int
@@ -43,7 +43,10 @@ func set_look_direction(dir : Vector2):
 		body_pivot.scale = Vector2(dir.x,1)
 
 func move():
-	velocity = move_and_slide(velocity, Vector2.UP)
+	set_velocity(velocity)
+	set_up_direction(Vector2.UP)
+	move_and_slide()
+	velocity = velocity
 
 # AREAS
 func _on_hitBox_area_entered(area):
@@ -59,7 +62,7 @@ func _on_alertArea_body_entered(body):
 
 # FIX ME: Move some of this code specific to hit FX directly else gonna rewrite a lot
 func play_hit_effect():
-	var instance = hit_effect.instance()
+	var instance = hit_effect.instantiate()
 	instance.global_position = global_position
 
 	var player_waist_pos = player.global_position + Vector2 (0, 30)
@@ -70,7 +73,7 @@ func play_hit_effect():
 	gravity.x =  -2900 * sin(player_angle_to_mob)
 	gravity.y = clamp (abs(3000 * cos(player_angle_to_mob)), 1300, 3000)
 
-	instance.get_node("Particles2D").process_material.gravity = gravity
+	instance.get_node("GPUParticles2D").process_material.gravity = gravity
 
 	level.add_child(instance)
 	move_child(instance, 0) # appears behind mobs and player

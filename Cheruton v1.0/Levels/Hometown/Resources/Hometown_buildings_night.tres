@@ -1,34 +1,34 @@
 [gd_resource type="TileSet" load_steps=12 format=2]
 
-[ext_resource path="res://Levels/Hometown/Sprites/HomeTown-BuidingsNightALL_n.png" type="Texture" id=2]
-[ext_resource path="res://Levels/Hometown/Sprites/Hometown_BuidingsNightALL.png" type="Texture" id=3]
+[ext_resource path="res://Levels/Hometown/Sprites/HomeTown-BuidingsNightALL_n.png" type="Texture2D" id=2]
+[ext_resource path="res://Levels/Hometown/Sprites/Hometown_BuidingsNightALL.png" type="Texture2D" id=3]
 
-[sub_resource type="StreamTexture" id=9]
+[sub_resource type="CompressedTexture2D" id=9]
 load_path = "res://.import/HomeTown-BuidingsNightALL.png-8d95b77578687594ffce0c606c5e5833.stex"
 
 [sub_resource type="ConvexPolygonShape2D" id=1]
-points = PoolVector2Array( 0, 544, 1792, 544, 1792, 576, 0, 576 )
+points = PackedVector2Array( 0, 544, 1792, 544, 1792, 576, 0, 576 )
 
 [sub_resource type="ConvexPolygonShape2D" id=2]
-points = PoolVector2Array( 240, 640, 64, 640, 63.7134, 632.195, 240.102, 631.5 )
+points = PackedVector2Array( 240, 640, 64, 640, 63.7134, 632.195, 240.102, 631.5 )
 
 [sub_resource type="ConvexPolygonShape2D" id=3]
-points = PoolVector2Array( 801.081, 616, 1059.08, 615, 1059.08, 615, 1059.08, 625, 801.081, 624 )
+points = PackedVector2Array( 801.081, 616, 1059.08, 615, 1059.08, 615, 1059.08, 625, 801.081, 624 )
 
 [sub_resource type="ConvexPolygonShape2D" id=4]
-points = PoolVector2Array( 64.7065, 662.864, 878.595, 661.136, 870.631, 647.792, 56.6313, 646.792 )
+points = PackedVector2Array( 64.7065, 662.864, 878.595, 661.136, 870.631, 647.792, 56.6313, 646.792 )
 
 [sub_resource type="ConvexPolygonShape2D" id=5]
-points = PoolVector2Array( 0, 376, 56, 368, 148, 372 )
+points = PackedVector2Array( 0, 376, 56, 368, 148, 372 )
 
 [sub_resource type="ConvexPolygonShape2D" id=6]
-points = PoolVector2Array( 352, 0, 352, 704, 144, 704, 144, 0 )
+points = PackedVector2Array( 352, 0, 352, 704, 144, 704, 144, 0 )
 
 [sub_resource type="ConvexPolygonShape2D" id=7]
-points = PoolVector2Array( 400, 48, 352, 48, 352, 0, 400, 0 )
+points = PackedVector2Array( 400, 48, 352, 48, 352, 0, 400, 0 )
 
 [sub_resource type="ConvexPolygonShape2D" id=8]
-points = PoolVector2Array( 1424, 104, 0, 104, 0, 96, 1424, 96 )
+points = PackedVector2Array( 1424, 104, 0, 104, 0, 96, 1424, 96 )
 
 [resource]
 0/name = "HomeTown-BuidingsALL.png 0"

@@ -1,7 +1,7 @@
-extends KinematicBody2D
+extends CharacterBody2D
 
-onready var sprite = $Sprite
-onready var dust = preload("res://Effects/Dust/JumpDust/jumpDust.tscn")
+@onready var sprite = $Sprite2D
+@onready var dust = preload("res://Effects/Dust/JumpDust/jumpDust.tscn")
 
 var velocity : Vector2
 var interact_enabled = true
@@ -16,13 +16,15 @@ func _physics_process(delta):
 	velocity.y += 2400 * delta
 
 	velocity.y = clamp (velocity.y, -INF, 2400)
-	move_and_slide(velocity, Vector2.UP)
+	set_velocity(velocity)
+	set_up_direction(Vector2.UP)
+	move_and_slide()
 
 	if is_on_floor():
 		velocity.x *= .86
 		var col = get_slide_collision(0)
 		if col and velocity.x > 50:
-			var instance = dust.instance()
+			var instance = dust.instantiate()
 			instance.emitting = true
 
 			instance.global_position = col.position
@@ -31,10 +33,10 @@ func _physics_process(delta):
 
 
 func pend_interact():
-	sprite.material.set_shader_param("width", .5)
+	sprite.material.set_shader_parameter("width", .5)
 
 func unpend_interact():
-	sprite.material.set_shader_param("width", 0)
+	sprite.material.set_shader_parameter("width", 0)
 
 func interact(body):
 	if not interact_enabled: return

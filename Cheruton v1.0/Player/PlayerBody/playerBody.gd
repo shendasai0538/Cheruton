@@ -1,4 +1,4 @@
-extends KinematicBody2D
+extends CharacterBody2D
 
 const GRAVITY = 2400
 const AIR_ACCEL = 32.5  # increase in this >> increase in stearing power in air
@@ -6,30 +6,30 @@ const MAX_WIRE_LENGTH_GROUND = 1000
 const INPUT_AGAIN_MARGIN = 0.12
 const TIME_PER_ATTACK = 1.1 # this causes a slight annoying delay when clicks don't register between the attacks, need to find a way to input buffer. Make an input system in the future
 
-onready var timers = $timers
-onready var animation_player = $AnimationPlayer
-onready var animation_player_fx = $AnimationPlayerFx
-onready var animation_player_fx_color = $AnimationPlayerFxColor
-onready var left_wall_raycasts = $wallRaycasts/leftSide
-onready var right_wall_raycasts = $wallRaycasts/rightSide
-onready var corner_correction_raycast_left = $cornerCorrectionRaycasts/leftside
-onready var corner_correction_raycast_right = $cornerCorrectionRaycasts/rightside
-onready var almost_reaching_platform_jump_boost = $almostReachingPlatformBoost
-onready var floor_raycast = $floorRay
-onready var sound_parent = $sounds
-onready var body_pivot = $bodyPivot
-onready var body_rotate = $bodyPivot/bodyRotate
-onready var body_collision = $bodyCollision
-onready var slide_collision = $slideCollision
-onready var states = $states
-onready var circle_scan = $circleScan
-onready var circle_scan_small = $circleScanSmall
-onready var shoulder_position = $bodyPivot/bodyRotate/shoulderPosition
-onready var player_sprite = $bodyPivot/bodyRotate/playerSprite
-onready var run_dust = preload("res://Effects/Dust/RunDust/runDust.tscn")
-onready var land_dust = preload("res://Effects/Dust/JumpDust/jumpDust.tscn")
-onready var ghost_image = preload("res://Player/PlayerBody/GhostImage/GhostImage.tscn")
-onready var dash_dust = preload("res://Effects/Dust/DashDust/DashDust.tscn")
+@onready var timers = $timers
+@onready var animation_player = $AnimationPlayer
+@onready var animation_player_fx = $AnimationPlayerFx
+@onready var animation_player_fx_color = $AnimationPlayerFxColor
+@onready var left_wall_raycasts = $wallRaycasts/leftSide
+@onready var right_wall_raycasts = $wallRaycasts/rightSide
+@onready var corner_correction_raycast_left = $cornerCorrectionRaycasts/leftside
+@onready var corner_correction_raycast_right = $cornerCorrectionRaycasts/rightside
+@onready var almost_reaching_platform_jump_boost = $almostReachingPlatformBoost
+@onready var floor_raycast = $floorRay
+@onready var sound_parent = $sounds
+@onready var body_pivot = $bodyPivot
+@onready var body_rotate = $bodyPivot/bodyRotate
+@onready var body_collision = $bodyCollision
+@onready var slide_collision = $slideCollision
+@onready var states = $states
+@onready var circle_scan = $circleScan
+@onready var circle_scan_small = $circleScanSmall
+@onready var shoulder_position = $bodyPivot/bodyRotate/shoulderPosition
+@onready var player_sprite = $bodyPivot/bodyRotate/playerSprite
+@onready var run_dust = preload("res://Effects/Dust/RunDust/runDust.tscn")
+@onready var land_dust = preload("res://Effects/Dust/JumpDust/jumpDust.tscn")
+@onready var ghost_image = preload("res://Player/PlayerBody/GhostImage/GhostImage.tscn")
+@onready var dash_dust = preload("res://Effects/Dust/DashDust/DashDust.tscn")
 
 var level
 
@@ -37,7 +37,7 @@ var cur_state : Node
 var prev_state : Node
 var velocity = Vector2()
 var actual_velocity = Vector2()
-var look_direction = Vector2(1, 0) setget set_look_direction
+var look_direction = Vector2(1, 0): set = set_look_direction
 var previous_anim : String
 var is_invunerable = false
 var prev_pos = Vector2()
@@ -79,7 +79,7 @@ var interaction_type : String
 var can_talk = true
 
 enum CAMERA_STATES {GROUND = 0, AIR = 1, HOOK = 2}
-var camera_state = CAMERA_STATES.GROUND setget set_camera_mode_logic
+var camera_state = CAMERA_STATES.GROUND: set = set_camera_mode_logic
 
 signal hook_command
 signal flying_sword_command
@@ -136,9 +136,9 @@ func get_nearest_object(obj_type : String):
 	for object in near_objects:
 		if not object.is_in_group(obj_type): continue
 		var result = space_state.intersect_ray(global_position + Vector2(0,-50), object.global_position ,[self, object], 32)
-		if result.empty(): non_block_objects.append( object)
+		if result.is_empty(): non_block_objects.append( object)
 
-	if non_block_objects.empty():
+	if non_block_objects.is_empty():
 		return
 
 	var min_dist_facing = INF
@@ -208,7 +208,7 @@ func play_anim_fx_color(string : String):
 func _on_ghostTimer_timeout():
 	emit_ghost()
 func emit_ghost():
-	var instance = ghost_image.instance()
+	var instance = ghost_image.instantiate()
 	var actual_sprite = instance.get_node("GhostSprite")
 	instance.global_position = player_sprite.global_position - level.global_position
 
@@ -300,11 +300,21 @@ func move():
 	var reported_vel
 	if hooked and not ["hook"].has(cur_state.name) and\
 	(global_position + velocity).distance_to(tip_pos) > MAX_WIRE_LENGTH_GROUND: # when player is hooked but tried to move away from hook point
-		reported_vel = move_and_slide(Vector2(), Vector2.UP)
+		set_velocity(Vector2())
+		set_up_direction(Vector2.UP)
+		move_and_slide()
+		reported_vel = velocity
 	elif ["run", "slide", "idle", "wallSlide"].has(cur_state.name):
-		reported_vel = move_and_slide_with_snap(velocity,Vector2.DOWN * 15, Vector2.UP)
+		set_velocity(velocity)
+		# TODOConverter3To4 looks that snap in Godot 4 is float, not vector like in Godot 3 - previous value `Vector2.DOWN * 15`
+		set_up_direction(Vector2.UP)
+		move_and_slide()
+		reported_vel = velocity
 	else:
-		reported_vel = move_and_slide(velocity, Vector2.UP)
+		set_velocity(velocity)
+		set_up_direction(Vector2.UP)
+		move_and_slide()
+		reported_vel = velocity
 
 	handle_move_collisions()
 	check_reset_attack()
@@ -313,7 +323,7 @@ func move():
 
 # used to interact collision objects
 func handle_move_collisions():
-	for i in get_slide_count():
+	for i in get_slide_collision_count():
 		var col = get_slide_collision(i)
 #		if col:	print("COL", col.collider.name)
 		if col.collider.has_method("handle_collision"):
@@ -353,7 +363,7 @@ func _is_wall_raycast_colliding(wall_raycasts) -> bool:
 	for raycast in wall_raycasts.get_children():
 			if raycast.is_colliding():
 				var angle =  abs(acos(Vector2.UP.dot(raycast.get_collision_normal()))) #accounts for slopes
-				if  angle > deg2rad(60) &&  angle < deg2rad(120):
+				if  angle > deg_to_rad(60) &&  angle < deg_to_rad(120):
 					return true
 	return false
 
@@ -368,11 +378,11 @@ func emit_dust(type : String):
 	var dust
 	match type:
 		"run" :
-			dust = run_dust.instance()
+			dust = run_dust.instantiate()
 		"land":
-			dust = land_dust.instance()
+			dust = land_dust.instantiate()
 		"dash":
-			dust = dash_dust.instance()
+			dust = dash_dust.instantiate()
 			dust.scale.x = -sign(velocity.x)
 #			dust.rotation = Vector2.DOWN.angle_to(velocity)
 			dust.global_position = global_position + Vector2(0, 68) - level.global_position

@@ -1,7 +1,7 @@
 extends Level
 
-onready var save_position = player.position
-onready var anim_player = $AnimationPlayer
+@onready var save_position = player.position
+@onready var anim_player = $AnimationPlayer
 const fur = preload("res://Enemy/Mobs/Furball/Furball.tscn")
 
 func _ready():
@@ -12,7 +12,7 @@ func _input(event):
 	if Input.is_action_just_pressed("reset"):
 #		player.velocity = Vector2()
 #		player.position = save_position
-		var new_fur = fur.instance()
+		var new_fur = fur.instantiate()
 		new_fur.global_position = player.global_position;
 		new_fur.player = player
 		new_fur.level = self

@@ -1,12 +1,12 @@
 extends Node2D
 
-onready var laser_beam = $laser_sprite_center
-onready var laser_particles = $hitParticles
+@onready var laser_beam = $laser_sprite_center
+@onready var laser_particles = $hitParticles
 
-export var rotating : bool = false
-export var angular_vel_deg : float = 1.0
-export var max_dist : float = 1000.0
-export var starting_rot_deg: float = 0.0
+@export var rotating : bool = false
+@export var angular_vel_deg : float = 1.0
+@export var max_dist : float = 1000.0
+@export var starting_rot_deg: float = 0.0
 
 var hit_pos : Vector2
 
@@ -14,7 +14,7 @@ func _ready():
 	rotation_degrees = starting_rot_deg
 
 func _physics_process(delta):
-	if rotating: rotate(deg2rad(angular_vel_deg))
+	if rotating: rotate(deg_to_rad(angular_vel_deg))
 
 	hit_pos = global_position + transform.x * max_dist # assume it hits at max distance
 	var space = get_world_2d().direct_space_state

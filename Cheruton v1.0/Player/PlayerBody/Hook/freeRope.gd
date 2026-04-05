@@ -3,8 +3,8 @@ extends Node2D
 const LIFETIME = 1
 const GRAVITY = 90
 
-var prev_points : PoolVector2Array
-var cur_points : PoolVector2Array
+var prev_points : PackedVector2Array
+var cur_points : PackedVector2Array
 var length : int
 var num_points : int
 var unit_length : float

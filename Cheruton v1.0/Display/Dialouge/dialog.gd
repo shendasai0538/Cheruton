@@ -2,10 +2,10 @@ extends basePopUp
 
 var TIME_PER_CHAR_WRITE = .001 # seconds .014
 
-onready var dialogue_base = $dialogBox/bodyBackground
-onready var dialogue_text = $dialogBox/bodyBackground/MarginContainer/bodyText
-onready var tween = $dialogBox/bodyBackground/Tween
-onready var audio = $AudioStreamPlayer
+@onready var dialogue_base = $dialogBox/bodyBackground
+@onready var dialogue_text = $dialogBox/bodyBackground/MarginContainer/bodyText
+@onready var tween = $dialogBox/bodyBackground/Tween
+@onready var audio = $AudioStreamPlayer
 
 var dialog : String
 var dialog_left : String
@@ -23,13 +23,13 @@ func _ready():
 
 #	load_story("res://Levels/Grasslands2/Stories/Baked/Grasslands2Dialog.tres") # for debuging 
 
-	dialogue_base.rect_scale = Vector2(0,1)
+	dialogue_base.scale = Vector2(0,1)
 	dialogue_text.percent_visible = 1
 
 	$dialogBox/bodyBackground/Next.modulate.a = 0
 
 func begin():
-	tween.interpolate_property(dialogue_base, "rect_scale", Vector2(0.1,1), Vector2(1,1), .8,Tween.TRANS_BACK, Tween.EASE_OUT, 0)
+	tween.interpolate_property(dialogue_base, "scale", Vector2(0.1,1), Vector2(1,1), .8,Tween.TRANS_BACK, Tween.EASE_OUT, 0)
 
 	tween.start()
 	show()
@@ -60,13 +60,13 @@ func handle_input(event):
 			if not finished_last_node: # method above coulve changed the value
 				play_dialog()
 		elif not finished_current_node:
-			dialogue_text.bbcode_text += dialog_left
+			dialogue_text.text += dialog_left
 			finished_current_node = true
 			$AnimationPlayerVisibility.play("next")
 
 func _process(delta):
 	if isisActive_gui:
-		dialogue_base.rect_pivot_offset = dialogue_base.rect_size/2 # doing this will allow the base to be scaled from the center
+		dialogue_base.pivot_offset = dialogue_base.size/2 # doing this will allow the base to be scaled from the center
 
 
 func get_next_node():
@@ -79,7 +79,7 @@ func get_next_node():
 		end_conversation()
 
 func play_dialog():
-	audio.pitch_scale = rand_range(.94, .95)
+	audio.pitch_scale = randf_range(.94, .95)
 	audio.play()
 
 	finished_current_node = false
@@ -88,7 +88,7 @@ func play_dialog():
 	var text = story_reader.get_text(dialog_id, node_id)
 	var dialog = _get_tagged_text("dialog", text)
 
-	dialogue_text.bbcode_text = ""
+	dialogue_text.text = ""
 	dialog_left = dialog
 
 	var write_speed = _get_tagged_text("speed", text)
@@ -97,13 +97,13 @@ func play_dialog():
 	start_dialog_timer()
 
 func start_dialog_timer():
-	$Timer.start(TIME_PER_CHAR_WRITE + rand_range(-.005, .005))
+	$Timer.start(TIME_PER_CHAR_WRITE + randf_range(-.005, .005))
 
 func _on_Timer_timeout():
 	if finished_current_node : return
 
 	var next_char = dialog_left[0]
-	dialogue_text.bbcode_text += next_char
+	dialogue_text.text += next_char
 
 	dialog_left.erase(0, 1)
 	if dialog_left == "":
@@ -115,7 +115,7 @@ func _on_Timer_timeout():
 		start_dialog_timer()
 
 func _on_Tween_tween_completed(object, key):
-	if key == ":rect_scale" and not isisActive_gui:
+	if key == ":scale" and not isisActive_gui:
 		hide()
 
 func _get_tagged_text(tag : String, text : String):
@@ -134,7 +134,7 @@ func _get_tagged_text(tag : String, text : String):
 func end_conversation():
 	DataResource.temp_dict_player.dialog_complete = true
 
-	tween.interpolate_property(dialogue_base, "rect_scale", Vector2(1,1), Vector2(.1,1), 0.2,Tween.TRANS_BACK, Tween.EASE_IN, 0)
+	tween.interpolate_property(dialogue_base, "scale", Vector2(1,1), Vector2(.1,1), 0.2,Tween.TRANS_BACK, Tween.EASE_IN, 0)
 	tween.start()
 	DataResource.save_rest()
 	emit_signal("release_gui", "dialog")

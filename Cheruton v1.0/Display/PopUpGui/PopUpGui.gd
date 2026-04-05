@@ -1,7 +1,7 @@
 extends CanvasLayer
 
-onready var popups = $popUps
-var enabled = false setget set_gui_enabled
+@onready var popups = $popUps
+var enabled = false: set = set_gui_enabled
 
 func set_gui_enabled(val):
 	popups.active = val

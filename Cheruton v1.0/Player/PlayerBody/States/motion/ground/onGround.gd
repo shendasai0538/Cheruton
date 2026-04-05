@@ -18,7 +18,7 @@ func handle_input(event):
 		elif not owner.interaction_type == "dialog":
 			owner.interact_with_nearest_object()
 
-	.handle_input(event) # everything below here not dealt twith
+	super.handle_input(event) # everything below here not dealt twith
 
 func update(delta):
 	if not owner.is_on_floor():

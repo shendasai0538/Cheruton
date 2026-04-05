@@ -1,7 +1,7 @@
 extends MovingNPC
 
 func _ready():
-	._ready()
+	super._ready()
 	walk_speed = 110
 	dir = -1
 	DIR_CHANGE_TIME = 8

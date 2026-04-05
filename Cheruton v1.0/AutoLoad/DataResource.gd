@@ -63,7 +63,9 @@ func load_dict(FilePath, password:= ""):
 		DataFile.open_encrypted_with_pass(FilePath, File.READ, password)
 	else:
 		DataFile.open(FilePath, File.READ)
-	var data = JSON.parse(DataFile.get_as_text())
+	var test_json_conv = JSON.new()
+	test_json_conv.parse(DataFile.get_as_text())
+	var data = test_json_conv.get_data()
 	DataFile.close()
 	#print("Data Loaded!")
 	return data.result
@@ -81,7 +83,7 @@ func save_data(FILE, dictionary):
 	#file.open(FILE, File.WRITE)
 	var _err_save = file.open_encrypted_with_pass(FILE, File.WRITE,"ginger")
 
-	file.store_string(to_json(dictionary))
+	file.store_string(JSON.new().stringify(dictionary))
 	file.close()
 
 func restore_last_save():
@@ -94,7 +96,7 @@ func update_input_map():
 		var action = keys[i]
 		var event = dict_input_map[action]
 
-		var existing_event = InputMap.get_action_list(action)[0].as_text()
+		var existing_event = InputMap.action_get_events(action)[0].as_text()
 
 		if(existing_event != event):
 			modify_event(action, event)
@@ -102,9 +104,9 @@ func update_input_map():
 
 func modify_event(action, event):
 	var new_input = InputEventKey.new()
-	var scancode = OS.find_scancode_from_string(event)
-	new_input.set_scancode(scancode)
-	InputMap.action_erase_event(action, InputMap.get_action_list(action)[0])
+	var keycode = OS.find_keycode_from_string(event)
+	new_input.set_keycode(keycode)
+	InputMap.action_erase_event(action, InputMap.action_get_events(action)[0])
 	InputMap.action_add_event(action, new_input)
 
 func reset_all():
@@ -156,13 +158,13 @@ func reset_input_map():
 	for i in action_size:
 		var action = action_map[i]
 		if(action != "ui_select" && action != "ui_focus_prev"):
-			var event = InputMap.get_action_list(action)[0].as_text()
+			var event = InputMap.action_get_events(action)[0].as_text()
 			dict_input_map[action] = event
 	save_rest()
 
 
 
-func add_exp(var exp_gain):
+func add_exp(exp_gain):
 	temp_dict_player.exp_curr += exp_gain
 
 	# Next Level Reached
@@ -199,24 +201,24 @@ func increase_specific(type):
 				equipped_item_val = DataResource.dict_inventory.Apparel["Item" + element_index].item_defense
 				temp_dict_player.defense = equipped_item_val + 1.2 * (temp_dict_player.defense - equipped_item_val)
 
-func change_health(var health_change):
+func change_health(health_change):
 	temp_dict_player.health_curr = clamp(temp_dict_player.health_curr + health_change, 0, temp_dict_player.health_max)
 	emit_signal("change_health", temp_dict_player.health_curr)
 
 func change_coins(coins_change):
 	temp_dict_player.coins += coins_change
 
-func change_audio_master(var audio_change):
+func change_audio_master(audio_change):
 	dict_settings.audio_master = clamp(dict_settings.audio_master + audio_change, -68, 0)
 	AudioServer.set_bus_volume_db(AudioServer.get_bus_index("Master"), DataResource.dict_settings.audio_master)
 	emit_signal("change_audio_master")
 
-func change_audio_music(var audio_change):
+func change_audio_music(audio_change):
 	dict_settings.audio_music = clamp(dict_settings.audio_music + audio_change, -68, 0)
 	AudioServer.set_bus_volume_db(AudioServer.get_bus_index("Music"), DataResource.dict_settings.audio_music)
 	emit_signal("change_audio_music")
 
-func change_audio_sfx(var audio_change):
+func change_audio_sfx(audio_change):
 	dict_settings.audio_sfx = clamp(dict_settings.audio_sfx + audio_change, -68, 0)
 	AudioServer.set_bus_volume_db(AudioServer.get_bus_index("SFX"), DataResource.dict_settings.audio_sfx)
 	emit_signal("change_audio_sfx")

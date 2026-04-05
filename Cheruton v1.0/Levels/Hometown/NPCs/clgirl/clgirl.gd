@@ -1,7 +1,7 @@
 extends StaticNPC
 
 func _ready():
-	DataResource.connect("dialog_over", self, "_on_dialog_processed")
+	DataResource.connect("dialog_over", Callable(self, "_on_dialog_processed"))
 
 func interact(body):
 	SceneControl.change_and_start_dialog(name) # else his anvil will also rotate

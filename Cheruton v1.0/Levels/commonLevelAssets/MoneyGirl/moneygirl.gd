@@ -2,13 +2,13 @@ extends StaticNPC
 # Note the 2 sprite soltion is hacky and should be replaced when u have better shader knowledge,
 # it was done because the outline shader overwrites the shadows drawn by the engine light2d
 
-onready var anim_player = $AnimationPlayer
-onready var magic_shot = preload("res://Levels/commonLevelAssets/MoneyGirl/MoneyGirlShot.tscn")
-onready var sound_parent = $sounds
+@onready var anim_player = $AnimationPlayer
+@onready var magic_shot = preload("res://Levels/commonLevelAssets/MoneyGirl/MoneyGirlShot.tscn")
+@onready var sound_parent = $sounds
 
 func _ready():
-	._ready()
-	sprite = $bodyRotate/Sprite
+	super._ready()
+	sprite = $bodyRotate/Sprite2D
 	sprite2 = $bodyRotate/Sprite2
 
 	$bodyRotate/staffPos.hide()
@@ -29,7 +29,7 @@ func interact(body : Node):
 		DataResource.temp_dict_player.dialog_complete = true
 		return
 
-	.interact(body)
+	super.interact(body)
 	level.next_cutscene()
 	DataResource.temp_dict_player.dialog_complete = false
 	level.wait_dialog_complete = true
@@ -38,7 +38,7 @@ func shoot():
 	$AnimationPlayerStaff.play("Staff")
 
 func instance_magic_shot():
-	var instance = magic_shot.instance()
+	var instance = magic_shot.instantiate()
 
 	instance.global_position = $bodyRotate/staffPos/tipStaffPos.global_position
 	instance.goal_obj = level.get_node("Mobs/FurballTarget")

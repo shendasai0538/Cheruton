@@ -1,7 +1,7 @@
 extends groundState
 
 func handle_input(event):
-	.handle_input(event)
+	super.handle_input(event)
 
 func enter():
 	if not owner.prev_state or owner.prev_state.name != "talk":
@@ -16,7 +16,7 @@ func update(delta):
 	if get_input_direction().x:
 		emit_signal("changeState", "run")
 
-	.update(delta)
+	super.update(delta)
 
 func exit():
 	owner.set_anim_speed(1)

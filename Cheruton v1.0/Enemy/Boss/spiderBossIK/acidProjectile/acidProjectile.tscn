@@ -1,7 +1,7 @@
 [gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://Enemy/Boss/spiderBossIK/acidProjectile/acidProjectile.gd" type="Script" id=1]
-[ext_resource path="res://icon.png" type="Texture" id=2]
+[ext_resource path="res://icon.png" type="Texture2D" id=2]
 
 [sub_resource type="PhysicsMaterial" id=3]
 friction = 0.21
@@ -18,7 +18,7 @@ collision_layer = 0
 mode = 2
 physics_material_override = SubResource( 3 )
 gravity_scale = 0.0
-contacts_reported = 1
+max_contacts_reported = 1
 contact_monitor = true
 linear_damp = 0.0
 angular_damp = 0.0
@@ -28,7 +28,7 @@ script = ExtResource( 1 )
 visible = false
 shape = SubResource( 1 )
 
-[node name="Sprite" type="Sprite" parent="."]
+[node name="Sprite2D" type="Sprite2D" parent="."]
 texture = ExtResource( 2 )
 
 [node name="Area2D" type="Area2D" parent="."]

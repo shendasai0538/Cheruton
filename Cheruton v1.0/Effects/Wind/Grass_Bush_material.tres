@@ -1,6 +1,6 @@
 [gd_resource type="ShaderMaterial" load_steps=2 format=2]
 
-[ext_resource path="res://Effects/Wind/Wind.shader" type="Shader" id=1]
+[ext_resource path="res://Effects/Wind/Wind.gdshader" type="Shader" id=1]
 
 
 

@@ -1,6 +1,6 @@
 extends StaticNPC
 
-onready var FurballMob = preload("res://Enemy/Mobs/Furball/Furball.tscn")
+@onready var FurballMob = preload("res://Enemy/Mobs/Furball/Furball.tscn")
 
 func ready():
 	dialog_name = "cutscene2_0"
@@ -9,7 +9,7 @@ func ready():
 	add_to_group("needs_player_ref", true)
 
 func interact(body):
-	var instance = FurballMob.instance()
+	var instance = FurballMob.instantiate()
 	instance.global_position = global_position
 	instance.name = "FurballTarget"
 	instance.level = level

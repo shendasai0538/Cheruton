@@ -4,7 +4,7 @@ const ENTERED = 0
 const EXITED = 1
 const ACTIVE_COLOR = Color(1,1,0)
 
-var active = false setget setisActive
+var active = false: set = setisActive
 
 func _ready():
 	add_to_group("hook_points")

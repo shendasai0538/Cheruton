@@ -1,12 +1,12 @@
 [gd_scene load_steps=4 format=2]
 
 [sub_resource type="Gradient" id=1]
-colors = PoolColorArray( 0.929412, 0.321569, 0.34902, 1, 0.929412, 0.321569, 0.34902, 0 )
+colors = PackedColorArray( 0.929412, 0.321569, 0.34902, 1, 0.929412, 0.321569, 0.34902, 0 )
 
-[sub_resource type="GradientTexture" id=2]
+[sub_resource type="GradientTexture2D" id=2]
 gradient = SubResource( 1 )
 
-[sub_resource type="ParticlesMaterial" id=3]
+[sub_resource type="ParticleProcessMaterial" id=3]
 lifetime_randomness = 0.2
 emission_shape = 2
 emission_box_extents = Vector3( 10.5, 3, 1 )
@@ -21,7 +21,7 @@ linear_accel = -20.0
 damping = 0.5
 color_ramp = SubResource( 2 )
 
-[node name="PoleCatchParticlesDown" type="Particles2D"]
+[node name="PoleCatchParticlesDown" type="GPUParticles2D"]
 position = Vector2( 10, 0 )
 emitting = false
 amount = 40

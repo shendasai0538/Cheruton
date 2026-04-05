@@ -14,10 +14,10 @@ var speed_tip : float
 var player : Node
 var level : Node
 
-onready var chain_state = chain_states.HIDDEN
-onready var tween = $Tween
-onready var rope  = $tip/rope
-onready var tip = $tip
+@onready var chain_state = chain_states.HIDDEN
+@onready var tween = $Tween
+@onready var rope  = $tip/rope
+@onready var tip = $tip
 
 signal hooked(tip_pos)
 

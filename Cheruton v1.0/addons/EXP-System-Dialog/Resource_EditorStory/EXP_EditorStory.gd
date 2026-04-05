@@ -1,9 +1,9 @@
-tool
+@tool
 extends Resource
 
-export(String) var TYPE = "EXP_Story_editor"
+@export var TYPE: String = "EXP_Story_editor"
 
-export(Dictionary) var names : Dictionary
-export(Dictionary) var story : Dictionary
-export(Array) var available_dids : Array
-export(Array) var groups : Array
+@export var names: Dictionary
+@export var story: Dictionary
+@export var available_dids: Array
+@export var groups: Array

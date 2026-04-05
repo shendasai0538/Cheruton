@@ -13,10 +13,10 @@ var stage
 
 var length_divisor = 1 #used to get the number of points in the line, we then connect those points via polyline
 
-export (Curve) var attachment_curve
+@export var attachment_curve: Curve
 var color_outline = Color(0.07843, 0.0627, 0.125)
 var color_inner = Color(.9,.9,.9)
-var points_arr = PoolVector2Array()
+var points_arr = PackedVector2Array()
 
 var length
 var c = 1 # set in player function equal to length of rope # similar to offset of a graph
@@ -42,9 +42,9 @@ func _draw(): # gets called once initially then again when update() is called
 		draw_polyline(points_arr,color_inner, LINE_WIDTH-10)
 
 func start():
-	var rand_num1 = rand_range(-3, 3)
-	var rand_num2 = rand_range(-4, 4)
-	var rand_num3 = rand_range(-.1, .1)
+	var rand_num1 = randf_range(-3, 3)
+	var rand_num2 = randf_range(-4, 4)
+	var rand_num3 = randf_range(-.1, .1)
 	stage = INITIAL_SHOOT
 	w = 7 + rand_num1
 	a = 18 +rand_num2
@@ -60,19 +60,19 @@ func release():
 	var rope_vec = owner.cur_player_pos - tip_pos
 	var rope_segement_vec = rope_vec/num_points
 
-	var cur_points_pos = PoolVector2Array()
+	var cur_points_pos = PackedVector2Array()
 	for i in num_points:
 		cur_points_pos.append(tip_pos + i * rope_segement_vec) # first point is at the tip (anchor)
 
 	rope_vec = owner.prev_player_pos - tip_pos
 	rope_segement_vec = rope_vec/num_points
 
-	var prev_points_pos = PoolVector2Array()
+	var prev_points_pos = PackedVector2Array()
 	for i in num_points:
 		prev_points_pos.append(tip_pos + i * rope_segement_vec)
 
 	var free_rope = load("res://Player/PlayerBody/Hook/freeRope.tscn")
-	var child = free_rope.instance()
+	var child = free_rope.instantiate()
 	owner.add_child(child)
 
 	child.init(cur_points_pos , prev_points_pos, length, num_points, color_outline, color_inner, LINE_WIDTH, owner.tip.rotation)
@@ -93,7 +93,7 @@ func _process(delta):
 			s = .4
 		update() # draws line to canvas
 	elif stage == JUST_HOOKED:
-		s = attachment_curve.interpolate(s)
+		s = attachment_curve.sample(s)
 		a = 40
 		length_divisor = lerp(length_divisor,c/100,delta) # 'c' boosts performance by reducing points
 		update()

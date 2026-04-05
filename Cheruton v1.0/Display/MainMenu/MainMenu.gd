@@ -4,22 +4,22 @@ const SCN1 = "res://Levels/Grasslands0/Grasslands0.tscn"
 const EXPBAR = "HudLayer/Hud/StatBars/ExpBar"
 const HEALTHBAR = "HudLayer/Hud/StatBars/HealthBar"
 
-onready var main_menu = self
-onready var options = $Bg/Options
-onready var slider = $Bg/Options/Slider
-onready var tween = $Tween
-onready var canvas_modulate = $CanvasModulate
-onready var general_player = $Bg/Cheruton/Player
-onready var bg_player = $Bg/BgPlayer
-onready var options_delay = $OptionsDelay
-onready var cheruton_delay = $CherutonDelay
-onready var cheruton = $Bg/Cheruton
+@onready var main_menu = self
+@onready var options = $Bg/Options
+@onready var slider = $Bg/Options/Slider
+@onready var tween = $Tween
+@onready var canvas_modulate = $CanvasModulate
+@onready var general_player = $Bg/Cheruton/Player
+@onready var bg_player = $Bg/BgPlayer
+@onready var options_delay = $OptionsDelay
+@onready var cheruton_delay = $CherutonDelay
+@onready var cheruton = $Bg/Cheruton
 
-onready var container = $Bg/Options/VBoxContainer
+@onready var container = $Bg/Options/VBoxContainer
 
-onready var play_position = $Bg/Options/VBoxContainer/Play.rect_position
-onready var settings_position = $Bg/Options/VBoxContainer/Settings.rect_position
-onready var quit_position = $Bg/Options/VBoxContainer/Quit.rect_position
+@onready var play_position = $Bg/Options/VBoxContainer/Play.position
+@onready var settings_position = $Bg/Options/VBoxContainer/Settings.position
+@onready var quit_position = $Bg/Options/VBoxContainer/Quit.position
 
 var modulate_dec = "white"
 var sliderisActive := false
@@ -32,7 +32,7 @@ func _ready():
 
 	get_tree().get_root().call_deferred("move_child",main_menu, 1)
 	bg_player.play("water")
-	SceneControl.settings_layer.get_node("Settings").connect("closed_settings", self, "back_to_mmenu")
+	SceneControl.settings_layer.get_node("Settings").connect("closed_settings", Callable(self, "back_to_mmenu"))
 	SceneControl.get_node("popUpGui").enabled = false
 	tween_white_screen()
 	slider_enabled = true
@@ -93,11 +93,11 @@ func _on_Player_animation_finished(anim_name):
 
 
 func perform_button_action():
-	var btn_pos = slider.rect_position - container.rect_position
+	var btn_pos = slider.position - container.position
 	match btn_pos:
 		play_position:
 			slider_enabled = false
-			SceneControl.change_scene(self, SCN1)
+			SceneControl.change_scene_to_file(self, SCN1)
 
 		settings_position:
 			hide_options()
@@ -117,28 +117,28 @@ func back_to_mmenu():
 
 
 func _on_Play_mouse_entered():
-	var new_position = Vector2(slider.rect_position.x, play_position.y)
+	var new_position = Vector2(slider.position.x, play_position.y)
 	slide_to_position(new_position)
 
 func _on_Settings_mouse_entered():
-	var new_position = Vector2(slider.rect_position.x, settings_position.y)
+	var new_position = Vector2(slider.position.x, settings_position.y)
 	slide_to_position(new_position)
 
 func _on_Quit_mouse_entered():
-	var new_position = Vector2(slider.rect_position.x, quit_position.y)
+	var new_position = Vector2(slider.position.x, quit_position.y)
 	slide_to_position(new_position)
 
 # Slides the slider to the intended position, or shows it there if not visible
 func slide_to_position(new_position):
 	# Offset of position
 	if(slider_enabled):
-		new_position.y += container.rect_position.y
-		var old_position = slider.rect_position
+		new_position.y += container.position.y
+		var old_position = slider.position
 		if(sliderisActive):
-			tween.interpolate_property(slider, "rect_position", old_position, new_position, 0.075, Tween.TRANS_SINE, Tween.EASE_IN_OUT)
+			tween.interpolate_property(slider, "position", old_position, new_position, 0.075, Tween.TRANS_SINE, Tween.EASE_IN_OUT)
 			tween.start()
 		else:
-			slider.rect_position.y = new_position.y
+			slider.position.y = new_position.y
 			slider.show()
 			sliderisActive = true
 

@@ -14,7 +14,7 @@ func _on_Settings_pressed():
 
 func _on_RMMenu_pressed():
 	SceneControl.button_click.play()
-	SceneControl.change_scene(SceneControl.levels.get_child(0), MAINMENU)
+	SceneControl.change_scene_to_file(SceneControl.levels.get_child(0), MAINMENU)
 	emit_signal("release_gui", "pause")
 
 func _on_ExitPause_pressed():
@@ -28,7 +28,7 @@ func handle_input(event):
 		$Resume.play()
 		
 func set_isisActive_gui(val):
-	.set_isisActive_gui(val)
+	super.set_isisActive_gui(val)
 	if val:
 		$Pause.play()
 		

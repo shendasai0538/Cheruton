@@ -31,8 +31,8 @@ var facing = 0
 var smoothing_speed_goal = 0
 var camera_state = 0
 
-onready var prev_camera_pos = get_camera_position()
-onready var tween = $ShiftTween
+@onready var prev_camera_pos = get_camera_position()
+@onready var tween = $ShiftTween
 
 # processes screenshake / pan
 func _process( delta ):
@@ -42,9 +42,9 @@ func _process( delta ):
 			_last_shook_timer = _last_shook_timer - _period_in_ms
 			var intensity = _amplitude * (1 - ((_duration - _timer) / _duration))
 			# Noise calculation logic from http://jonny.morrill.me/blog/view/14
-			var new_x = rand_range(-1.0, 1.0)
+			var new_x = randf_range(-1.0, 1.0)
 			var x_component = intensity * (_previous_x + (delta * (new_x - _previous_x)))
-			var new_y = rand_range(-1.0, 1.0)
+			var new_y = randf_range(-1.0, 1.0)
 			var y_component = intensity * (_previous_y + (delta * (new_y - _previous_y)))
 			_previous_x = new_x
 			_previous_y = new_y
@@ -58,9 +58,9 @@ func _process( delta ):
 			_timer = 0
 			shake_offset -= _last_offset
 	else:
-		shake_offset = shake_offset.linear_interpolate( Vector2.ZERO, delta )
+		shake_offset = shake_offset.lerp( Vector2.ZERO, delta )
 	# pan camera
-	pan_offset = pan_offset.linear_interpolate( target_pan_offset, pan_speed * delta )
+	pan_offset = pan_offset.lerp( target_pan_offset, pan_speed * delta )
 	if abs( pan_offset.y ) < 0.5:
 		pan_offset.y = 0
 
@@ -85,8 +85,8 @@ func shake(duration, frequency, amplitude, shakedir = Vector2.ZERO ):
 	_timer = duration
 	_period_in_ms = 1.0 / frequency
 	_amplitude = amplitude
-	_previous_x = rand_range(-0.5, 0.5)
-	_previous_y = rand_range(-0.5, 0.5)
+	_previous_x = randf_range(-0.5, 0.5)
+	_previous_y = randf_range(-0.5, 0.5)
 	_shakedir = shakedir.normalized()
 	shake_offset -= _last_offset
 	_last_offset = Vector2.ZERO
@@ -98,7 +98,7 @@ func pan_camera( pan : Vector2 ) -> void:
 func camera_process(delta):
 	_check_facing()
 	prev_camera_pos = get_camera_position()
-	smoothing_speed = lerp(smoothing_speed, smoothing_speed_goal, delta * SMOOTH_SPEED_FACTOR)
+	position_smoothing_speed = lerp(position_smoothing_speed, smoothing_speed_goal, delta * SMOOTH_SPEED_FACTOR)
 
 # This function causes the camera to look ahead in the direction player is running
 func _check_facing():
@@ -114,18 +114,18 @@ func _on_player_camera_command(command, arg):
 
 	match (camera_state):
 		CAMERA_STATES.DEFAULT:
-			drag_margin_left = .06
-			drag_margin_right = .06
-			drag_margin_top = 0.4
-			drag_margin_bottom = .2
-			drag_margin_v_enabled = not  arg
-			drag_margin_h_enabled = true
+			drag_left_margin = .06
+			drag_right_margin = .06
+			drag_top_margin = 0.4
+			drag_bottom_margin = .2
+			drag_vertical_enabled = not  arg
+			drag_horizontal_enabled = true
 			SHIFT_DURATION = 1
 			smoothing_speed_goal = 1
 			LOOK_AHEAD_FACTOR = .1
 		CAMERA_STATES.HOOK:
-			drag_margin_v_enabled = true
-			drag_margin_h_enabled = true
+			drag_vertical_enabled = true
+			drag_horizontal_enabled = true
 			SHIFT_DURATION = .5
 			smoothing_speed_goal = 10
 			LOOK_AHEAD_FACTOR = .25

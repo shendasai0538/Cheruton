@@ -1,6 +1,6 @@
 [gd_scene load_steps=6 format=2]
 
-[ext_resource path="res://icon.png" type="Texture" id=1]
+[ext_resource path="res://icon.png" type="Texture2D" id=1]
 [ext_resource path="res://Levels/commonLevelAssets/Props/fallingPlatforms/fallingPlatform.gd" type="Script" id=2]
 [ext_resource path="res://Levels/commonLevelAssets/Props/fallingPlatforms/body.gd" type="Script" id=3]
 
@@ -17,8 +17,8 @@ tracks/0/loop_wrap = true
 tracks/0/imported = false
 tracks/0/enabled = true
 tracks/0/keys = {
-"times": PoolRealArray( 0, 0.4, 0.6 ),
-"transitions": PoolRealArray( 0.16, 1.5, 1 ),
+"times": PackedFloat32Array( 0, 0.4, 0.6 ),
+"transitions": PackedFloat32Array( 0.16, 1.5, 1 ),
 "update": 0,
 "values": [ Vector2( 0, 0 ), Vector2( 0, 16 ), Vector2( 0, 14 ) ]
 }
@@ -26,11 +26,11 @@ tracks/0/keys = {
 [node name="fallingPlatform" type="Node2D"]
 script = ExtResource( 2 )
 
-[node name="body" type="KinematicBody2D" parent="."]
+[node name="body" type="CharacterBody2D" parent="."]
 collision_mask = 0
 script = ExtResource( 3 )
 
-[node name="Sprite" type="Sprite" parent="body"]
+[node name="Sprite2D" type="Sprite2D" parent="body"]
 scale = Vector2( 2, 1 )
 texture = ExtResource( 1 )
 

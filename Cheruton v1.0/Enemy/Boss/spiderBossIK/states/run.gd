@@ -4,7 +4,7 @@ const SPEED = 465  # faster than player
 const RUN_SPEED = 100
 
 const LEG_DIST_MARGIN = 400
-onready var projectile = preload("res://Enemy/Boss/spiderBossIK/acidProjectile/acidProjectile.tscn")
+@onready var projectile = preload("res://Enemy/Boss/spiderBossIK/acidProjectile/acidProjectile.tscn")
 var leg_move_timer : float
 var desired_velocity = Vector2()
 #var idling = true
@@ -81,7 +81,7 @@ func move_leg(leg):
 
 	var tip_pos = leg.get_tip_pos()
 	owner.next_pos_col_check.global_position = tip_pos + Vector2(0 , -50) # else it would touch the floor during walks
-	owner.next_pos_col_check.cast_to = desired_pos - tip_pos + Vector2(0, -50)
+	owner.next_pos_col_check.target_position = desired_pos - tip_pos + Vector2(0, -50)
 	var way_to_next_step_has_collision = true if owner.next_pos_col_check.is_colliding() else false# quickly places foot before collision collision peirces through the leg, making it look unrealistic
 	if leg.get_tip_dist_to_point(desired_pos) > adjusted_leg_dist_margin or (owner.velocity.length() >100 and way_to_next_step_has_collision):
 		leg.step(desired_pos)

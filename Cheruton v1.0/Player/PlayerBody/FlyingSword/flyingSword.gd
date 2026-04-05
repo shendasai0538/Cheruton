@@ -1,4 +1,4 @@
-extends KinematicBody2D
+extends CharacterBody2D
 
 const SPEED_THROW_START = 3000
 const SPEED_RETURN = 2700
@@ -9,15 +9,15 @@ const PICK_UP_TIME = .15 # player can't immediately grab after throwing
 const WEAPON_RETURN_DELAY = .1
 enum sword_states { SHOOT = 0, HIT = 1, RETURN = 2, HIDDEN = 3}
 
-onready var sword_state = sword_states.HIDDEN
-onready var animation_player = $AnimationPlayer
-onready var bodyRotation = $bodyRotation
-onready var sprite = $bodyRotation/Sprite
-onready var hurt_box_col = $hurtBox/CollisionShape2D
-onready var hit_particles = preload("res://Player/PlayerBody/FlyingSword/HitParticles.tscn")
-onready var fly_audio = $FlyAudio
-onready var hit_audio = $HitAudio
-onready var return_audio = $ReturnAudio
+@onready var sword_state = sword_states.HIDDEN
+@onready var animation_player = $AnimationPlayer
+@onready var bodyRotation = $bodyRotation
+@onready var sprite = $bodyRotation/Sprite2D
+@onready var hurt_box_col = $hurtBox/CollisionShape2D
+@onready var hit_particles = preload("res://Player/PlayerBody/FlyingSword/HitParticles.tscn")
+@onready var fly_audio = $FlyAudio
+@onready var hit_audio = $HitAudio
+@onready var return_audio = $ReturnAudio
 
 var player : Node
 var level : Node
@@ -51,7 +51,7 @@ func _on_flyingSword_command(command, arg):
 	bodyRotation.show()
 	animation_player.play("air")
 	if command == 0:
-		set_collision_mask_bit(0,1)
+		set_collision_mask_value(0,1)
 		fly_audio.play();
 
 		global_position = player.global_position + 24 * player.look_direction
@@ -136,7 +136,7 @@ func _physics_process(delta):
 			animation_player.play("air")
 
 			hurt_box_col.disabled = false
-			set_collision_mask_bit(0,0)
+			set_collision_mask_value(0,0)
 			bodyRotation.rotate(angular_velocity)
 
 			var direction = cur_player_pos - global_position # go towards player

@@ -1,21 +1,21 @@
 [gd_resource type="TileSet" load_steps=7 format=2]
 
-[ext_resource path="res://Levels/Hometown/Sprites/Hometown_BuidingsALL.png" type="Texture" id=2]
+[ext_resource path="res://Levels/Hometown/Sprites/Hometown_BuidingsALL.png" type="Texture2D" id=2]
 
 [sub_resource type="ConvexPolygonShape2D" id=1]
-points = PoolVector2Array( 920, 728, 92, 724, 92, 712, 920, 712 )
+points = PackedVector2Array( 920, 728, 92, 724, 92, 712, 920, 712 )
 
 [sub_resource type="ConvexPolygonShape2D" id=2]
-points = PoolVector2Array( 48, 116, 1456, 116, 1456, 144, 48, 144 )
+points = PackedVector2Array( 48, 116, 1456, 116, 1456, 144, 48, 144 )
 
 [sub_resource type="ConvexPolygonShape2D" id=3]
-points = PoolVector2Array( 840, 528, 956, 528, 956, 536, 840, 536 )
+points = PackedVector2Array( 840, 528, 956, 528, 956, 536, 840, 536 )
 
 [sub_resource type="ConvexPolygonShape2D" id=4]
-points = PoolVector2Array( 4, 536, 4, 508, 328, 516, 376, 516, 484, 536, 1800, 536, 1800, 564, 4, 564 )
+points = PackedVector2Array( 4, 536, 4, 508, 328, 516, 376, 516, 484, 536, 1800, 536, 1800, 564, 4, 564 )
 
 [sub_resource type="ConvexPolygonShape2D" id=5]
-points = PoolVector2Array( 564, 432, 500, 432, 500, 428, 564, 428 )
+points = PackedVector2Array( 564, 432, 500, 432, 500, 428, 564, 428 )
 
 [resource]
 9/name = "Hometown_BuidingsALL.png 9"

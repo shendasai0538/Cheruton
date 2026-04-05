@@ -1,14 +1,14 @@
-extends KinematicBody2D
+extends CharacterBody2D
 
 class_name MovingNPC
 
 var DIR_CHANGE_TIME = 8
 
-export var walk_speed : int = 110 # remember to move ray case if walk speed is ever too much
+@export var walk_speed : int = 110 # remember to move ray case if walk speed is ever too much
 
-onready var body_rotate = $bodyRotate
-onready var anim_player = $AnimationPlayer
-onready var dialog_name = name
+@onready var body_rotate = $bodyRotate
+@onready var anim_player = $AnimationPlayer
+@onready var dialog_name = name
 
 var interaction_type : String
 var dir : int
@@ -31,7 +31,9 @@ func _physics_process(delta):
 		timer = DIR_CHANGE_TIME
 		flip_dir()
 
-	move_and_slide(Vector2(dir*walk_speed, 100), Vector2.UP)
+	set_velocity(Vector2(dir*walk_speed, 100))
+	set_up_direction(Vector2.UP)
+	move_and_slide()
 
 	if is_on_wall():
 		flip_dir()
@@ -53,9 +55,9 @@ func flip_dir():
 	body_rotate.scale.x = -body_rotate.scale.x
 
 func pend_interact():
-	$bodyRotate/Sprite.material.set_shader_param("width", .5)
+	$bodyRotate/Sprite2D.material.set_shader_parameter("width", .5)
 func unpend_interact():
-	$bodyRotate/Sprite.material.set_shader_param("width", 0)
+	$bodyRotate/Sprite2D.material.set_shader_parameter("width", 0)
 
 func interact(body):
 	if is_talking: return

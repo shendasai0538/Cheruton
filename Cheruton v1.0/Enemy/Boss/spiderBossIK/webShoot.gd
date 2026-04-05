@@ -2,7 +2,7 @@ extends baseState
 
 enum stages{ANTICIPATION = 0, SHOOT = 1, RECOVER = 2}
 
-onready var projectile = preload("res://Enemy/Boss/spiderBossIK/acidProjectile/acidProjectile.tscn")
+@onready var projectile = preload("res://Enemy/Boss/spiderBossIK/acidProjectile/acidProjectile.tscn")
 
 var stage_switch_timer : float
 var stage : int
@@ -51,7 +51,7 @@ func update(delta):
 			if not projectile_shot and stage_switch_timer/timers_dict["SHOOT"] < 0.2: # the number here represents the percentage left in the movent
 				projectile_shot = true
 
-				var proj = projectile.instance()
+				var proj = projectile.instantiate()
 				owner.level.add_child(proj)
 
 				proj.global_position = owner.global_position

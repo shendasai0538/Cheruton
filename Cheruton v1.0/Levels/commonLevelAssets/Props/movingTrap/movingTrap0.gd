@@ -2,17 +2,17 @@ extends Node2D
 
 const iDLE_DURATION = 1.0
 
-export var cicular_path = true
-export var move_to = Vector2() # center of circle if circular path_true
-export var radius = 100.0
-export var speed = 30.0
+@export var cicular_path = true
+@export var move_to = Vector2() # center of circle if circular path_true
+@export var radius = 100.0
+@export var speed = 30.0
 
 var goal_pos = Vector2()
 var switch = false
 var duration
 
-onready var trap = $hitArea
-onready var tween = $Tween
+@onready var trap = $hitArea
+@onready var tween = $Tween
 
 func _ready():
 	duration = move_to.length() / speed
@@ -20,9 +20,9 @@ func _ready():
 
 func _physics_process(delta):
 	if not cicular_path:
-		trap.position = trap.position.linear_interpolate(goal_pos, 0.06) # This ease in
+		trap.position = trap.position.lerp(goal_pos, 0.06) # This ease in
 	else:
-		rotate (deg2rad(speed)*.1)
+		rotate (deg_to_rad(speed)*.1)
 
 func _on_Tween_tween_completed(object, key):
 	if not cicular_path:

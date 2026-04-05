@@ -1,6 +1,6 @@
 [gd_scene load_steps=4 format=2]
 
-[ext_resource path="res://Levels/Hometown/Sprites/Hometown_Portal.png" type="Texture" id=1]
+[ext_resource path="res://Levels/Hometown/Sprites/Hometown_Portal.png" type="Texture2D" id=1]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 464, 14 )
@@ -14,7 +14,7 @@ light_mask = 0
 [node name="rotate" type="Node2D" parent="."]
 position = Vector2( 0, -32 )
 
-[node name="Sprite" type="Sprite" parent="rotate"]
+[node name="Sprite2D" type="Sprite2D" parent="rotate"]
 light_mask = 0
 position = Vector2( 0, 2 )
 scale = Vector2( 4, 4 )

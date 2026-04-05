@@ -1,5 +1,5 @@
 extends StaticNPC
 
 func _ready():
-	._ready()
+	super._ready()
 	$AnimationPlayer.play("sweep")

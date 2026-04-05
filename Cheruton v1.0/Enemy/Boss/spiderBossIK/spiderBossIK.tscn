@@ -1,28 +1,28 @@
 [gd_scene load_steps=31 format=2]
 
 [ext_resource path="res://Enemy/Boss/spiderBossIK/spiderBossIK.gd" type="Script" id=1]
-[ext_resource path="res://Enemy/Boss/spiderBossIK/Sprites/Enemy_Boss_Spider_head.png" type="Texture" id=2]
+[ext_resource path="res://Enemy/Boss/spiderBossIK/Sprites/Enemy_Boss_Spider_head.png" type="Texture2D" id=2]
 [ext_resource path="res://Enemy/Boss/spiderBossIK/spiderLeg.tscn" type="PackedScene" id=3]
 [ext_resource path="res://Enemy/Boss/spiderBossIK/spiderLegController.gd" type="Script" id=4]
 [ext_resource path="res://Enemy/Boss/spiderBossIK/states/spiderBossStateMachine.gd" type="Script" id=5]
-[ext_resource path="res://Effects/ShockWave/ShockWave.shader" type="Shader" id=6]
+[ext_resource path="res://Effects/ShockWave/ShockWave.gdshader" type="Shader" id=6]
 [ext_resource path="res://Enemy/Boss/spiderBossIK/scream.gd" type="Script" id=7]
-[ext_resource path="res://Enemy/Boss/spiderBossIK/Sprites/Enemy_Boss_Spider_butt.png" type="Texture" id=8]
+[ext_resource path="res://Enemy/Boss/spiderBossIK/Sprites/Enemy_Boss_Spider_butt.png" type="Texture2D" id=8]
 [ext_resource path="res://Enemy/Boss/spiderBossIK/states/idle.gd" type="Script" id=9]
 [ext_resource path="res://Enemy/Boss/spiderBossIK/states/run.gd" type="Script" id=10]
 [ext_resource path="res://Enemy/Boss/spiderBossIK/states/jumpAttack.gd" type="Script" id=11]
 [ext_resource path="res://Enemy/Boss/spiderBossIK/debugLabel.gd" type="Script" id=12]
-[ext_resource path="res://Display/Font/Wilson hawk italic.ttf" type="DynamicFontData" id=13]
+[ext_resource path="res://Display/Font/Wilson hawk italic.ttf" type="FontFile" id=13]
 [ext_resource path="res://Enemy/Boss/spiderBossIK/states/stabAttack.gd" type="Script" id=14]
 [ext_resource path="res://Enemy/Boss/spiderBossIK/states/stepBack.gd" type="Script" id=15]
 [ext_resource path="res://Enemy/Boss/spiderBossIK/webShoot.gd" type="Script" id=16]
-[ext_resource path="res://Enemy/Boss/spiderBossIK/Sprites/Roar_wave_light_orange.png" type="Texture" id=17]
+[ext_resource path="res://Enemy/Boss/spiderBossIK/Sprites/Roar_wave_light_orange.png" type="Texture2D" id=17]
 
 [sub_resource type="Gradient" id=1]
-offsets = PoolRealArray( 0, 0.0780669, 0.122677, 0.256506 )
-colors = PoolColorArray( 1, 1, 1, 1, 1, 1, 1, 0.789196, 1, 1, 1, 0.130435, 1, 1, 1, 0 )
+offsets = PackedFloat32Array( 0, 0.0780669, 0.122677, 0.256506 )
+colors = PackedColorArray( 1, 1, 1, 1, 1, 1, 1, 0.789196, 1, 1, 1, 0.130435, 1, 1, 1, 0 )
 
-[sub_resource type="GradientTexture" id=2]
+[sub_resource type="GradientTexture2D" id=2]
 gradient = SubResource( 1 )
 
 [sub_resource type="Curve" id=3]
@@ -31,7 +31,7 @@ _data = [ Vector2( 0, 0 ), 0.0, 2.62346, 0, 0, Vector2( 0.955882, 1 ), 0.487963,
 [sub_resource type="CurveTexture" id=4]
 curve = SubResource( 3 )
 
-[sub_resource type="ParticlesMaterial" id=5]
+[sub_resource type="ParticleProcessMaterial" id=5]
 flag_disable_z = true
 gravity = Vector3( 0, 0, 0 )
 orbit_velocity = 0.0
@@ -66,7 +66,7 @@ shader_param/size = 0.0
 shader_param/thickness = 0.01
 shader_param/chrome_abberation_offset = 0.01
 
-[sub_resource type="DynamicFont" id=12]
+[sub_resource type="FontFile" id=12]
 size = 64
 font_data = ExtResource( 13 )
 
@@ -79,8 +79,8 @@ tracks/0/loop_wrap = false
 tracks/0/imported = false
 tracks/0/enabled = true
 tracks/0/keys = {
-"times": PoolRealArray( 0, 1, 1.01 ),
-"transitions": PoolRealArray( 1, 1, 1 ),
+"times": PackedFloat32Array( 0, 1, 1.01 ),
+"transitions": PackedFloat32Array( 1, 1, 1 ),
 "update": 0,
 "values": [ 0.2, 0.0, 0.0 ]
 }
@@ -91,8 +91,8 @@ tracks/1/loop_wrap = false
 tracks/1/imported = false
 tracks/1/enabled = true
 tracks/1/keys = {
-"times": PoolRealArray( 0, 1, 1.01 ),
-"transitions": PoolRealArray( 0.7, 1, 1 ),
+"times": PackedFloat32Array( 0, 1, 1.01 ),
+"transitions": PackedFloat32Array( 0.7, 1, 1 ),
 "update": 0,
 "values": [ 0.0, 1.0, 0.0 ]
 }
@@ -103,40 +103,40 @@ tracks/2/loop_wrap = true
 tracks/2/imported = false
 tracks/2/enabled = true
 tracks/2/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
+"times": PackedFloat32Array( 0 ),
+"transitions": PackedFloat32Array( 1 ),
 "update": 0,
 "values": [ 0.01 ]
 }
 
-[node name="spiderBossIK" type="KinematicBody2D"]
+[node name="spiderBossIK" type="CharacterBody2D"]
 collision_layer = 0
 script = ExtResource( 1 )
 
-[node name="butt" type="Sprite" parent="."]
+[node name="butt" type="Sprite2D" parent="."]
 position = Vector2( 0, -126 )
 scale = Vector2( 4, 4 )
 texture = ExtResource( 8 )
 
-[node name="midBody" type="Sprite" parent="."]
+[node name="midBody" type="Sprite2D" parent="."]
 visible = false
 position = Vector2( 0, -140 )
 scale = Vector2( 4, 4 )
 z_index = 2
 
-[node name="head" type="Sprite" parent="."]
+[node name="head" type="Sprite2D" parent="."]
 scale = Vector2( 4, 4 )
 z_index = 4
 texture = ExtResource( 2 )
 
-[node name="feelers" type="Sprite" parent="head"]
+[node name="feelers" type="Sprite2D" parent="head"]
 visible = false
 position = Vector2( 0, 40 )
 
-[node name="mouthPos" type="Position2D" parent="head"]
+[node name="mouthPos" type="Marker2D" parent="head"]
 position = Vector2( 0, 45 )
 
-[node name="roarEffect" type="Particles2D" parent="head/mouthPos"]
+[node name="roarEffect" type="GPUParticles2D" parent="head/mouthPos"]
 modulate = Color( 0.4375, 0.4375, 0.4375, 1 )
 emitting = false
 amount = 20
@@ -162,7 +162,7 @@ shape = SubResource( 8 )
 
 [node name="ALegs" type="Node2D" parent="."]
 
-[node name="leg1" type="Position2D" parent="ALegs"]
+[node name="leg1" type="Marker2D" parent="ALegs"]
 position = Vector2( 164, -8.5 )
 z_index = 3
 script = ExtResource( 4 )
@@ -174,19 +174,19 @@ flipped = true
 [node name="RayCast2D" type="RayCast2D" parent="ALegs/leg1"]
 position = Vector2( 224.169, -5 )
 enabled = true
-cast_to = Vector2( -53, 720 )
+target_position = Vector2( -53, 720 )
 
 [node name="RayCast2D2" type="RayCast2D" parent="ALegs/leg1"]
 position = Vector2( 100.907, -77.1101 )
 enabled = true
-cast_to = Vector2( 440, 280 )
+target_position = Vector2( 440, 280 )
 
 [node name="RayCast2D3" type="RayCast2D" parent="ALegs/leg1"]
 position = Vector2( 305.641, 160.441 )
 enabled = true
-cast_to = Vector2( -950, 600 )
+target_position = Vector2( -950, 600 )
 
-[node name="leg2" type="Position2D" parent="ALegs"]
+[node name="leg2" type="Marker2D" parent="ALegs"]
 position = Vector2( -180, -70 )
 z_index = 2
 script = ExtResource( 4 )
@@ -197,19 +197,19 @@ position = Vector2( 0, 55.8384 )
 [node name="RayCast2D" type="RayCast2D" parent="ALegs/leg2"]
 position = Vector2( -389.844, 121.991 )
 enabled = true
-cast_to = Vector2( 53, 720 )
+target_position = Vector2( 53, 720 )
 
 [node name="RayCast2D2" type="RayCast2D" parent="ALegs/leg2"]
 position = Vector2( -36, -82 )
 enabled = true
-cast_to = Vector2( -440, 280 )
+target_position = Vector2( -440, 280 )
 
 [node name="RayCast2D3" type="RayCast2D" parent="ALegs/leg2"]
 position = Vector2( -336.115, 332.144 )
 enabled = true
-cast_to = Vector2( 950, 600 )
+target_position = Vector2( 950, 600 )
 
-[node name="leg3" type="Position2D" parent="ALegs"]
+[node name="leg3" type="Marker2D" parent="ALegs"]
 position = Vector2( 160.566, -120 )
 z_index = 1
 script = ExtResource( 4 )
@@ -222,24 +222,24 @@ is_back_leg = true
 [node name="RayCast2D" type="RayCast2D" parent="ALegs/leg3"]
 position = Vector2( 346.011, 117.028 )
 enabled = true
-cast_to = Vector2( -53, 720 )
+target_position = Vector2( -53, 720 )
 
 [node name="RayCast2D2" type="RayCast2D" parent="ALegs/leg3"]
 position = Vector2( 124.198, -60.4726 )
 enabled = true
 exclude_parent = false
-cast_to = Vector2( 440, 280 )
+target_position = Vector2( 440, 280 )
 
 [node name="RayCast2D3" type="RayCast2D" parent="ALegs/leg3"]
 position = Vector2( 394.232, 380.58 )
 enabled = true
 exclude_parent = false
-cast_to = Vector2( -950, 600 )
+target_position = Vector2( -950, 600 )
 
 [node name="BLegs" type="Node2D" parent="."]
 position = Vector2( -8, 0 )
 
-[node name="leg1" type="Position2D" parent="BLegs"]
+[node name="leg1" type="Marker2D" parent="BLegs"]
 position = Vector2( -164, 2.903 )
 z_index = 3
 script = ExtResource( 4 )
@@ -250,19 +250,19 @@ position = Vector2( 0, 20 )
 [node name="RayCast2D" type="RayCast2D" parent="BLegs/leg1"]
 position = Vector2( -239.645, 8.09512 )
 enabled = true
-cast_to = Vector2( 53, 720 )
+target_position = Vector2( 53, 720 )
 
 [node name="RayCast2D2" type="RayCast2D" parent="BLegs/leg1"]
 position = Vector2( -80.8382, -94.6984 )
 enabled = true
-cast_to = Vector2( -440, 280 )
+target_position = Vector2( -440, 280 )
 
 [node name="RayCast2D3" type="RayCast2D" parent="BLegs/leg1"]
 position = Vector2( -293.494, 156.895 )
 enabled = true
-cast_to = Vector2( 950, 600 )
+target_position = Vector2( 950, 600 )
 
-[node name="leg2" type="Position2D" parent="BLegs"]
+[node name="leg2" type="Marker2D" parent="BLegs"]
 position = Vector2( 180, -70 )
 z_index = 2
 script = ExtResource( 4 )
@@ -274,21 +274,21 @@ flipped = true
 [node name="RayCast2D" type="RayCast2D" parent="BLegs/leg2"]
 position = Vector2( 272.702, 76.7147 )
 enabled = true
-cast_to = Vector2( -53, 720 )
+target_position = Vector2( -53, 720 )
 
 [node name="RayCast2D2" type="RayCast2D" parent="BLegs/leg2"]
 position = Vector2( 52, -82 )
 enabled = true
 exclude_parent = false
-cast_to = Vector2( 440, 280 )
+target_position = Vector2( 440, 280 )
 
 [node name="RayCast2D3" type="RayCast2D" parent="BLegs/leg2"]
 position = Vector2( 353.06, 301.026 )
 enabled = true
 exclude_parent = false
-cast_to = Vector2( -950, 600 )
+target_position = Vector2( -950, 600 )
 
-[node name="leg3" type="Position2D" parent="BLegs"]
+[node name="leg3" type="Marker2D" parent="BLegs"]
 position = Vector2( -161.177, -120 )
 z_index = 1
 script = ExtResource( 4 )
@@ -300,17 +300,17 @@ is_back_leg = true
 [node name="RayCast2D" type="RayCast2D" parent="BLegs/leg3"]
 position = Vector2( -373.737, 160.438 )
 enabled = true
-cast_to = Vector2( 53, 720 )
+target_position = Vector2( 53, 720 )
 
 [node name="RayCast2D2" type="RayCast2D" parent="BLegs/leg3"]
 position = Vector2( -110.823, -62 )
 enabled = true
-cast_to = Vector2( -440, 280 )
+target_position = Vector2( -440, 280 )
 
 [node name="RayCast2D3" type="RayCast2D" parent="BLegs/leg3"]
 position = Vector2( -376.522, 406.611 )
 enabled = true
-cast_to = Vector2( 950, 600 )
+target_position = Vector2( 950, 600 )
 
 [node name="states" type="Node" parent="."]
 script = ExtResource( 5 )
@@ -339,7 +339,7 @@ script = ExtResource( 16 )
 
 [node name="groundCheck" type="RayCast2D" parent="."]
 enabled = true
-cast_to = Vector2( 0, 330 )
+target_position = Vector2( 0, 330 )
 
 [node name="nextPosColCheck" type="RayCast2D" parent="."]
 enabled = true
@@ -377,9 +377,9 @@ __meta__ = {
 
 [node name="Label" type="Label" parent="CanvasLayer"]
 visible = false
-margin_right = 40.0
-margin_bottom = 14.0
-custom_fonts/font = SubResource( 12 )
+offset_right = 40.0
+offset_bottom = 14.0
+theme_override_fonts/font = SubResource( 12 )
 text = "asd"
 script = ExtResource( 12 )
 __meta__ = {

@@ -2,7 +2,7 @@ extends Control
 
 class_name basePopUp
 
-var isisActive_gui = false setget set_isisActive_gui
+var isisActive_gui = false: set = set_isisActive_gui
 
 signal new_gui
 signal release_gui

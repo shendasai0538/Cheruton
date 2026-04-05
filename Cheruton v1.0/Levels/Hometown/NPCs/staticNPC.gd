@@ -2,9 +2,9 @@ extends Node2D
 
 class_name StaticNPC
 
-export var is_flipped = false
+@export var is_flipped = false
 
-onready var dialog_name = name
+@onready var dialog_name = name
 
 var sprite
 var sprite2
@@ -12,7 +12,7 @@ var sprite2
 var level
 var player
 
-var interact_enabled = true setget set_interact_enabled
+var interact_enabled = true: set = set_interact_enabled
 
 var interaction_type
 
@@ -20,7 +20,7 @@ var is_talking = false
 var save_dir : int
 
 func _ready():
-	sprite = $Sprite
+	sprite = $Sprite2D
 	sprite2 = $Sprite2
 	interaction_type = "dialog"
 	$AnimationPlayer.play("idle")
@@ -34,10 +34,10 @@ func _ready():
 	if is_flipped: scale.x = -abs(scale.x)
 
 func pend_interact():
-	sprite.material.set_shader_param("width", .5)
+	sprite.material.set_shader_parameter("width", .5)
 
 func unpend_interact():
-	sprite.material.set_shader_param("width", 0)
+	sprite.material.set_shader_parameter("width", 0)
 
 func _process(delta):
 	if is_talking and DataResource.temp_dict_player.dialog_complete:

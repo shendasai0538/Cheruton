@@ -1,59 +1,59 @@
 [gd_scene load_steps=11 format=2]
 
-[ext_resource path="res://Display/Font/eight-bit-dragon.otf" type="DynamicFontData" id=1]
+[ext_resource path="res://Display/Font/eight-bit-dragon.otf" type="FontFile" id=1]
 [ext_resource path="res://Levels/commonLevelAssets/Props/SavePoint/SavePoint.gd" type="Script" id=2]
-[ext_resource path="res://Levels/Grasslands0/Sprites/circleLight.png" type="Texture" id=3]
-[ext_resource path="res://Levels/commonLevelAssets/Props/SavePoint/Sprites/SavePopUp - Base.png" type="Texture" id=4]
-[ext_resource path="res://Levels/commonLevelAssets/Props/SavePoint/Sprites/Props-Savepoint.png" type="Texture" id=5]
+[ext_resource path="res://Levels/Grasslands0/Sprites/circleLight.png" type="Texture2D" id=3]
+[ext_resource path="res://Levels/commonLevelAssets/Props/SavePoint/Sprites/SavePopUp - Base.png" type="Texture2D" id=4]
+[ext_resource path="res://Levels/commonLevelAssets/Props/SavePoint/Sprites/Props-Savepoint.png" type="Texture2D" id=5]
 [ext_resource path="res://Levels/commonLevelAssets/Props/SavePoint/Sprites/Sound/SFX_UI_Saved.wav" type="AudioStream" id=6]
 
 [sub_resource type="Animation" id=1]
 length = 0.001
 tracks/0/type = "value"
-tracks/0/path = NodePath("Sprite:region_rect")
+tracks/0/path = NodePath("Sprite2D:region_rect")
 tracks/0/interp = 0
 tracks/0/loop_wrap = true
 tracks/0/imported = false
 tracks/0/enabled = true
 tracks/0/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
+"times": PackedFloat32Array( 0 ),
+"transitions": PackedFloat32Array( 1 ),
 "update": 0,
 "values": [ Rect2( 1, 1, 48, 64 ) ]
 }
 tracks/1/type = "value"
-tracks/1/path = NodePath("Sprite:offset")
+tracks/1/path = NodePath("Sprite2D:offset")
 tracks/1/interp = 0
 tracks/1/loop_wrap = true
 tracks/1/imported = false
 tracks/1/enabled = true
 tracks/1/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
+"times": PackedFloat32Array( 0 ),
+"transitions": PackedFloat32Array( 1 ),
 "update": 0,
 "values": [ Vector2( 5, -4 ) ]
 }
 tracks/2/type = "value"
-tracks/2/path = NodePath("Light2D:energy")
+tracks/2/path = NodePath("PointLight2D:energy")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/imported = false
 tracks/2/enabled = true
 tracks/2/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
+"times": PackedFloat32Array( 0 ),
+"transitions": PackedFloat32Array( 1 ),
 "update": 0,
 "values": [ 0.0 ]
 }
 tracks/3/type = "value"
-tracks/3/path = NodePath("Light2D:texture_scale")
+tracks/3/path = NodePath("PointLight2D:texture_scale")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/imported = false
 tracks/3/enabled = true
 tracks/3/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
+"times": PackedFloat32Array( 0 ),
+"transitions": PackedFloat32Array( 1 ),
 "update": 0,
 "values": [ 0.01 ]
 }
@@ -64,8 +64,8 @@ tracks/4/loop_wrap = true
 tracks/4/imported = false
 tracks/4/enabled = true
 tracks/4/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
+"times": PackedFloat32Array( 0 ),
+"transitions": PackedFloat32Array( 1 ),
 "update": 0,
 "values": [ Color( 1, 1, 1, 0 ) ]
 }
@@ -73,50 +73,50 @@ tracks/4/keys = {
 [sub_resource type="Animation" id=2]
 length = 3.2
 tracks/0/type = "value"
-tracks/0/path = NodePath("Sprite:region_rect")
+tracks/0/path = NodePath("Sprite2D:region_rect")
 tracks/0/interp = 0
 tracks/0/loop_wrap = true
 tracks/0/imported = false
 tracks/0/enabled = true
 tracks/0/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
+"times": PackedFloat32Array( 0 ),
+"transitions": PackedFloat32Array( 1 ),
 "update": 0,
 "values": [ Rect2( 51, 1, 48, 64 ) ]
 }
 tracks/1/type = "value"
-tracks/1/path = NodePath("Sprite:offset")
+tracks/1/path = NodePath("Sprite2D:offset")
 tracks/1/interp = 0
 tracks/1/loop_wrap = true
 tracks/1/imported = false
 tracks/1/enabled = true
 tracks/1/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
+"times": PackedFloat32Array( 0 ),
+"transitions": PackedFloat32Array( 1 ),
 "update": 0,
 "values": [ Vector2( 5, -4 ) ]
 }
 tracks/2/type = "value"
-tracks/2/path = NodePath("Light2D:energy")
+tracks/2/path = NodePath("PointLight2D:energy")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/imported = false
 tracks/2/enabled = true
 tracks/2/keys = {
-"times": PoolRealArray( 0, 0.470261, 0.747781, 1.5331 ),
-"transitions": PoolRealArray( 1.4, 0.8, 0.8, 1 ),
+"times": PackedFloat32Array( 0, 0.470261, 0.747781, 1.5331 ),
+"transitions": PackedFloat32Array( 1.4, 0.8, 0.8, 1 ),
 "update": 0,
 "values": [ 0.0, 0.72, 0.72, 0.4 ]
 }
 tracks/3/type = "value"
-tracks/3/path = NodePath("Light2D:texture_scale")
+tracks/3/path = NodePath("PointLight2D:texture_scale")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/imported = false
 tracks/3/enabled = true
 tracks/3/keys = {
-"times": PoolRealArray( 0, 0.480299, 1.54815 ),
-"transitions": PoolRealArray( 1.4, 0.8, 1 ),
+"times": PackedFloat32Array( 0, 0.480299, 1.54815 ),
+"transitions": PackedFloat32Array( 1.4, 0.8, 1 ),
 "update": 0,
 "values": [ 0.01, 1.0, 1.0 ]
 }
@@ -127,8 +127,8 @@ tracks/4/loop_wrap = true
 tracks/4/imported = false
 tracks/4/enabled = true
 tracks/4/keys = {
-"times": PoolRealArray( 0.505126, 1.40713, 2.05167, 2.79081 ),
-"transitions": PoolRealArray( 1, 1, 1.4, 1 ),
+"times": PackedFloat32Array( 0.505126, 1.40713, 2.05167, 2.79081 ),
+"transitions": PackedFloat32Array( 1, 1, 1.4, 1 ),
 "update": 0,
 "values": [ Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0 ) ]
 }
@@ -139,8 +139,8 @@ tracks/5/loop_wrap = true
 tracks/5/imported = false
 tracks/5/enabled = true
 tracks/5/keys = {
-"times": PoolRealArray( 0.343538, 1.78163, 3.2 ),
-"transitions": PoolRealArray( 1.2, 1.5, 1 ),
+"times": PackedFloat32Array( 0.343538, 1.78163, 3.2 ),
+"transitions": PackedFloat32Array( 1.2, 1.5, 1 ),
 "update": 0,
 "values": [ Vector2( 0, 0 ), Vector2( 0, -16 ), Vector2( 0, 0 ) ]
 }
@@ -148,7 +148,7 @@ tracks/5/keys = {
 [sub_resource type="RectangleShape2D" id=3]
 extents = Vector2( 120, 200 )
 
-[sub_resource type="DynamicFont" id=4]
+[sub_resource type="FontFile" id=4]
 size = 20
 font_data = ExtResource( 1 )
 
@@ -157,7 +157,7 @@ collision_layer = 0
 collision_mask = 2
 script = ExtResource( 2 )
 
-[node name="Sprite" type="Sprite" parent="."]
+[node name="Sprite2D" type="Sprite2D" parent="."]
 scale = Vector2( 4, 4 )
 texture = ExtResource( 5 )
 offset = Vector2( 5, -4 )
@@ -172,22 +172,22 @@ anims/saved = SubResource( 2 )
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource( 3 )
 
-[node name="Light2D" type="Light2D" parent="."]
+[node name="PointLight2D" type="PointLight2D" parent="."]
 position = Vector2( -36, -8 )
 texture = ExtResource( 3 )
 texture_scale = 0.01
 energy = 0.0
 
-[node name="rotate" type="Position2D" parent="."]
+[node name="rotate" type="Marker2D" parent="."]
 position = Vector2( 0, -2.02117 )
 
 [node name="TextureRect" type="TextureRect" parent="rotate"]
 modulate = Color( 1, 1, 1, 0 )
-margin_left = -120.0
-margin_top = -192.0
-margin_right = 140.0
-margin_bottom = -156.0
-rect_min_size = Vector2( 80, 0 )
+offset_left = -120.0
+offset_top = -192.0
+offset_right = 140.0
+offset_bottom = -156.0
+custom_minimum_size = Vector2( 80, 0 )
 texture = ExtResource( 4 )
 __meta__ = {
 "_edit_use_anchors_": false,
@@ -200,14 +200,14 @@ anchor_left = 0.5
 anchor_top = 1.0
 anchor_right = 0.5
 anchor_bottom = 1.0
-margin_left = -74.0
-margin_top = -28.0
-margin_right = 76.0
-margin_bottom = 72.0
-rect_min_size = Vector2( 150, 40 )
-custom_fonts/normal_font = SubResource( 4 )
+offset_left = -74.0
+offset_top = -28.0
+offset_right = 76.0
+offset_bottom = 72.0
+custom_minimum_size = Vector2( 150, 40 )
+theme_override_fonts/normal_font = SubResource( 4 )
 bbcode_enabled = true
-bbcode_text = "Game  Saved"
+text = "Game  Saved"
 text = "Game  Saved"
 __meta__ = {
 "_edit_use_anchors_": false

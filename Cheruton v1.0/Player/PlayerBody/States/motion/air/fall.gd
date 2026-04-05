@@ -13,7 +13,7 @@ func handle_input(event):
 		if coyote_timer > 0 and not owner.has_jumped:
 				emit_signal("changeState", "jump")
 
-	.handle_input(event)
+	super.handle_input(event)
 
 func enter():
 	enter_velocity = owner.velocity
@@ -88,4 +88,4 @@ func update(delta):
 			emit_signal("changeState", "run")
 
 	owner.move()
-	.update(delta)
+	super.update(delta)

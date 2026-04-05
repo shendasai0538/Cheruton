@@ -1,7 +1,7 @@
-tool
-extends WindowDialog
+@tool
+extends Window
 
-onready var _Text_Editor = self.get_node("VBoxContainer/TextEdit")
+@onready var _Text_Editor = self.get_node("VBoxContainer/TextEdit")
 
 var _Target_Node
 

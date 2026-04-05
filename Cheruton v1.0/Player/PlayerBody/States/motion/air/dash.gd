@@ -7,7 +7,7 @@ const INITIAL_STAGE_TIME = .1
 
 enum stages{INITIAL = 1, MID_DASH = 2, END =3 }
 
-onready var color_shader = preload("res://Effects/SolidColor/pink.tres")
+@onready var color_shader = preload("res://Effects/SolidColor/pink.tres")
 
 var stage : int
 var dir : Vector2

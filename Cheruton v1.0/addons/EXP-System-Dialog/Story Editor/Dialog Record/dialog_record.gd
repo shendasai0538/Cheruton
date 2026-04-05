@@ -1,4 +1,4 @@
-tool
+@tool
 extends Control
 
 signal changed_human_readable_text(did, text)
@@ -7,11 +7,11 @@ signal edit_pressed(did)
 signal rename_pressed(this)
 signal unchecked(this)
 
-onready var _DID_LBL = self.get_node("ColorRect/HBoxContainer/DID_LBL")
-onready var _Human_Readable_LineEdit = self.get_node("ColorRect/HBoxContainer/Human_Readable_LineEdit")
-onready var _Group_List = self.get_node("ColorRect/HBoxContainer/Group_BTN")
-onready var _Name_BTN = self.get_node("ColorRect/HBoxContainer/Name_BTN")
-onready var _Select_CheckBox = self.get_node("ColorRect/HBoxContainer/CheckBox")
+@onready var _DID_LBL = self.get_node("ColorRect/HBoxContainer/DID_LBL")
+@onready var _Human_Readable_LineEdit = self.get_node("ColorRect/HBoxContainer/Human_Readable_LineEdit")
+@onready var _Group_List = self.get_node("ColorRect/HBoxContainer/Group_BTN")
+@onready var _Name_BTN = self.get_node("ColorRect/HBoxContainer/Name_BTN")
+@onready var _Select_CheckBox = self.get_node("ColorRect/HBoxContainer/CheckBox")
 
 var _did : int = -1
 var _Story_Editor
@@ -58,7 +58,7 @@ func _on_Name_BTN_pressed():
 #Public Methods
 
 func check():
-	self._Select_CheckBox.pressed = true
+	self._Select_CheckBox.button_pressed = true
 
 
 func get_did():
@@ -83,7 +83,7 @@ func set_story_editor(editor):
 
 
 func uncheck():
-	self._Select_CheckBox.pressed = false
+	self._Select_CheckBox.button_pressed = false
 
 
 func update_human_readable_description(new_text):

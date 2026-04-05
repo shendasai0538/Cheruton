@@ -24,7 +24,7 @@ func handle_input(event):
 				owner.play_sound("hook_start")
 #				owner.play_and_return_anim("grapple_throw")
 				owner.start_hook()
-	.handle_input(event)
+	super.handle_input(event)
 
 func enter() -> void:
 	grav_multiplier = NORMAL_GRAV_MULTIPLIER
@@ -103,7 +103,7 @@ func update( delta ):
 		emit_signal("changeState","fall")
 
 
-	.update(delta)
+	super.update(delta)
 
 func exit():
 	owner.bounce_boost = false

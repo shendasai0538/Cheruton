@@ -1,9 +1,9 @@
-tool
-extends WindowDialog
+@tool
+extends Window
 
 signal rename_BTN_pressed(text)
 
-onready var _Name_LineEdit = self.get_node("MarginContainer/VBoxContainer/Name_LineEdit")
+@onready var _Name_LineEdit = self.get_node("MarginContainer/VBoxContainer/Name_LineEdit")
 
 var _Target_Record = null
 

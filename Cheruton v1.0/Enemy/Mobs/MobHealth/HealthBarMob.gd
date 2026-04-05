@@ -1,8 +1,8 @@
 extends Control
 
-onready var healthbar_fast = $HealthBarFast
-onready var healthbar_slow = $HealthBarSlow
-onready var tween = $Tween
+@onready var healthbar_fast = $HealthBarFast
+@onready var healthbar_slow = $HealthBarSlow
+@onready var tween = $Tween
 
 var max_health : float
 var change_speed : float

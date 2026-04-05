@@ -1,41 +1,41 @@
 extends Control
 
-const LMB = "InputEventMouseButton : button_index=BUTTON_LEFT, pressed=false, position=(0, 0), button_mask=0, doubleclick=false"
-const RMB = "InputEventMouseButton : button_index=BUTTON_RIGHT, pressed=false, position=(0, 0), button_mask=0, doubleclick=false"
+const LMB = "InputEventMouseButton : button_index=MOUSE_BUTTON_LEFT, pressed=false, position=(0, 0), button_mask=0, doubleclick=false"
+const RMB = "InputEventMouseButton : button_index=MOUSE_BUTTON_RIGHT, pressed=false, position=(0, 0), button_mask=0, doubleclick=false"
 const UNASSIGN = "Unassigned"
 
 const RED = Color(1,0,0,1)
 const WHITE = Color(1,1,1,1)
 
-onready var control_label = preload("res://Display/Settings/control_label.tscn")
-onready var control_btn = preload("res://Display/Settings/control_btn.tscn")
+@onready var control_label = preload("res://Display/Settings/control_label.tscn")
+@onready var control_btn = preload("res://Display/Settings/control_btn.tscn")
 
-onready var master_bar = $Settings/Container/Main/Contents/BaseAudio/Rect/Contents/SoundBar/MainVolBar
-onready var music_bar = $Settings/Container/Main/Contents/BaseAudio/Rect/Contents/SoundBar/MusicVolBar
-onready var sfx_bar = $Settings/Container/Main/Contents/BaseAudio/Rect/Contents/SoundBar/SFXVolBar
-
-
-onready var container = $Settings/Container
-onready var contents = $Settings/Container/Main/Contents
-onready var controls_column = $Settings/Container/Main/Contents/BaseControls/Scroll
-
-onready var slider = $Settings/Slider
-onready var tween = $Tween
-onready var controls = $Settings/Container/Main/Contents/Options/Controls
-onready var audio = $Settings/Container/Main/Contents/Options/Audio
-onready var game = $Settings/Container/Main/Contents/Options/Game
-onready var back = $Settings/Container/Main/Contents/Options/Back
+@onready var master_bar = $Settings/Container/Main/Contents/BaseAudio/Rect/Contents/SoundBar/MainVolBar
+@onready var music_bar = $Settings/Container/Main/Contents/BaseAudio/Rect/Contents/SoundBar/MusicVolBar
+@onready var sfx_bar = $Settings/Container/Main/Contents/BaseAudio/Rect/Contents/SoundBar/SFXVolBar
 
 
-onready var controls_action = $Settings/Container/Main/Contents/BaseControls/Scroll/Column/Action
-onready var controls_mapping = $Settings/Container/Main/Contents/BaseControls/Scroll/Column/Mapping
-onready var controls_message = $Settings/Container/Main/Contents/BaseControls/Message
-onready var controls_reset = $Settings/Container/Main/Contents/BaseControls/Button
+@onready var container = $Settings/Container
+@onready var contents = $Settings/Container/Main/Contents
+@onready var controls_column = $Settings/Container/Main/Contents/BaseControls/Scroll
 
-onready var base_controls = $Settings/Container/Main/Contents/BaseControls
-onready var base_audio = $Settings/Container/Main/Contents/BaseAudio
-onready var base_game = $Settings/Container/Main/Contents/BaseGame
-onready var base_empty = $Settings/Container/Main/Contents/BaseEmpty
+@onready var slider = $Settings/Slider
+@onready var tween = $Tween
+@onready var controls = $Settings/Container/Main/Contents/Options/Controls
+@onready var audio = $Settings/Container/Main/Contents/Options/Audio
+@onready var game = $Settings/Container/Main/Contents/Options/Game
+@onready var back = $Settings/Container/Main/Contents/Options/Back
+
+
+@onready var controls_action = $Settings/Container/Main/Contents/BaseControls/Scroll/Column/Action
+@onready var controls_mapping = $Settings/Container/Main/Contents/BaseControls/Scroll/Column/Mapping
+@onready var controls_message = $Settings/Container/Main/Contents/BaseControls/Message
+@onready var controls_reset = $Settings/Container/Main/Contents/BaseControls/Button
+
+@onready var base_controls = $Settings/Container/Main/Contents/BaseControls
+@onready var base_audio = $Settings/Container/Main/Contents/BaseAudio
+@onready var base_game = $Settings/Container/Main/Contents/BaseGame
+@onready var base_empty = $Settings/Container/Main/Contents/BaseEmpty
 
 
 var sliderisActive := false
@@ -46,7 +46,7 @@ var temp_control
 var key_action := []
 var key_duplicates := {}
 
-onready var active_tab = base_empty
+@onready var active_tab = base_empty
 
 signal closed_settings
 
@@ -77,22 +77,22 @@ func init_key_bindings(reset:= false):
 			true:
 				new_button = controls_mapping.get_node(key_action[i])
 			false:
-				new_label = control_label.instance()
-				new_button = control_btn.instance()
+				new_label = control_label.instantiate()
+				new_button = control_btn.instantiate()
 
 				new_label.name = key_action[i]
 				new_button.name = key_action[i]
 				new_button.get_child(0).name = key_action[i]
 
 				new_label.text = key_action[i].capitalize()
-				new_button.connect("pressed" ,self, "_on_button_pressed", [new_button])
-				new_button.connect("mouse_entered" ,self, "_on_button_mouse_entered", [new_button])
+				new_button.connect("pressed", Callable(self, "_on_button_pressed").bind(new_button))
+				new_button.connect("mouse_entered", Callable(self, "_on_button_mouse_entered").bind(new_button))
 				controls_action.add_child(new_label)
 				controls_mapping.add_child(new_button)
 
-		new_button.get_child(0).text = reform_btn_text(InputMap.get_action_list(key_action[i])[0].as_text())
-		if(new_button.get_child(0).get("custom_colors/font_color") == RED):
-			new_button.get_child(0).set("custom_colors/font_color", WHITE)
+		new_button.get_child(0).text = reform_btn_text(InputMap.action_get_events(key_action[i])[0].as_text())
+		if(new_button.get_child(0).get("theme_override_colors/font_color") == RED):
+			new_button.get_child(0).set("theme_override_colors/font_color", WHITE)
 
 
 func reform_btn_text(text):
@@ -118,11 +118,11 @@ func _on_button_pressed(button):
 
 	if(temp_control):
 		if(prior_collision):
-			temp_control.get_child(0).set("custom_colors/font_color", RED)
-		temp_control.get_child(0).text = reform_btn_text(InputMap.get_action_list(temp_control.name)[0].as_text())
+			temp_control.get_child(0).set("theme_override_colors/font_color", RED)
+		temp_control.get_child(0).text = reform_btn_text(InputMap.action_get_events(temp_control.name)[0].as_text())
 
-	if(button.get_child(0).get("custom_colors/font_color") == RED):
-		button.get_child(0).set("custom_colors/font_color", WHITE)
+	if(button.get_child(0).get("theme_override_colors/font_color") == RED):
+		button.get_child(0).set("theme_override_colors/font_color", WHITE)
 		prior_collision = true
 	else:
 		prior_collision = false
@@ -146,7 +146,7 @@ func _input(event):
 	elif event is InputEventMouseButton:
 		if(edit_control):
 			edit_control = false
-			if(event.button_index == BUTTON_LEFT || event.button_index == BUTTON_RIGHT):
+			if(event.button_index == MOUSE_BUTTON_LEFT || event.button_index == MOUSE_BUTTON_RIGHT):
 				align_mouse_event(event)
 				_edit_key(event)
 
@@ -154,22 +154,22 @@ func _input(event):
 func align_mouse_event(event):
 	event.position = Vector2(0, 0)
 	event.button_mask= 0
-	event.pressed = false
+	event.button_pressed = false
 	event.doubleclick = false
 
 # Affixes the new key binding to the action highlighted
 func _edit_key(new_key):
 	var action_name = temp_control.name
 	var old_key
-	if !InputMap.get_action_list(action_name).empty():
-		old_key = InputMap.get_action_list(temp_control.name)[0]
-		InputMap.action_erase_event(action_name, InputMap.get_action_list(action_name)[0])
+	if !InputMap.action_get_events(action_name).is_empty():
+		old_key = InputMap.action_get_events(temp_control.name)[0]
+		InputMap.action_erase_event(action_name, InputMap.action_get_events(action_name)[0])
 
 	check_duplicates(new_key, temp_control.name)
 	# Update duplicate list
 	InputMap.action_add_event(action_name, new_key)
 
-	var btn_text = reform_btn_text(InputMap.get_action_list(temp_control.name)[0].as_text())
+	var btn_text = reform_btn_text(InputMap.action_get_events(temp_control.name)[0].as_text())
 	DataResource.dict_input_map[temp_control.name] = btn_text
 	temp_control.get_child(0).text = btn_text
 
@@ -224,8 +224,8 @@ func handle_duplicates(action_assigned, conflicting_action):
 	var assigned_mapping = controls_mapping.get_node(action_assigned).get_child(0)
 	var conflict_mapping = controls_mapping.get_node(conflicting_action).get_child(0)
 
-	assigned_mapping.set("custom_colors/font_color", RED)
-	conflict_mapping.set("custom_colors/font_color", RED)
+	assigned_mapping.set("theme_override_colors/font_color", RED)
+	conflict_mapping.set("theme_override_colors/font_color", RED)
 
 # Clears duplicates that have been resolved
 func clear_duplicates(action_assigned):
@@ -237,7 +237,7 @@ func clear_duplicates(action_assigned):
 
 			if(key_duplicates[i].size() == 1):
 				var conflict_mapping = controls_mapping.get_node(key_duplicates[i][0]).get_child(0)
-				conflict_mapping.set("custom_colors/font_color", WHITE)
+				conflict_mapping.set("theme_override_colors/font_color", WHITE)
 				update_duplicates = true
 
 		if(update_duplicates):
@@ -248,9 +248,9 @@ func clear_duplicates(action_assigned):
 
 
 	var assigned_mapping = controls_mapping.get_node(action_assigned).get_child(0)
-	assigned_mapping.set("custom_colors/font_color", WHITE)
+	assigned_mapping.set("theme_override_colors/font_color", WHITE)
 
-	if(key_duplicates.empty()):
+	if(key_duplicates.is_empty()):
 		controls_message.hide()
 		back.disabled = false
 
@@ -263,7 +263,7 @@ func _on_Reset_pressed():
 
 func handle_reset():
 	key_duplicates.clear()
-	InputMap.load_from_globals()
+	InputMap.load_from_project_settings()
 	init_key_bindings(true)
 
 #########
@@ -276,9 +276,9 @@ func init_bar_vals():
 	sfx_bar.value = (DataResource.dict_settings.audio_sfx + 68) / 60 * 100
 
 func connect_functions():
-	var _conn1 = DataResource.connect("change_audio_master", self, "change_master_vol")
-	var _conn2 = DataResource.connect("change_audio_music", self, "change_music_vol")
-	var _conn3 = DataResource.connect("change_audio_sfx", self, "change_sfx_vol")
+	var _conn1 = DataResource.connect("change_audio_master", Callable(self, "change_master_vol"))
+	var _conn2 = DataResource.connect("change_audio_music", Callable(self, "change_music_vol"))
+	var _conn3 = DataResource.connect("change_audio_sfx", Callable(self, "change_sfx_vol"))
 
 func _on_MuteToggle_pressed():
 	DataResource.dict_settings.is_mute = !DataResource.dict_settings.is_mute
@@ -344,13 +344,13 @@ func handle_input(event):
 		_on_Back_pressed()
 
 func _on_Controls_mouse_entered():
-	var new_position = Vector2(slider.rect_position.x, controls.rect_position.y)
-	var new_offset = controls.get_child(0).rect_size.y /4
+	var new_position = Vector2(slider.position.x, controls.position.y)
+	var new_offset = controls.get_child(0).size.y /4
 	slide_to_position(new_position, new_offset)
 
 func _on_Audio_mouse_entered():
-	var new_position = Vector2(slider.rect_position.x, audio.rect_position.y)
-	var new_offset = audio.get_child(0).rect_size.y /4
+	var new_position = Vector2(slider.position.x, audio.position.y)
+	var new_offset = audio.get_child(0).size.y /4
 	slide_to_position(new_position, new_offset)
 
 func _on_Game_mouse_entered():
@@ -361,22 +361,22 @@ func _on_Game_mouse_entered():
 
 
 func _on_Back_mouse_entered():
-	var new_position = Vector2(slider.rect_position.x, back.rect_position.y)
-	var new_offset = back.get_child(0).rect_size.y /4
+	var new_position = Vector2(slider.position.x, back.position.y)
+	var new_offset = back.get_child(0).size.y /4
 	slide_to_position(new_position, new_offset)
 
 # Slides the slider to the intended position, or shows it there if not visible
 func slide_to_position(new_position, new_offset):
 	# Offset of position
-	new_position.y += contents.rect_position.y
+	new_position.y += contents.position.y
 	new_position.y /= 6.25
 	new_position.y += new_offset
-	var old_position = slider.rect_position
+	var old_position = slider.position
 	if(sliderisActive):
-		tween.interpolate_property(slider, "rect_position", old_position, new_position, 0.075, Tween.TRANS_SINE, Tween.EASE_IN_OUT)
+		tween.interpolate_property(slider, "position", old_position, new_position, 0.075, Tween.TRANS_SINE, Tween.EASE_IN_OUT)
 		tween.start()
 	else:
-		slider.rect_position.y = new_position.y
+		slider.position.y = new_position.y
 		slider.show()
 		sliderisActive = true
 

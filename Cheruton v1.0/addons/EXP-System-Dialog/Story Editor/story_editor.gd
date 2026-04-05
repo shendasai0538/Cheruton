@@ -1,21 +1,21 @@
-tool
+@tool
 extends Control
 
 signal changed_story
 signal close_pressed
 signal dialog_edit_pressed(story, did)
 
-onready var _Dialog_Record_Root = self.get_node("VBoxContainer/HBoxContainer3/Panel/VScrollBar/Dialog_Record_Root")
-onready var _Dir = Directory.new()
-onready var _Filename_LBL = self.get_node("VBoxContainer/HBoxContainer2/Filename_LBL")
-onready var _Filter_Menu = self.get_node("VBoxContainer/HBoxContainer2/Filter_MenuButton")
-onready var _Group_List = self.get_node("VBoxContainer/HBoxContainer3/Group_Manager/Group_ItemList")
-onready var _Group_Manager_Panel = self.get_node("VBoxContainer/HBoxContainer3/Group_Manager")
-onready var _Group_Selector = self.get_node("VBoxContainer/HBoxContainer/Group_Selector_BTN")
-onready var _New_Group_LineEdit = self.get_node("VBoxContainer/HBoxContainer3/Group_Manager/HBoxContainer/Add_Group_LineEdit")
-onready var _Search_LineEdit = self.get_node("VBoxContainer/HBoxContainer2/Search_LineEdit")
-onready var _Search_Option_BTN = self.get_node("VBoxContainer/HBoxContainer2/Search_OptionButton")
-onready var _Story_Menu = self.get_node("VBoxContainer/HBoxContainer/Story")
+@onready var _Dialog_Record_Root = self.get_node("VBoxContainer/HBoxContainer3/Panel/VScrollBar/Dialog_Record_Root")
+@onready var _Dir = DirAccess.new()
+@onready var _Filename_LBL = self.get_node("VBoxContainer/HBoxContainer2/Filename_LBL")
+@onready var _Filter_Menu = self.get_node("VBoxContainer/HBoxContainer2/Filter_MenuButton")
+@onready var _Group_List = self.get_node("VBoxContainer/HBoxContainer3/Group_Manager/Group_ItemList")
+@onready var _Group_Manager_Panel = self.get_node("VBoxContainer/HBoxContainer3/Group_Manager")
+@onready var _Group_Selector = self.get_node("VBoxContainer/HBoxContainer/Group_Selector_BTN")
+@onready var _New_Group_LineEdit = self.get_node("VBoxContainer/HBoxContainer3/Group_Manager/HBoxContainer/Add_Group_LineEdit")
+@onready var _Search_LineEdit = self.get_node("VBoxContainer/HBoxContainer2/Search_LineEdit")
+@onready var _Search_Option_BTN = self.get_node("VBoxContainer/HBoxContainer2/Search_OptionButton")
+@onready var _Story_Menu = self.get_node("VBoxContainer/HBoxContainer/Story")
 
 var _Dialog_Record = preload("res://addons/EXP-System-Dialog/Story Editor/Dialog Record/Dialog_Record.tscn")
 var _EXP_Baked_Story = preload("res://addons/EXP-System-Dialog/Resource_BakedStory/EXP_BakedStory.gd")
@@ -40,7 +40,7 @@ func _ready():
 	self._create_rename_box()
 	self._populate_story_menu()
 	self._setup_dialogs()
-	self._Filter_Menu.get_popup().connect("index_pressed", self, "_on_Filter_Menu_index_pressed")
+	self._Filter_Menu.get_popup().connect("index_pressed", Callable(self, "_on_Filter_Menu_index_pressed"))
 	self._Filter_Menu.get_popup().hide_on_checkable_item_selection = false
 	self._populate_filter_menu()
 	self._populate_searchby_menu()
@@ -161,7 +161,7 @@ func _on_Load_CSV_file_selected(filepath : String):
 	while not csv_file.eof_reached():
 		var line = csv_file.get_csv_line()
 
-		if line.empty():
+		if line.is_empty():
 			continue
 
 		var did = int(line[0])
@@ -196,15 +196,15 @@ func _on_Load_Story_file_selected(filename : String):
 	self._populate_filter_menu()
 
 	for did in self.get_dids():
-		var new_dialog_record = _Dialog_Record.instance()
+		var new_dialog_record = _Dialog_Record.instantiate()
 		self._Dialog_Record_Root.add_child(new_dialog_record)
 		new_dialog_record.set_story_editor(self)
-		new_dialog_record.connect("checked", self, "_on_Dialog_checked")
-		new_dialog_record.connect("unchecked", self, "_on_Dialog_unchecked")
+		new_dialog_record.connect("checked", Callable(self, "_on_Dialog_checked"))
+		new_dialog_record.connect("unchecked", Callable(self, "_on_Dialog_unchecked"))
 		new_dialog_record.connect("changed_human_readable_text", self,
 			"_on_Dialog_changed_human_readable_text")
-		new_dialog_record.connect("edit_pressed", self, "_on_Dialog_edit_pressed")
-		new_dialog_record.connect("rename_pressed", self, "_on_Record_Rename_pressed")
+		new_dialog_record.connect("edit_pressed", Callable(self, "_on_Dialog_edit_pressed"))
+		new_dialog_record.connect("rename_pressed", Callable(self, "_on_Record_Rename_pressed"))
 
 		new_dialog_record.set_did(did)
 		var human_readable_description = self.get_dialog_property(did, "human_readable_description")
@@ -243,7 +243,7 @@ func _on_Rename_Box_Rename(rename : String):
 	var old_name = record.get_record_name()
 	var record_did = record.get_did()
 
-	if rename.empty() or rename == "NAME":
+	if rename.is_empty() or rename == "NAME":
 		record.set_record_name("NAME")
 		self._story[record_did].erase("name")
 		self._record_names.erase(old_name)
@@ -325,7 +325,7 @@ func _on_Uncheck_All_BTN_pressed():
 func create_node(did : int, type : String) -> int:
 	var new_nid = self._generate_nid(did)
 	var node_data = {"type": type, "text": "", "graph_offset": Vector2(40, 40),
-	"rect_size": Vector2(0,0) ,"links": {}, "slot_amount": 1}
+	"size": Vector2(0,0) ,"links": {}, "slot_amount": 1}
 	self._story[did]["nodes"][new_nid] = node_data
 	return new_nid
 
@@ -422,7 +422,7 @@ func _bake_data() :
 		for nid in baked_story[did]["nodes"].keys():
 			baked_story[did]["nodes"][nid].erase("type")
 			baked_story[did]["nodes"][nid].erase("graph_offset")
-			baked_story[did]["nodes"][nid].erase("rect_size")
+			baked_story[did]["nodes"][nid].erase("size")
 			baked_story[did]["nodes"][nid].erase("slot_amount")
 	return baked_story.duplicate(true)
 
@@ -476,16 +476,16 @@ func _create_dialog() -> int:
 func _create_dialog_record():
 	var new_did = self._create_dialog()
 
-	var new_dialog_record = _Dialog_Record.instance()
+	var new_dialog_record = _Dialog_Record.instantiate()
 	self._Dialog_Record_Root.add_child(new_dialog_record)
 	new_dialog_record.set_story_editor(self)
 
-	new_dialog_record.connect("checked", self, "_on_Dialog_checked")
-	new_dialog_record.connect("unchecked", self, "_on_Dialog_unchecked")
+	new_dialog_record.connect("checked", Callable(self, "_on_Dialog_checked"))
+	new_dialog_record.connect("unchecked", Callable(self, "_on_Dialog_unchecked"))
 	new_dialog_record.connect("changed_human_readable_text", self,
 		"_on_Dialog_changed_human_readable_text")
-	new_dialog_record.connect("edit_pressed", self, "_on_Dialog_edit_pressed")
-	new_dialog_record.connect("rename_pressed", self, "_on_Record_Rename_pressed")
+	new_dialog_record.connect("edit_pressed", Callable(self, "_on_Dialog_edit_pressed"))
+	new_dialog_record.connect("rename_pressed", Callable(self, "_on_Record_Rename_pressed"))
 
 	new_dialog_record.set_did(new_did)
 	new_dialog_record.update_human_readable_description(
@@ -493,8 +493,8 @@ func _create_dialog_record():
 
 
 func _create_rename_box():
-	self._Record_Rename_Box = _Record_Rename_Box_TSCN.instance()
-	self._Record_Rename_Box.connect("rename_BTN_pressed", self, "_on_Rename_Box_Rename")
+	self._Record_Rename_Box = _Record_Rename_Box_TSCN.instantiate()
+	self._Record_Rename_Box.connect("rename_BTN_pressed", Callable(self, "_on_Rename_Box_Rename"))
 	self.add_child(self._Record_Rename_Box)
 
 
@@ -527,14 +527,14 @@ func _dialog_remove_group(did : int, group : String):
 
 
 func _generate_did() -> int:
-	if not self._available_dids.empty():
+	if not self._available_dids.is_empty():
 		return self._available_dids.pop_front()
 	else:
 		return self._story.size() + 1
 
 
 func _generate_nid(did : int) -> int:
-	if not self._story[did]["available_nid"].empty():
+	if not self._story[did]["available_nid"].is_empty():
 		return self._story[did]["available_nid"].pop_front()
 	else:
 		return self._story[did]["nodes"].size() + 1
@@ -595,7 +595,7 @@ func _populate_story_menu():
 	self._Story_Menu.get_popup().add_item("Bake Story As", 3)
 	self._Story_Menu.get_popup().add_item("Save CSV As", 4)
 	self._Story_Menu.get_popup().add_item("Load CSV", 5)
-	self._Story_Menu.get_popup().connect("id_pressed", self, "_on_story_menu_option_pressed")
+	self._Story_Menu.get_popup().connect("id_pressed", Callable(self, "_on_story_menu_option_pressed"))
 
 
 func _remove_all_records():
@@ -611,11 +611,11 @@ func _remove_group_from_story(group : String):
 
 
 func _remove_record(dialog_record):
-	dialog_record.disconnect("checked", self, "_on_Dialog_checked")
-	dialog_record.disconnect("unchecked", self, "_on_Dialog_unchecked")
+	dialog_record.disconnect("checked", Callable(self, "_on_Dialog_checked"))
+	dialog_record.disconnect("unchecked", Callable(self, "_on_Dialog_unchecked"))
 	dialog_record.disconnect("changed_human_readable_text", self,
 		"_on_Dialog_changed_human_readable_text")
-	dialog_record.disconnect("rename_pressed", self, "_on_Record_Rename_pressed")
+	dialog_record.disconnect("rename_pressed", Callable(self, "_on_Record_Rename_pressed"))
 	var record_name = dialog_record.get_record_name()
 	if not record_name == "NAME":
 		self._record_names.erase(record_name)
@@ -644,48 +644,48 @@ func _save_data_to(filename):
 
 func _setup_dialogs():
 	self._Load_Story = EditorFileDialog.new()
-	self._Load_Story.mode = EditorFileDialog.MODE_OPEN_FILE
+	self._Load_Story.mode = EditorFileDialog.FILE_MODE_OPEN_FILE
 	self._Load_Story.add_filter("*.tres ; Story files")
 	self._Load_Story.resizable = true
 	self._Load_Story.access = EditorFileDialog.ACCESS_RESOURCES
 	self._Load_Story.current_dir = "res://"
-	self._Load_Story.connect("file_selected", self, "_on_Load_Story_file_selected")
+	self._Load_Story.connect("file_selected", Callable(self, "_on_Load_Story_file_selected"))
 	self.add_child(self._Load_Story)
 
 	self._Save_Story_As = EditorFileDialog.new()
-	self._Save_Story_As.mode = EditorFileDialog.MODE_SAVE_FILE
+	self._Save_Story_As.mode = EditorFileDialog.FILE_MODE_SAVE_FILE
 	self._Save_Story_As.add_filter("*.tres ; Story files")
 	self._Save_Story_As.resizable = true
 	self._Save_Story_As.access = EditorFileDialog.ACCESS_RESOURCES
 	self._Save_Story_As.current_dir = "res://"
-	self._Save_Story_As.connect("file_selected", self, "_on_Save_Story_As_file_selected")
+	self._Save_Story_As.connect("file_selected", Callable(self, "_on_Save_Story_As_file_selected"))
 	self.add_child(self._Save_Story_As)
 
 	self._Bake_Story_As = EditorFileDialog.new()
-	self._Bake_Story_As.mode = EditorFileDialog.MODE_SAVE_FILE
+	self._Bake_Story_As.mode = EditorFileDialog.FILE_MODE_SAVE_FILE
 	self._Bake_Story_As.add_filter("*.tres ; Baked Story files")
 	self._Bake_Story_As.resizable = true
 	self._Bake_Story_As.access = EditorFileDialog.ACCESS_RESOURCES
 	self._Bake_Story_As.current_dir = "res://"
-	self._Bake_Story_As.connect("file_selected", self, "_on_Bake_Story_As_file_selected")
+	self._Bake_Story_As.connect("file_selected", Callable(self, "_on_Bake_Story_As_file_selected"))
 	self.add_child(self._Bake_Story_As)
 
 	self._Save_CSV_As = EditorFileDialog.new()
-	self._Save_CSV_As.mode = EditorFileDialog.MODE_SAVE_FILE
+	self._Save_CSV_As.mode = EditorFileDialog.FILE_MODE_SAVE_FILE
 	self._Save_CSV_As.add_filter("*.csv ; CSV files")
 	self._Save_CSV_As.resizable = true
 	self._Save_CSV_As.access = EditorFileDialog.ACCESS_FILESYSTEM
 	self._Save_CSV_As.current_dir = "res://"
-	self._Save_CSV_As.connect("file_selected", self, "_on_Save_CVS_As_file_selected")
+	self._Save_CSV_As.connect("file_selected", Callable(self, "_on_Save_CVS_As_file_selected"))
 	self.add_child(self._Save_CSV_As)
 
 	self._Load_CSV  = EditorFileDialog.new()
-	self._Load_CSV .mode = EditorFileDialog.MODE_OPEN_FILE
-	self._Load_CSV .add_filter("*.csv ; CSV files")
+	self._Load_CSV .mode = EditorFileDialog.FILE_MODE_OPEN_FILE
+	self._Load_CSV super.add_filter("*.csv ; CSV files")
 	self._Load_CSV .resizable = true
 	self._Load_CSV .access = EditorFileDialog.ACCESS_FILESYSTEM
 	self._Load_CSV .current_dir = "res://"
-	self._Load_CSV .connect("file_selected", self, "_on_Load_CSV_file_selected")
+	self._Load_CSV super.connect("file_selected", Callable(self, "_on_Load_CSV_file_selected"))
 	self.add_child(self._Load_CSV)
 
 
@@ -708,14 +708,14 @@ func _update_filter():
 			for child in children:
 				var did = child.get_did()
 				var human_readable_description = self.get_dialog_property(did, "human_readable_description")
-				if human_readable_description.find(new_text) == -1 and not new_text.empty():
+				if human_readable_description.find(new_text) == -1 and not new_text.is_empty():
 					child.visible = false
 				else:
 					child.visible = false
 					if self._Filter_Menu.get_popup().get_item_count() == 0:
 						child.visible = true
 					var dialog_groups = self.dialog_get_groups(did)
-					if dialog_groups.empty() and filter_groups.has("-No Tags-"):
+					if dialog_groups.is_empty() and filter_groups.has("-No Tags-"):
 						child.visible = true
 					for group in dialog_groups:
 						if filter_groups.has(group):
@@ -723,14 +723,14 @@ func _update_filter():
 		1: #DID Search
 			for child in children:
 				var did = child.get_did()
-				if not new_text == str(did) and not new_text.empty():
+				if not new_text == str(did) and not new_text.is_empty():
 					child.visible = false
 				else:
 					child.visible = false
 					if self._Filter_Menu.get_popup().get_item_count() == 0:
 						child.visible = true
 					var dialog_groups = self.dialog_get_groups(did)
-					if dialog_groups.empty() and filter_groups.has("-No Tags-"):
+					if dialog_groups.is_empty() and filter_groups.has("-No Tags-"):
 						child.visible = true
 					for group in dialog_groups:
 						if filter_groups.has(group):
@@ -739,14 +739,14 @@ func _update_filter():
 			for child in children:
 				var did = child.get_did()
 				var record_name = child.get_record_name()
-				if record_name.find(new_text) == -1 and not new_text.empty():
+				if record_name.find(new_text) == -1 and not new_text.is_empty():
 					child.visible = false
 				else:
 					child.visible = false
 					if self._Filter_Menu.get_popup().get_item_count() == 0:
 						child.visible = true
 					var dialog_groups = self.dialog_get_groups(did)
-					if dialog_groups.empty() and filter_groups.has("-No Tags-"):
+					if dialog_groups.is_empty() and filter_groups.has("-No Tags-"):
 						child.visible = true
 					for group in dialog_groups:
 						if filter_groups.has(group):

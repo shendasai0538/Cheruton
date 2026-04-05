@@ -28,4 +28,4 @@ func _on_Area2D_body_entered(body):
 	$CutscenePlayer.play("cutscene0_0")
 	
 func next_scene():
-	SceneControl.change_scene(self, "res://Levels/Cave0/Cave0.tscn")
+	SceneControl.change_scene_to_file(self, "res://Levels/Cave0/Cave0.tscn")

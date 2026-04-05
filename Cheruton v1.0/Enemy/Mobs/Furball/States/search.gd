@@ -10,7 +10,7 @@ func enter():
 	jump_started = false
 
 func jump(): #called by animation player
-	owner.velocity.y =  JUMP_VEL + rand_range(-100, 100) # this helps to remove syncing of multiple mob animations
+	owner.velocity.y =  JUMP_VEL + randf_range(-100, 100) # this helps to remove syncing of multiple mob animations
 	jump_started = true
 
 func update( delta ):

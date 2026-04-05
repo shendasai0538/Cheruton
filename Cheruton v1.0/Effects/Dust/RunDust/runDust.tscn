@@ -6,7 +6,7 @@
 
 
 
-[node name="runDust" type="Particles2D"]
+[node name="runDust" type="GPUParticles2D"]
 emitting = false
 amount = 10
 lifetime = 0.7

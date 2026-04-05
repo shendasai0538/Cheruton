@@ -33,21 +33,21 @@ func _ready() -> void:
 	call_deferred("enter_level")
 
 func _set_player() -> void:
-	player = find_node( "player" )
+	player = find_child( "player" )
 	if player == null:
 		print( "Level: player not found" )
 
 func _set_camera() -> void:
-	camera = find_node( "camera" )
+	camera = find_child( "camera" )
 	if camera == null:
 		print( "Level: camera not found" )
 
-	var pos_NW = find_node( "camera_limit_NW" )
+	var pos_NW = find_child( "camera_limit_NW" )
 	if pos_NW:
 		camera.limit_left = pos_NW.position.x
 		camera.limit_top = pos_NW.position.y
 
-	var pos_SE = find_node( "camera_limit_SE" )
+	var pos_SE = find_child( "camera_limit_SE" )
 	if pos_SE:
 		camera.limit_right = pos_SE.position.x
 		camera.limit_bottom = pos_SE.position.y
@@ -56,27 +56,27 @@ func _set_player_objects() -> void:
 	if not player: return
 
 	if camera:
-		player.connect("camera_command", camera, "_on_player_camera_command")
+		player.connect("camera_command", Callable(camera, "_on_player_camera_command"))
 
-	var grapple_hook = find_node ("grappleHook")
+	var grapple_hook = find_child ("grappleHook")
 	if grapple_hook:
-		grapple_hook.connect("hooked", player, "_on_Chain_hooked")
-		player.connect("hook_command", grapple_hook, "_on_player_hook_command")
+		grapple_hook.connect("hooked", Callable(player, "_on_Chain_hooked"))
+		player.connect("hook_command", Callable(grapple_hook, "_on_player_hook_command"))
 	else:
 		print("Level: grappleHook not found")
 
-	var flying_sword = find_node("flyingSword")
+	var flying_sword = find_child("flyingSword")
 	if flying_sword:
-		flying_sword.connect("sword_result", player, "on_sword_result")
-		player.connect("flying_sword_command", flying_sword, "_on_flyingSword_command")
+		flying_sword.connect("sword_result", Callable(player, "on_sword_result"))
+		player.connect("flying_sword_command", Callable(flying_sword, "_on_flyingSword_command"))
 	else:
 		print("Level: flyingSword not found")
 
 func _set_level():
-	var death_zone = find_node("DeathZone")
+	var death_zone = find_child("DeathZone")
 
 	if death_zone:
-		death_zone.connect("body_entered", self, "handle_death_zone")
+		death_zone.connect("body_entered", Callable(self, "handle_death_zone"))
 	else:
 		print("death_zone not found")
 

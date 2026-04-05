@@ -1,30 +1,30 @@
 [gd_scene load_steps=12 format=2]
 
 [ext_resource path="res://Display/Pause/Pause.gd" type="Script" id=1]
-[ext_resource path="res://Display/Pause/Sprites/Slots/HorizontalTabSelect.png" type="Texture" id=2]
-[ext_resource path="res://Display/Pause/Sprites/Base/baseUIBackgroundg.png" type="Texture" id=3]
-[ext_resource path="res://Display/Pause/Sprites/Icons/exit.png" type="Texture" id=4]
-[ext_resource path="res://Display/Pause/Sprites/Slots/HorizontalTabDeSelect.png" type="Texture" id=5]
-[ext_resource path="res://Display/Font/eight-bit-dragon.otf" type="DynamicFontData" id=6]
-[ext_resource path="res://Display/Font/UAV-OSD-Mono-13.ttf" type="DynamicFontData" id=7]
+[ext_resource path="res://Display/Pause/Sprites/Slots/HorizontalTabSelect.png" type="Texture2D" id=2]
+[ext_resource path="res://Display/Pause/Sprites/Base/baseUIBackgroundg.png" type="Texture2D" id=3]
+[ext_resource path="res://Display/Pause/Sprites/Icons/exit.png" type="Texture2D" id=4]
+[ext_resource path="res://Display/Pause/Sprites/Slots/HorizontalTabDeSelect.png" type="Texture2D" id=5]
+[ext_resource path="res://Display/Font/eight-bit-dragon.otf" type="FontFile" id=6]
+[ext_resource path="res://Display/Font/UAV-OSD-Mono-13.ttf" type="FontFile" id=7]
 [ext_resource path="res://Display/Pause/sound/SFX_UI_Resume.mp3" type="AudioStream" id=8]
 [ext_resource path="res://Display/Pause/sound/SFX_UI_Pause.mp3" type="AudioStream" id=9]
 
-[sub_resource type="DynamicFont" id=1]
+[sub_resource type="FontFile" id=1]
 size = 14
 outline_size = 1
 outline_color = Color( 0, 0, 0, 1 )
 extra_spacing_space = -4
 font_data = ExtResource( 7 )
 
-[sub_resource type="DynamicFont" id=2]
+[sub_resource type="FontFile" id=2]
 size = 10
 font_data = ExtResource( 6 )
 
 [node name="Pause" type="Control"]
-margin_right = 480.0
-margin_bottom = 270.0
-rect_scale = Vector2( 4, 4 )
+offset_right = 480.0
+offset_bottom = 270.0
+scale = Vector2( 4, 4 )
 script = ExtResource( 1 )
 __meta__ = {
 "_edit_use_anchors_": false
@@ -35,11 +35,11 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-margin_left = -107.5
-margin_top = -60.0
-margin_right = 107.5
-margin_bottom = 60.0
-rect_pivot_offset = Vector2( 140, 60 )
+offset_left = -107.5
+offset_top = -60.0
+offset_right = 107.5
+offset_bottom = 60.0
+pivot_offset = Vector2( 140, 60 )
 texture = ExtResource( 3 )
 patch_margin_left = 50
 patch_margin_top = 50
@@ -50,10 +50,10 @@ __meta__ = {
 }
 
 [node name="Rectangle" type="TextureRect" parent="Border"]
-margin_left = 18.0
-margin_top = 10.0
-margin_right = 192.0
-margin_bottom = 111.0
+offset_left = 18.0
+offset_top = 10.0
+offset_right = 192.0
+offset_bottom = 111.0
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -61,17 +61,17 @@ __meta__ = {
 [node name="VBoxContainer" type="VBoxContainer" parent="Border/Rectangle"]
 anchor_right = 1.0
 anchor_bottom = 1.0
-margin_right = 7.0
-rect_min_size = Vector2( 0, 50 )
-custom_constants/separation = 13
+offset_right = 7.0
+custom_minimum_size = Vector2( 0, 50 )
+theme_override_constants/separation = 13
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="GPaused" type="Label" parent="Border/Rectangle/VBoxContainer"]
-margin_right = 181.0
-margin_bottom = 16.0
-custom_fonts/font = SubResource( 1 )
+offset_right = 181.0
+offset_bottom = 16.0
+theme_override_fonts/font = SubResource( 1 )
 text = "Game Paused"
 align = 1
 valign = 1
@@ -80,9 +80,9 @@ __meta__ = {
 }
 
 [node name="Buttons" type="TextureRect" parent="Border/Rectangle/VBoxContainer"]
-margin_top = 29.0
-margin_right = 181.0
-margin_bottom = 101.0
+offset_top = 29.0
+offset_right = 181.0
+offset_bottom = 101.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
@@ -91,20 +91,20 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-margin_left = -40.0
-margin_top = -40.0
-margin_right = 40.0
-margin_bottom = 40.0
-rect_min_size = Vector2( 80, 80 )
-custom_constants/separation = 12
+offset_left = -40.0
+offset_top = -40.0
+offset_right = 40.0
+offset_bottom = 40.0
+custom_minimum_size = Vector2( 80, 80 )
+theme_override_constants/separation = 12
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="Settings" type="TextureButton" parent="Border/Rectangle/VBoxContainer/Buttons/Buttons"]
-margin_right = 80.0
-margin_bottom = 15.0
-rect_min_size = Vector2( 0, 15 )
+offset_right = 80.0
+offset_bottom = 15.0
+custom_minimum_size = Vector2( 0, 15 )
 texture_pressed = ExtResource( 5 )
 texture_hover = ExtResource( 2 )
 expand = true
@@ -112,7 +112,7 @@ expand = true
 [node name="Label" type="Label" parent="Border/Rectangle/VBoxContainer/Buttons/Buttons/Settings"]
 anchor_right = 1.0
 anchor_bottom = 1.0
-custom_fonts/font = SubResource( 2 )
+theme_override_fonts/font = SubResource( 2 )
 text = "Settings"
 align = 1
 valign = 1
@@ -121,10 +121,10 @@ __meta__ = {
 }
 
 [node name="RMMenu" type="TextureButton" parent="Border/Rectangle/VBoxContainer/Buttons/Buttons"]
-margin_top = 27.0
-margin_right = 80.0
-margin_bottom = 42.0
-rect_min_size = Vector2( 0, 15 )
+offset_top = 27.0
+offset_right = 80.0
+offset_bottom = 42.0
+custom_minimum_size = Vector2( 0, 15 )
 texture_pressed = ExtResource( 5 )
 texture_hover = ExtResource( 2 )
 expand = true
@@ -132,7 +132,7 @@ expand = true
 [node name="Label" type="Label" parent="Border/Rectangle/VBoxContainer/Buttons/Buttons/RMMenu"]
 anchor_right = 1.0
 anchor_bottom = 1.0
-custom_fonts/font = SubResource( 2 )
+theme_override_fonts/font = SubResource( 2 )
 text = "Main Menu"
 align = 1
 valign = 1
@@ -141,10 +141,10 @@ __meta__ = {
 }
 
 [node name="ExitDirect" type="TextureButton" parent="Border/Rectangle/VBoxContainer/Buttons/Buttons"]
-margin_top = 54.0
-margin_right = 80.0
-margin_bottom = 69.0
-rect_min_size = Vector2( 0, 15 )
+offset_top = 54.0
+offset_right = 80.0
+offset_bottom = 69.0
+custom_minimum_size = Vector2( 0, 15 )
 texture_pressed = ExtResource( 5 )
 texture_hover = ExtResource( 2 )
 expand = true
@@ -152,7 +152,7 @@ expand = true
 [node name="Label2" type="Label" parent="Border/Rectangle/VBoxContainer/Buttons/Buttons/ExitDirect"]
 anchor_right = 1.0
 anchor_bottom = 1.0
-custom_fonts/font = SubResource( 2 )
+theme_override_fonts/font = SubResource( 2 )
 text = "Exit"
 align = 1
 valign = 1
@@ -161,10 +161,10 @@ __meta__ = {
 }
 
 [node name="ExitPause" type="TextureButton" parent="Border"]
-margin_left = 189.728
-margin_top = 6.8176
-margin_right = 201.728
-margin_bottom = 18.8176
+offset_left = 189.728
+offset_top = 6.8176
+offset_right = 201.728
+offset_bottom = 18.8176
 texture_normal = ExtResource( 4 )
 __meta__ = {
 "_edit_use_anchors_": false

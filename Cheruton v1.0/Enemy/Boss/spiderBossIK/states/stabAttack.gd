@@ -51,10 +51,10 @@ func update(delta):
 	owner.move()
 
 func stab_move_body_sprites():
-	owner.desired_head_pos = owner.default_sprite_pos[0] + (owner.velocity * 0.2).clamped(300)
-	owner.desired_feeler_pos = owner.default_sprite_pos[1] + (owner.velocity * 0.01).clamped(0)
-	owner.desired_mid_body_pos = owner.default_sprite_pos[2] + owner.velocity.clamped(0)
-	owner.desired_butt_pos =owner. default_sprite_pos[3] - (owner.velocity * 0.1).clamped(48)
+	owner.desired_head_pos = owner.default_sprite_pos[0] + (owner.velocity * 0.2).limit_length(300)
+	owner.desired_feeler_pos = owner.default_sprite_pos[1] + (owner.velocity * 0.01).limit_length(0)
+	owner.desired_mid_body_pos = owner.default_sprite_pos[2] + owner.velocity.limit_length(0)
+	owner.desired_butt_pos =owner. default_sprite_pos[3] - (owner.velocity * 0.1).limit_length(48)
 
 func update_idle(delta):
 	match stage:

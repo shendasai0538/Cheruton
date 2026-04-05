@@ -8,8 +8,8 @@ var dialog_over:= false
 
 func _ready():
 	for child in get_children():
-		child.connect("new_gui", self, "new_gui")
-		child.connect("release_gui", self, "release_gui")
+		child.connect("new_gui", Callable(self, "new_gui"))
+		child.connect("release_gui", Callable(self, "release_gui"))
 		statesDict[child.name] = child
 
 	for state in statesDict:

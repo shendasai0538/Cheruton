@@ -2,14 +2,14 @@ extends Node
 class_name baseFSM
 signal stateChanged(curState)
 
-export(NodePath) var START_STATE
+@export var START_STATE: NodePath
 var statesDict = {}
 
 var curState = null
 var prevState = null
 
 var isInputEnabled = false # Thus must be manualy set true in input controlled subclasses
-var isFsmActive = false setget setFsmActive
+var isFsmActive = false: set = setFsmActive
 
 # _ready() function not overridable so no need ._ready() in subclasses
 func _ready():
@@ -20,7 +20,7 @@ func _ready():
 func initializeStates():
 	for child in get_children():
 			statesDict[child.name] = child
-			child.connect("changeState", self, "onChangeState")
+			child.connect("changeState", Callable(self, "onChangeState"))
 
 func setStartStateAndEnter(startState):
 	curState = get_node(startState)

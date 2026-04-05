@@ -1,15 +1,15 @@
 extends Control
 
 
-onready var healthbar = $HealthBarDesign/HealthBar
-onready var healthstat = $HealthBarDesign/HealthVal
-onready var tween = $Tween
+@onready var healthbar = $HealthBarDesign/HealthBar
+@onready var healthstat = $HealthBarDesign/HealthVal
+@onready var tween = $Tween
 
 var health_max
 
 func _ready():
-	var _conn1 = DataResource.connect("change_health", self, "change_healthbar")
-	var _conn2 = SceneControl.connect("init_statbar", self, "init_bar")
+	var _conn1 = DataResource.connect("change_health", Callable(self, "change_healthbar"))
+	var _conn2 = SceneControl.connect("init_statbar", Callable(self, "init_bar"))
 
 func init_bar():
 	var old_health = DataResource.temp_dict_player.health_curr

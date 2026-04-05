@@ -1,7 +1,7 @@
 extends Level
 
-onready var save_position = $player.position
-onready var cut_scene_player = $CutScenePlayer
+@onready var save_position = $player.position
+@onready var cut_scene_player = $CutScenePlayer
 
 var cur_cut_scene_completed = false
 var flying_sword
@@ -87,4 +87,4 @@ func shake_camera(time : float, freq : float, power : float, dir: Vector2):
 	camera.shake(time, freq, power, dir)
 
 func next_scene():
-	SceneControl.change_scene(self, "res://Levels/Hometown/Hometown.tscn")
+	SceneControl.change_scene_to_file(self, "res://Levels/Hometown/Hometown.tscn")

@@ -40,8 +40,8 @@ func update(delta):
 				for leg in owner.legs:
 					leg.step_and_hold(leg.global_position + Vector2(0,350) , 0.45)
 
-				save_cast_to = owner.ground_check.cast_to
-				owner.ground_check.cast_to = Vector2(0 ,700) # so spider plants legs earlier
+				save_cast_to = owner.ground_check.target_position
+				owner.ground_check.target_position = Vector2(0 ,700) # so spider plants legs earlier
 				owner.set_body_collision(2)
 
 		stages.JUMP:
@@ -53,7 +53,7 @@ func update(delta):
 			owner.move()
 			move_body_sprites()
 
-			if owner.velocity.y > -300 and close_to_ground: # note close_to_ground affected by cast_to property of ray, which we modified above
+			if owner.velocity.y > -300 and close_to_ground: # note close_to_ground affected by target_position property of ray, which we modified above
 				for leg in owner.legs:
 					if leg.just_planted: continue
 
@@ -63,7 +63,7 @@ func update(delta):
 			if owner.is_on_floor():
 				stage = stages.LAND
 				owner.velocity.y = 0
-				owner.ground_check.cast_to = save_cast_to
+				owner.ground_check.target_position = save_cast_to
 
 		stages.LAND:
 			owner.jump_hurt_box_col_shape.disabled = true
@@ -88,8 +88,8 @@ func move_leg(leg):
 
 func move_body_sprites():
 	owner.desired_head_pos = owner.default_sprite_pos[0]  + Vector2(clamp(owner.velocity.x * 0.3, -20, 20), clamp(-owner.velocity.y, -150, 100))
-	owner.desired_feeler_pos = owner.default_sprite_pos[1] + (owner.velocity * 0.01).clamped(0)
-	owner.desired_mid_body_pos = owner.default_sprite_pos[2] + owner.velocity.clamped(0)
+	owner.desired_feeler_pos = owner.default_sprite_pos[1] + (owner.velocity * 0.01).limit_length(0)
+	owner.desired_mid_body_pos = owner.default_sprite_pos[2] + owner.velocity.limit_length(0)
 	owner.desired_butt_pos = owner.default_sprite_pos[3] +  Vector2(clamp(owner.velocity.x * 0.32, -20, 20), clamp(owner.velocity.y * .32, -100, 100))
 
 func exit():

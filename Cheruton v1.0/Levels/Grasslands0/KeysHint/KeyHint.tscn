@@ -1,11 +1,11 @@
 [gd_scene load_steps=6 format=2]
 
-[ext_resource path="res://Display/Font/eight-bit-dragon.otf" type="DynamicFontData" id=1]
+[ext_resource path="res://Display/Font/eight-bit-dragon.otf" type="FontFile" id=1]
 [ext_resource path="res://Levels/Grasslands0/KeysHint/KeyHint.gd" type="Script" id=2]
-[ext_resource path="res://Levels/Grasslands0/KeysHint/Sprites/UI_HintKeys.png" type="Texture" id=3]
-[ext_resource path="res://Levels/Grasslands0/KeysHint/Sprites/LeftClick.png" type="Texture" id=4]
+[ext_resource path="res://Levels/Grasslands0/KeysHint/Sprites/UI_HintKeys.png" type="Texture2D" id=3]
+[ext_resource path="res://Levels/Grasslands0/KeysHint/Sprites/LeftClick.png" type="Texture2D" id=4]
 
-[sub_resource type="DynamicFont" id=1]
+[sub_resource type="FontFile" id=1]
 size = 10
 font_data = ExtResource( 1 )
 
@@ -14,12 +14,12 @@ script = ExtResource( 2 )
 
 [node name="Base" type="NinePatchRect" parent="."]
 show_behind_parent = true
-margin_left = -28.0
-margin_top = -28.0
-margin_right = -14.0
-margin_bottom = -13.0
-rect_min_size = Vector2( 15, 15 )
-rect_scale = Vector2( 4, 4 )
+offset_left = -28.0
+offset_top = -28.0
+offset_right = -14.0
+offset_bottom = -13.0
+custom_minimum_size = Vector2( 15, 15 )
+scale = Vector2( 4, 4 )
 texture = ExtResource( 3 )
 patch_margin_left = 2
 patch_margin_top = 1
@@ -32,24 +32,24 @@ __meta__ = {
 [node name="Key" type="RichTextLabel" parent="Base"]
 anchor_right = 1.0
 anchor_bottom = 1.0
-margin_left = 5.0
-margin_top = 2.0
-margin_right = 7.0
-margin_bottom = -2.0
-rect_min_size = Vector2( 4, 4 )
-rect_pivot_offset = Vector2( 250, 250 )
-rect_clip_content = false
-custom_fonts/normal_font = SubResource( 1 )
-custom_colors/default_color = Color( 0.858824, 0.878431, 0.905882, 1 )
+offset_left = 5.0
+offset_top = 2.0
+offset_right = 7.0
+offset_bottom = -2.0
+custom_minimum_size = Vector2( 4, 4 )
+pivot_offset = Vector2( 250, 250 )
+clip_contents = false
+theme_override_fonts/normal_font = SubResource( 1 )
+theme_override_colors/default_color = Color( 0.858824, 0.878431, 0.905882, 1 )
 bbcode_enabled = true
-bbcode_text = "S"
+text = "S"
 text = "S"
 scroll_active = false
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="NonTextKey" type="Sprite" parent="Base"]
+[node name="NonTextKey" type="Sprite2D" parent="Base"]
 visible = false
 position = Vector2( 8.5, 8 )
 texture = ExtResource( 4 )

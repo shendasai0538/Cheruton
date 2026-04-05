@@ -16,32 +16,32 @@ var temp_mouse_node
 
 signal tab_changed(next_tab)
 
-onready var active_tab_image = preload("res://Display/Shop/Sprites/Slots/HorizontalTabSelect.png")
-onready var default_tab_image = preload("res://Display/Shop/Sprites/Slots/HorizontalTabDeSelect.png")
-onready var index_bg = preload("res://Display/Shop/Sprites/Slots/itemSelected.png")
-onready var index_equipped_bg = preload("res://Display/Shop/Sprites/Slots/itemEquipped.png")
-onready var instance_loc = preload("res://Player/Inventory/101.tscn")
+@onready var active_tab_image = preload("res://Display/Shop/Sprites/Slots/HorizontalTabSelect.png")
+@onready var default_tab_image = preload("res://Display/Shop/Sprites/Slots/HorizontalTabDeSelect.png")
+@onready var index_bg = preload("res://Display/Shop/Sprites/Slots/itemSelected.png")
+@onready var index_equipped_bg = preload("res://Display/Shop/Sprites/Slots/itemEquipped.png")
+@onready var instance_loc = preload("res://Player/Inventory/101.tscn")
 
-onready var weapons_sell = DataResource.dict_inventory.get("Weapons")
-onready var apparel_sell = DataResource.dict_inventory.get("Apparel")
-onready var consum_sell = DataResource.dict_inventory.get("Consum")
-onready var misc_sell = DataResource.dict_inventory.get("Misc")
+@onready var weapons_sell = DataResource.dict_inventory.get("Weapons")
+@onready var apparel_sell = DataResource.dict_inventory.get("Apparel")
+@onready var consum_sell = DataResource.dict_inventory.get("Consum")
+@onready var misc_sell = DataResource.dict_inventory.get("Misc")
 
-onready var shop = self
-onready var inventory = get_parent().get_node("inventory")
+@onready var shop = self
+@onready var inventory = get_parent().get_node("inventory")
 
-onready var contents = $Border/Bg/Main/Sides/Rest/Contents
-onready var tabs = $Border/Bg/Main/Sides/Rest/Contents/Tabs
-onready var items_sell = $Border/Bg/Main/Sides/Rest/Contents/ItemsSell
-onready var items_buy = $Border/Bg/Main/Sides/Rest/Contents/ItemsBuy
-onready var coins = $Border/Bg/Main/Sides/Data/Coins
-onready var price_value = $Border/Bg/Main/Sides/Data/Price/Value
-onready var buy_tab = $Border/Bg/Main/Sides/BtnMode/Buy
-onready var sell_tab = $Border/Bg/Main/Sides/BtnMode/Sell
+@onready var contents = $Border/Bg/Main/Sides/Rest/Contents
+@onready var tabs = $Border/Bg/Main/Sides/Rest/Contents/TabBar
+@onready var items_sell = $Border/Bg/Main/Sides/Rest/Contents/ItemsSell
+@onready var items_buy = $Border/Bg/Main/Sides/Rest/Contents/ItemsBuy
+@onready var coins = $Border/Bg/Main/Sides/Data/Coins
+@onready var price_value = $Border/Bg/Main/Sides/Data/Price/Value
+@onready var buy_tab = $Border/Bg/Main/Sides/BtnMode/Buy
+@onready var sell_tab = $Border/Bg/Main/Sides/BtnMode/Sell
 
-onready var transaction_music = $MusicNodes/Transaction
-onready var hover_music = $MusicNodes/Hover
-onready var select_music = $MusicNodes/Select
+@onready var transaction_music = $MusicNodes/Transaction
+@onready var hover_music = $MusicNodes/Hover
+@onready var select_music = $MusicNodes/Select
 
 
 
@@ -58,11 +58,11 @@ func _ready():
 
 # Links the buttons when pressed into the function to change active tab
 func connect_tabs():
-	var _conn0 = connect("tab_changed", shop, "change_tab_state")
-	var _conn1 = tabs.get_node("Weapons/Weapons").connect("pressed", shop,  "tab_pressed", ["Weapons"])
-	var _conn2 = tabs.get_node("Apparel/Apparel").connect("pressed", shop,  "tab_pressed", ["Apparel"])
-	var _conn3 = tabs.get_node("Consum/Consum").connect("pressed", shop,  "tab_pressed", ["Consum"])
-	var _conn4 = tabs.get_node("Misc/Misc").connect("pressed", shop,  "tab_pressed", ["Misc"])
+	var _conn0 = connect("tab_changed", Callable(shop, "change_tab_state"))
+	var _conn1 = tabs.get_node("Weapons/Weapons").connect("pressed", Callable(shop, "tab_pressed").bind("Weapons"))
+	var _conn2 = tabs.get_node("Apparel/Apparel").connect("pressed", Callable(shop, "tab_pressed").bind("Apparel"))
+	var _conn3 = tabs.get_node("Consum/Consum").connect("pressed", Callable(shop, "tab_pressed").bind("Consum"))
+	var _conn4 = tabs.get_node("Misc/Misc").connect("pressed", Callable(shop, "tab_pressed").bind("Misc"))
 
 # Buy Option set
 func _on_Buy_pressed():
@@ -126,12 +126,12 @@ func generate_list(scroll_tab, list_tab, tab_index, item_dec):
 			scroll_tab.add_child(new_row)
 			var integrated_row = scroll_tab.get_child(scroll_tab.get_child_count() - 1)
 			integrated_row.name = "Row" + str(row_index)
-			integrated_row.add_constant_override("separation", 10)
+			integrated_row.add_theme_constant_override("separation", 10)
 
 		var row = scroll_tab.get_node("Row" + str(row_index))
 
 		# Creates a new box in the particular row
-		var instanced = instance_loc.instance()
+		var instanced = instance_loc.instantiate()
 		row.add_child(instanced)
 		row.get_child(row.get_child_count() - 1).name = str(tab_index + index)
 
@@ -171,13 +171,13 @@ func enable_mouse(new_node):
 		var btn = new_node.get_node("Background/ItemBg/ItemBtn")
 		btn.get_node("Qty").show()
 		if(!btn.get_normal_texture()):
-			var _conn0 = btn.connect("pressed", shop, "_on_pressed", [new_node])
-			var _conn1 = new_node.connect("mouse_entered", shop, "_on_mouse_entered", [new_node])
-			var _conn2 = new_node.connect("mouse_exited", shop, "_on_mouse_exited", [new_node])
+			var _conn0 = btn.connect("pressed", Callable(shop, "_on_pressed").bind(new_node))
+			var _conn1 = new_node.connect("mouse_entered", Callable(shop, "_on_mouse_entered").bind(new_node))
+			var _conn2 = new_node.connect("mouse_exited", Callable(shop, "_on_mouse_exited").bind(new_node))
 
 			# For the TextureButton
-			var _conn3 = btn.connect("mouse_entered", shop, "_on_mouse_entered", [new_node])
-			var _conn4 = btn.connect("mouse_exited", shop, "_on_mouse_exited", [new_node])
+			var _conn3 = btn.connect("mouse_entered", Callable(shop, "_on_mouse_entered").bind(new_node))
+			var _conn4 = btn.connect("mouse_exited", Callable(shop, "_on_mouse_exited").bind(new_node))
 
 # Disable mouse functions of the item index
 func disable_mouse(new_node):
@@ -188,13 +188,13 @@ func disable_mouse(new_node):
 		btn.get_node("Qty").hide()
 		btn.set_normal_texture(null)
 
-		var _disconn1 = btn.disconnect("pressed", shop, "_on_pressed")
-		var _disconn2 = new_node.disconnect("mouse_entered", shop, "_on_mouse_entered")
-		var _disconn3 = new_node.disconnect("mouse_exited", shop, "_on_mouse_exited")
+		var _disconn1 = btn.disconnect("pressed", Callable(shop, "_on_pressed"))
+		var _disconn2 = new_node.disconnect("mouse_entered", Callable(shop, "_on_mouse_entered"))
+		var _disconn3 = new_node.disconnect("mouse_exited", Callable(shop, "_on_mouse_exited"))
 
 		# For the TextureButton
-		var _disconn4 = btn.disconnect("mouse_entered", shop, "_on_mouse_entered")
-		btn.disconnect("mouse_exited", shop, "_on_mouse_exited")
+		var _disconn4 = btn.disconnect("mouse_entered", Callable(shop, "_on_mouse_entered"))
+		btn.disconnect("mouse_exited", Callable(shop, "_on_mouse_exited"))
 
 
 func init_equipped():
@@ -206,7 +206,7 @@ func init_equipped():
 
 # Displays equipped item if it was equipped in the shop
 func display_equipped(name):
-	var node = items_sell.find_node(str(DataResource.temp_dict_player[name + "_item"]), true, false)
+	var node = items_sell.find_child(str(DataResource.temp_dict_player[name + "_item"]), true, false)
 	node.get_node("Background/ItemBg").texture = index_equipped_bg
 
 
@@ -345,7 +345,7 @@ func sell_item():
 		# Dequip item held if that node is a held item
 		if(active_tab.name == "Weapons" || active_tab.name == "Apparel"):
 			if(DataResource.temp_dict_player[active_tab.name + "_item"] == mouse_node.name):
-					inventory.item_status(inventory.find_node(mouse_node.name, true, false), "DEQUIP")
+					inventory.item_status(inventory.find_child(mouse_node.name, true, false), "DEQUIP")
 
 		# From deleted item's index upwards, shift affected indexes down by 1
 		element_index = int(element_index)
@@ -353,7 +353,7 @@ func sell_item():
 			#loaddata
 			DataResource.dict_inventory[active_tab.name]["Item" + str(element_index)] = DataResource.dict_inventory[active_tab.name]["Item" + str(element_index + 1)]
 			var updating_node_index = str(int(mouse_node.name)/100 * 100 + element_index)
-			var updating_node = items_sell.get_node(active_tab.name).find_node(updating_node_index, true, false)
+			var updating_node = items_sell.get_node(active_tab.name).find_child(updating_node_index, true, false)
 			var list_tab = DataResource.dict_inventory.get(active_tab.name)
 			generate_specific_data(updating_node, element_index, list_tab)
 
@@ -362,7 +362,7 @@ func sell_item():
 		# Clear the last entry of dict and disable/clear its last node
 		DataResource.dict_inventory[active_tab.name].erase("Item" + str(element_index))
 		var deletion = str(int(mouse_node.name)/100 * 100 + element_index)
-		var emptied_node = items_sell.get_node(active_tab.name).find_node(deletion, true, false)
+		var emptied_node = items_sell.get_node(active_tab.name).find_child(deletion, true, false)
 		check_fixed()
 		disable_mouse(emptied_node)
 
@@ -403,7 +403,7 @@ func buy_item():
 	for _i in range(1, dict_size + 1):
 			#loaddata
 			var updating_node_index = node_multiplier + element_index
-			var updating_node = items_sell.get_node(current_tab_name).find_node(str(updating_node_index), true, false)
+			var updating_node = items_sell.get_node(current_tab_name).find_child(str(updating_node_index), true, false)
 			var list_tab = DataResource.dict_inventory.get(current_tab_name)
 			enable_mouse(updating_node)
 			generate_specific_data(updating_node, element_index, list_tab)
@@ -420,7 +420,7 @@ func _on_Button_pressed():
 func _on_Shop_visibility_changed():
 	if(!visible):
 		check_fixed()
-		var shop_sell = get_parent().find_node("Items", true, false)
+		var shop_sell = get_parent().find_child("Items", true, false)
 		update_tab_items(WEAPONS, shop_sell, "Weapons")
 		update_tab_items(APPAREL, shop_sell, "Apparel")
 		update_tab_items(CONSUM, shop_sell, "Consum")
@@ -438,14 +438,14 @@ func update_tab_items(tab_constant, updating_path, tab_name):
 		var updating_node
 		for _i in range(element_index, dict_size):
 			updating_node_index = str(int(tab_constant + element_index))
-			updating_node = updating_path.get_node(tab_name).find_node(updating_node_index, true, false)
+			updating_node = updating_path.get_node(tab_name).find_child(updating_node_index, true, false)
 			generate_specific_data(updating_node, element_index, list_tab)
-			if(!updating_node.is_connected("mouse_entered", inventory, "_on_mouse_entered")):
+			if(!updating_node.is_connected("mouse_entered", Callable(inventory, "_on_mouse_entered"))):
 				inventory.enable_mouse(updating_node, true)
 			element_index += 1
 		if(element_index == dict_size):
 			updating_node_index = str(int(tab_constant + element_index))
-			updating_node = updating_path.get_node(tab_name).find_node(updating_node_index, true, false)
+			updating_node = updating_path.get_node(tab_name).find_child(updating_node_index, true, false)
 			if(updating_node.get_child(0).get_child(0).name != "ItemName"):
 				inventory.disable_mouse(updating_node)
 

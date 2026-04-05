@@ -1,4 +1,4 @@
-tool
+@tool
 extends GraphNode
 
 signal changed_offset(nid, vec2)
@@ -10,8 +10,8 @@ signal pressed_load(this)
 signal pressed_save(this)
 signal text_changed(nid, new_text)
 
-onready var _Link_SpinBox = self.get_node("VBoxContainer/HBoxContainer/Link_SpinBox")
-onready var _Text_Editor = self.get_node("VBoxContainer/HBoxContainer2/TextEdit")
+@onready var _Link_SpinBox = self.get_node("VBoxContainer/HBoxContainer/Link_SpinBox")
+@onready var _Text_Editor = self.get_node("VBoxContainer/HBoxContainer2/TextEdit")
 
 var _nid : int = 0
 var _slot_amount : int = 1
@@ -36,7 +36,7 @@ func _on_Line_offset_changed():
 
 
 func _on_Line_resize_request(new_minsize):
-	self.rect_size = new_minsize
+	self.size = new_minsize
 	self.emit_signal("changed_size", self)
 
 
@@ -110,5 +110,5 @@ func _update_slots():
 		var output_link_label = Label.new()
 		output_link_label.text = str(slot)
 		output_link_label.align = Label.ALIGN_RIGHT
-		self.add_child_below_node(last_output_link_label, output_link_label)
+		self.add_sibling(last_output_link_label, output_link_label)
 		last_output_link_label = output_link_label

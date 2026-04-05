@@ -29,7 +29,7 @@ func enter():
 	release_timer = RELEASE_TIMER
 	tip_pos = owner.tip_pos
 
-	owner.set_collision_mask_bit(0, false) # to not collidewith random props
+	owner.set_collision_mask_value(0, false) # to not collidewith random props
 	# Integration variables
 	next_pos = owner.global_position
 	cur_pos = owner.global_position - owner.velocity *.0146
@@ -69,7 +69,7 @@ func update(delta):
 		hit_wall = true
 
 func update_idle(delta):
-	var angle_deg = rad2deg(owner.global_position.angle_to_point(tip_pos) - PI/2)
+	var angle_deg = rad_to_deg(owner.global_position.angle_to_point(tip_pos) - PI/2)
 
 	var cur_body_rot_deg = owner.body_pivot.rotation_degrees
 
@@ -140,6 +140,6 @@ func _adjust():
 
 func exit():
 	owner.body_pivot.rotation =  0
-	owner.set_collision_mask_bit(0, true)
+	owner.set_collision_mask_value(0, true)
 
 	owner.play_anim("swing_exit")

@@ -1,7 +1,7 @@
 extends Level
 
-onready var save_position = player.position
-onready var anim_player = $AnimationPlayer
+@onready var save_position = player.position
+@onready var anim_player = $AnimationPlayer
 
 func _ready():
 	player.set_isInputEnabled(true)

@@ -1,11 +1,11 @@
-tool
+@tool
 extends Control
 
 signal back_BTN_pressed
 signal close_BTN_pressed
 
-onready var _Graph = self.get_node("VBoxContainer/GraphEdit")
-onready var _Human_Readable_LBL = self.get_node("VBoxContainer/VBoxContainer/Human_Readable_LBL")
+@onready var _Graph = self.get_node("VBoxContainer/GraphEdit")
+@onready var _Human_Readable_LBL = self.get_node("VBoxContainer/VBoxContainer/Human_Readable_LBL")
 
 var _Editor_TSCN = preload("res://addons/EXP-System-Dialog/Dialog Editor/Editor/Editor.tscn")
 var _LineNode = preload("res://addons/EXP-System-Dialog/Dialog Editor/Nodes/Line/Line_Node.tscn")
@@ -22,26 +22,26 @@ var _Target_Node
 
 func _ready():
 	self._setup_dialogs()
-	self._Editor = _Editor_TSCN.instance()
+	self._Editor = _Editor_TSCN.instantiate()
 	self.add_child(self._Editor)
 
 #Callback Methods
 
 func _on_Add_Node_BTN_pressed():
 	var new_nid = self._Story_Editor.create_node(self._did, "line")
-	var new_line_node = self._LineNode.instance()
+	var new_line_node = self._LineNode.instantiate()
 	new_line_node.offset += self._Graph.scroll_offset
 	new_line_node.set_nid(new_nid)
-	new_line_node.connect("erased", self, "_on_Node_erased")
-	new_line_node.connect("changed_offset", self, "_on_Node_changed_offset")
-	new_line_node.connect("text_changed", self, "_on_Node_text_changed")
-	new_line_node.connect("pressed_save", self, "_on_Node_pressed_save")
-	new_line_node.connect("pressed_load", self, "_on_Node_pressed_load")
-	new_line_node.connect("pressed_editor", self, "_on_Node_pressed_editor")
-	new_line_node.connect("changed_slots", self, "_on_Node_changed_slots")
-	new_line_node.connect("changed_size", self, "_on_Node_changed_size")
+	new_line_node.connect("erased", Callable(self, "_on_Node_erased"))
+	new_line_node.connect("changed_offset", Callable(self, "_on_Node_changed_offset"))
+	new_line_node.connect("text_changed", Callable(self, "_on_Node_text_changed"))
+	new_line_node.connect("pressed_save", Callable(self, "_on_Node_pressed_save"))
+	new_line_node.connect("pressed_load", Callable(self, "_on_Node_pressed_load"))
+	new_line_node.connect("pressed_editor", Callable(self, "_on_Node_pressed_editor"))
+	new_line_node.connect("changed_slots", Callable(self, "_on_Node_changed_slots"))
+	new_line_node.connect("changed_size", Callable(self, "_on_Node_changed_size"))
 	var slot_count = self._Story_Editor.get_node_property(self._did, new_nid, "slot_amount")
-	self._Story_Editor.set_node_property(self._did, new_nid, "rect_size", new_line_node.rect_size)
+	self._Story_Editor.set_node_property(self._did, new_nid, "size", new_line_node.size)
 	new_line_node.set_slot_amount(slot_count)
 	self._Graph.add_child(new_line_node)
 
@@ -84,7 +84,7 @@ func _on_Node_changed_offset(nid, new_offset):
 
 func _on_Node_changed_size(changed_node):
 	var changed_node_nid = changed_node.get_nid()
-	self._Story_Editor.set_node_property(self._did, changed_node_nid, "rect_size", changed_node.rect_size)
+	self._Story_Editor.set_node_property(self._did, changed_node_nid, "size", changed_node.size)
 
 
 func _on_Node_changed_slots(changed_node):
@@ -172,44 +172,44 @@ func _populate_graph():
 		var new_node : GraphNode
 		match self._Story_Editor.get_node_property(self._did, nID, "type"):
 			"line":
-				new_node = _LineNode.instance()
+				new_node = _LineNode.instantiate()
 				var slot_count = self._Story_Editor.get_node_property(self._did, nID, "slot_amount")
 				new_node.set_slot_amount(slot_count)
 				self._Graph.add_child(new_node)
-				new_node.connect("erased", self, "_on_Node_erased")
+				new_node.connect("erased", Callable(self, "_on_Node_erased"))
 				var new_text = self._Story_Editor.get_node_property(self._did, nID, "text")
-				var new_rect_size = self._Story_Editor.get_node_property(self._did, nID, "rect_size")
-				new_node.rect_size = new_rect_size
+				var new_rect_size = self._Story_Editor.get_node_property(self._did, nID, "size")
+				new_node.size = new_rect_size
 				new_node.set_text(new_text)
-				new_node.connect("text_changed", self, "_on_Node_text_changed")
-				new_node.connect("pressed_save", self, "_on_Node_pressed_save")
-				new_node.connect("pressed_load", self, "_on_Node_pressed_load")
-				new_node.connect("pressed_editor", self, "_on_Node_pressed_editor")
-				new_node.connect("changed_slots", self, "_on_Node_changed_slots")
-				new_node.connect("changed_size", self, "_on_Node_changed_size")
+				new_node.connect("text_changed", Callable(self, "_on_Node_text_changed"))
+				new_node.connect("pressed_save", Callable(self, "_on_Node_pressed_save"))
+				new_node.connect("pressed_load", Callable(self, "_on_Node_pressed_load"))
+				new_node.connect("pressed_editor", Callable(self, "_on_Node_pressed_editor"))
+				new_node.connect("changed_slots", Callable(self, "_on_Node_changed_slots"))
+				new_node.connect("changed_size", Callable(self, "_on_Node_changed_size"))
 		
 		new_node.set_nid(nID)
 		new_node.offset = self._Story_Editor.get_node_property(self._did, nID, "graph_offset")
-		new_node.connect("changed_offset", self, "_on_Node_changed_offset")
+		new_node.connect("changed_offset", Callable(self, "_on_Node_changed_offset"))
 
 
 func _setup_dialogs():
 	self._Load_Template = EditorFileDialog.new()
-	self._Load_Template.mode = EditorFileDialog.MODE_OPEN_FILE
+	self._Load_Template.mode = EditorFileDialog.FILE_MODE_OPEN_FILE
 	self._Load_Template.add_filter("*.res ; Template files")
 	self._Load_Template.resizable = true
 	self._Load_Template.access = EditorFileDialog.ACCESS_RESOURCES
 	self._Load_Template.current_dir = "res://"
-	self._Load_Template.connect("file_selected", self, "_on_Load_Template_file_selected")
+	self._Load_Template.connect("file_selected", Callable(self, "_on_Load_Template_file_selected"))
 	self.add_child(self._Load_Template)
 	
 	self._Save_Template_As = EditorFileDialog.new()
-	self._Save_Template_As.mode = EditorFileDialog.MODE_SAVE_FILE
+	self._Save_Template_As.mode = EditorFileDialog.FILE_MODE_SAVE_FILE
 	self._Save_Template_As.add_filter("*.res ; Template files")
 	self._Save_Template_As.resizable = true
 	self._Save_Template_As.access = EditorFileDialog.ACCESS_RESOURCES
 	self._Save_Template_As.current_dir = "res://"
-	self._Save_Template_As.connect("file_selected", self, "_on_Save_Template_As_file_selected")
+	self._Save_Template_As.connect("file_selected", Callable(self, "_on_Save_Template_As_file_selected"))
 	self.add_child(self._Save_Template_As)
 
 
