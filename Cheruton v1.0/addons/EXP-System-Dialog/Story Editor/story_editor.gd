@@ -434,12 +434,12 @@ func _bake_data_to(filename):
 		if file_data.TYPE == "EXP_Baked_Story":
 			file_data.story = self._bake_data()
 			file_data.names = self._record_names.duplicate(true)
-			ResourceSaver.save(filename, file_data)
+			ResourceSaver.save(file_data, filename)
 	else:
 		file_data = _EXP_Baked_Story.new()
 		file_data.story = self._bake_data()
 		file_data.names = self._record_names.duplicate(true)
-		ResourceSaver.save(filename, file_data)
+		ResourceSaver.save(file_data, filename)
 
 
 func _clear_group_manager():
@@ -613,8 +613,8 @@ func _remove_group_from_story(group : String):
 func _remove_record(dialog_record):
 	dialog_record.disconnect("checked", Callable(self, "_on_Dialog_checked"))
 	dialog_record.disconnect("unchecked", Callable(self, "_on_Dialog_unchecked"))
-	dialog_record.disconnect("changed_human_readable_text", self,
-		"_on_Dialog_changed_human_readable_text")
+	dialog_record.disconnect("changed_human_readable_text",
+		Callable(self, "_on_Dialog_changed_human_readable_text"))
 	dialog_record.disconnect("rename_pressed", Callable(self, "_on_Record_Rename_pressed"))
 	var record_name = dialog_record.get_record_name()
 	if not record_name == "NAME":
@@ -632,19 +632,19 @@ func _save_data_to(filename):
 			file_data.story = self._story.duplicate(true)
 			file_data.available_dids = self._available_dids.duplicate(true)
 			file_data.groups = self._groups.duplicate(true)
-			ResourceSaver.save(filename, file_data)
+			ResourceSaver.save(file_data, filename)
 	else:
 		file_data = _EXP_Story.new()
 		file_data.names = self._record_names.duplicate(true)
 		file_data.story = self._story.duplicate(true)
 		file_data.available_dids = self._available_dids.duplicate(true)
 		file_data.groups = self._groups.duplicate(true)
-		ResourceSaver.save(filename, file_data)
+		ResourceSaver.save(file_data, filename)
 
 
 func _setup_dialogs():
 	self._Load_Story = EditorFileDialog.new()
-	self._Load_Story.mode = EditorFileDialog.FILE_MODE_OPEN_FILE
+	self._Load_Story.file_mode = EditorFileDialog.FILE_MODE_OPEN_FILE
 	self._Load_Story.add_filter("*.tres ; Story files")
 	self._Load_Story.resizable = true
 	self._Load_Story.access = EditorFileDialog.ACCESS_RESOURCES
@@ -653,7 +653,7 @@ func _setup_dialogs():
 	self.add_child(self._Load_Story)
 
 	self._Save_Story_As = EditorFileDialog.new()
-	self._Save_Story_As.mode = EditorFileDialog.FILE_MODE_SAVE_FILE
+	self._Save_Story_As.file_mode = EditorFileDialog.FILE_MODE_SAVE_FILE
 	self._Save_Story_As.add_filter("*.tres ; Story files")
 	self._Save_Story_As.resizable = true
 	self._Save_Story_As.access = EditorFileDialog.ACCESS_RESOURCES
@@ -662,7 +662,7 @@ func _setup_dialogs():
 	self.add_child(self._Save_Story_As)
 
 	self._Bake_Story_As = EditorFileDialog.new()
-	self._Bake_Story_As.mode = EditorFileDialog.FILE_MODE_SAVE_FILE
+	self._Bake_Story_As.file_mode = EditorFileDialog.FILE_MODE_SAVE_FILE
 	self._Bake_Story_As.add_filter("*.tres ; Baked Story files")
 	self._Bake_Story_As.resizable = true
 	self._Bake_Story_As.access = EditorFileDialog.ACCESS_RESOURCES
@@ -671,7 +671,7 @@ func _setup_dialogs():
 	self.add_child(self._Bake_Story_As)
 
 	self._Save_CSV_As = EditorFileDialog.new()
-	self._Save_CSV_As.mode = EditorFileDialog.FILE_MODE_SAVE_FILE
+	self._Save_CSV_As.file_mode = EditorFileDialog.FILE_MODE_SAVE_FILE
 	self._Save_CSV_As.add_filter("*.csv ; CSV files")
 	self._Save_CSV_As.resizable = true
 	self._Save_CSV_As.access = EditorFileDialog.ACCESS_FILESYSTEM
@@ -680,12 +680,12 @@ func _setup_dialogs():
 	self.add_child(self._Save_CSV_As)
 
 	self._Load_CSV  = EditorFileDialog.new()
-	self._Load_CSV .mode = EditorFileDialog.FILE_MODE_OPEN_FILE
-	self._Load_CSV super.add_filter("*.csv ; CSV files")
+	self._Load_CSV .file_mode = EditorFileDialog.FILE_MODE_OPEN_FILE
+	self._Load_CSV.add_filter("*.csv ; CSV files")
 	self._Load_CSV .resizable = true
 	self._Load_CSV .access = EditorFileDialog.ACCESS_FILESYSTEM
 	self._Load_CSV .current_dir = "res://"
-	self._Load_CSV super.connect("file_selected", Callable(self, "_on_Load_CSV_file_selected"))
+	self._Load_CSV.connect("file_selected", Callable(self, "_on_Load_CSV_file_selected"))
 	self.add_child(self._Load_CSV)
 
 

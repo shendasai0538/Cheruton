@@ -125,7 +125,7 @@ func _on_Node_text_changed(nid, new_text):
 func _on_Save_Template_As_file_selected(filename):
 	var save_file = _NodeTemplate.new()
 	save_file.template = self._Target_Node.get_text()
-	ResourceSaver.save(filename, save_file)
+	ResourceSaver.save(save_file, filename)
 
 
 func _on_Story_Editor_dialog_edit_pressed(story_editor, did : int):
@@ -195,7 +195,7 @@ func _populate_graph():
 
 func _setup_dialogs():
 	self._Load_Template = EditorFileDialog.new()
-	self._Load_Template.mode = EditorFileDialog.FILE_MODE_OPEN_FILE
+	self._Load_Template.file_mode = EditorFileDialog.FILE_MODE_OPEN_FILE
 	self._Load_Template.add_filter("*.res ; Template files")
 	self._Load_Template.resizable = true
 	self._Load_Template.access = EditorFileDialog.ACCESS_RESOURCES
@@ -204,7 +204,7 @@ func _setup_dialogs():
 	self.add_child(self._Load_Template)
 	
 	self._Save_Template_As = EditorFileDialog.new()
-	self._Save_Template_As.mode = EditorFileDialog.FILE_MODE_SAVE_FILE
+	self._Save_Template_As.file_mode = EditorFileDialog.FILE_MODE_SAVE_FILE
 	self._Save_Template_As.add_filter("*.res ; Template files")
 	self._Save_Template_As.resizable = true
 	self._Save_Template_As.access = EditorFileDialog.ACCESS_RESOURCES
