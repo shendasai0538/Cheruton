@@ -22,7 +22,6 @@ enum sword_states { SHOOT = 0, HIT = 1, RETURN = 2, HIDDEN = 3}
 var player : Node
 var level : Node
 
-var velocity : Vector2
 var desired_velocity = Vector2()
 var angular_velocity : float
 var cur_player_pos : Vector2

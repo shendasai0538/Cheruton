@@ -13,7 +13,6 @@ class_name Enemy
 var level
 var player
 
-var velocity = Vector2()
 var health = 15.0: set = set_health
 
 func _ready():

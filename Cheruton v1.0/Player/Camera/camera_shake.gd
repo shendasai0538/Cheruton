@@ -28,10 +28,10 @@ var slowmo_target = Vector2()
 var slowmo_offset = Vector2()
 
 var facing = 0
-var smoothing_speed_goal = 0
+var smoothing_speed_goal := 0.0
 var camera_state = 0
 
-@onready var prev_camera_pos = get_camera_position()
+@onready var prev_camera_pos = get_screen_center_position()
 var _shift_tween : Tween
 
 # processes screenshake / pan
@@ -97,12 +97,12 @@ func pan_camera( pan : Vector2 ) -> void:
 # GAME CAMERA
 func camera_process(delta):
 	_check_facing()
-	prev_camera_pos = get_camera_position()
+	prev_camera_pos = get_screen_center_position()
 	position_smoothing_speed = lerp(position_smoothing_speed, smoothing_speed_goal, delta * SMOOTH_SPEED_FACTOR)
 
 # This function causes the camera to look ahead in the direction player is running
 func _check_facing():
-	var new_facing = sign(get_camera_position().x - prev_camera_pos.x)
+	var new_facing = sign(get_screen_center_position().x - prev_camera_pos.x)
 	if new_facing != 0 && facing != new_facing:
 		facing = new_facing
 		var target_offset = get_viewport_rect().size.x * facing * LOOK_AHEAD_FACTOR

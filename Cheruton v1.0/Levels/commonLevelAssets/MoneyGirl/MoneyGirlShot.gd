@@ -3,7 +3,6 @@ extends CharacterBody2D
 const SPEED = 2000
 
 var goal_obj
-var velocity
 var level # set by shooter
 
 func _ready():

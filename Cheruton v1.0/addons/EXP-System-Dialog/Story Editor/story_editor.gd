@@ -201,8 +201,8 @@ func _on_Load_Story_file_selected(filename : String):
 		new_dialog_record.set_story_editor(self)
 		new_dialog_record.connect("checked", Callable(self, "_on_Dialog_checked"))
 		new_dialog_record.connect("unchecked", Callable(self, "_on_Dialog_unchecked"))
-		new_dialog_record.connect("changed_human_readable_text", self,
-			"_on_Dialog_changed_human_readable_text")
+		new_dialog_record.connect("changed_human_readable_text",
+			Callable(self, "_on_Dialog_changed_human_readable_text"))
 		new_dialog_record.connect("edit_pressed", Callable(self, "_on_Dialog_edit_pressed"))
 		new_dialog_record.connect("rename_pressed", Callable(self, "_on_Record_Rename_pressed"))
 

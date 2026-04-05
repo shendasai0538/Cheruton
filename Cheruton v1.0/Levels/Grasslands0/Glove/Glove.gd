@@ -3,7 +3,6 @@ extends CharacterBody2D
 @onready var sprite = $Sprite2D
 @onready var dust = preload("res://Effects/Dust/JumpDust/jumpDust.tscn")
 
-var velocity : Vector2
 var interact_enabled = true
 
 var level

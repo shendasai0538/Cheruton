@@ -37,7 +37,6 @@ var player
 var level
 
 var sprite_move_speed_modifier = 1.0
-var velocity = Vector2()
 var leg_move_timer
 var cur_state
 var player_found = true
