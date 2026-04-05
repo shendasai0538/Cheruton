@@ -50,7 +50,7 @@ func _ready() -> void:
 	h_scroll_bar.connect("value_changed", Callable(self, "_on_HScrollBar_value_changed"))
 	v_scroll_bar.connect("value_changed", Callable(self, "_on_VScrollBar_value_changed"))
 
-	update()
+	queue_redraw()
 
 
 func _draw() -> void:
@@ -128,7 +128,7 @@ func load_settings(settings : Dictionary) -> void:
 
 	background_color = settings.inspector_background.color
 
-	update()
+	queue_redraw()
 
 
 func _update_offset_limits() -> void:
@@ -208,13 +208,13 @@ func set_offset(new_offset : Vector2) -> void:
 	if not _updating_scroll_bars:
 		_update_scrollbars()
 
-	update()
+	queue_redraw()
 
 
 func set_selected_frames(selection : Array) -> void:
 	selected_frames = selection
 
-	update()
+	queue_redraw()
 
 
 func set_texture(new_texture) -> void:

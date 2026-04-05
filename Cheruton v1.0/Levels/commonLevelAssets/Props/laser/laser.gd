@@ -18,7 +18,10 @@ func _physics_process(delta):
 
 	hit_pos = global_position + transform.x * max_dist # assume it hits at max distance
 	var space = get_world_2d().direct_space_state
-	var col = space.intersect_ray(global_position, hit_pos, [self], 1, true, true) # transform.x contains the rotation reperesented by a unit vector, '.y' member is the same rotation but in the oppsite direction and '.origin' member is the global transformation
+	var query = PhysicsRayQueryParameters2D.create(global_position, hit_pos, 1, [get_rid()])
+	query.collide_with_areas = true
+	query.collide_with_bodies = true
+	var col = space.intersect_ray(query) # transform.x contains the rotation reperesented by a unit vector
 
 	if col:
 		hit_pos = col.position

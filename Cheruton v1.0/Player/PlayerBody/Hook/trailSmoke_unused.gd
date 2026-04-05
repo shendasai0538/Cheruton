@@ -137,4 +137,4 @@ func set_target(p_value: Node2D):
 
 func set_target_path(p_value: NodePath):
 	target_path = p_value
-	target = $p_value as Node2D if has_node(p_value) else null
+	target = get_node(p_value) as Node2D if has_node(p_value) else null

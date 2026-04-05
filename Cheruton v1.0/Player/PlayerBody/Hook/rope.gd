@@ -91,10 +91,10 @@ func _process(delta):
 		if owner.chain_state == owner.chain_states.HOOKED:
 			stage = JUST_HOOKED
 			s = .4
-		update() # draws line to canvas
+		queue_redraw() # draws line to canvas
 	elif stage == JUST_HOOKED:
 		s = attachment_curve.sample(s)
 		a = 40
 		length_divisor = lerp(length_divisor,c/100,delta) # 'c' boosts performance by reducing points
-		update()
+		queue_redraw()
 

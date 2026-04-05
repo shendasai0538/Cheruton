@@ -35,7 +35,6 @@ var level
 
 var cur_state : Node
 var prev_state : Node
-var velocity = Vector2()
 var actual_velocity = Vector2()
 var look_direction = Vector2(1, 0): set = set_look_direction
 var previous_anim : String
@@ -135,7 +134,8 @@ func get_nearest_object(obj_type : String):
 	var space_state = get_world_2d().direct_space_state
 	for object in near_objects:
 		if not object.is_in_group(obj_type): continue
-		var result = space_state.intersect_ray(global_position + Vector2(0,-50), object.global_position ,[self, object], 32)
+		var query = PhysicsRayQueryParameters2D.create(global_position + Vector2(0,-50), object.global_position, 32, [get_rid(), object.get_rid()])
+		var result = space_state.intersect_ray(query)
 		if result.is_empty(): non_block_objects.append( object)
 
 	if non_block_objects.is_empty():

@@ -69,7 +69,7 @@ func _constrain(delta):
 			cur_points[i] += vector/ 2
 
 func _render():
-	update()
+	queue_redraw()
 
 func _draw():
 	if cur_points.size()> 1:
