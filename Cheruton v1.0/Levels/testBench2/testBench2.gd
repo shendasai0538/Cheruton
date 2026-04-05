@@ -6,7 +6,7 @@ func _ready():
 	player.set_isInputEnabled(true)
 func _input(event):
 	if Input.is_action_just_pressed("reset"):
-		var mob_instance = load("res://Enemy/Mobs/Furball/Furball.tscn").instance()
+		var mob_instance = load("res://Enemy/Mobs/Furball/Furball.tscn").instantiate()
 
 		mob_instance.global_position = save_position
 		mob_instance.level = self

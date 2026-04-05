@@ -306,7 +306,7 @@ func move():
 		reported_vel = velocity
 	elif ["run", "slide", "idle", "wallSlide"].has(cur_state.name):
 		set_velocity(velocity)
-		# TODOConverter3To4 looks that snap in Godot 4 is float, not vector like in Godot 3 - previous value `Vector2.DOWN * 15`
+		floor_snap_length = 15.0
 		set_up_direction(Vector2.UP)
 		move_and_slide()
 		reported_vel = velocity

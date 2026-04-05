@@ -3,7 +3,6 @@ extends Control
 
 @onready var healthbar = $HealthBarDesign/HealthBar
 @onready var healthstat = $HealthBarDesign/HealthVal
-@onready var tween = $Tween
 
 var health_max
 
@@ -21,8 +20,8 @@ func change_healthbar(new_health):
 	animate_healthbar(healthbar.value, new_health/health_max * 100)
 
 func animate_healthbar(start, end):
-	tween.interpolate_property(healthbar, "value", start, end, 0.2, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
-	tween.start()
+	var tween = create_tween()
+	tween.tween_property(healthbar, "value", end, 0.2).from(start).set_trans(Tween.TRANS_LINEAR).set_ease(Tween.EASE_IN_OUT)
 
 func _on_HealthBar_value_changed(value):
 	healthstat.text = str(floor(healthbar.value * health_max/100), "/", health_max)

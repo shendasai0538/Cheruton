@@ -4,7 +4,6 @@ var TIME_PER_CHAR_WRITE = .001 # seconds .014
 
 @onready var dialogue_base = $dialogBox/bodyBackground
 @onready var dialogue_text = $dialogBox/bodyBackground/MarginContainer/bodyText
-@onready var tween = $dialogBox/bodyBackground/Tween
 @onready var audio = $AudioStreamPlayer
 
 var dialog : String
@@ -29,9 +28,8 @@ func _ready():
 	$dialogBox/bodyBackground/Next.modulate.a = 0
 
 func begin():
-	tween.interpolate_property(dialogue_base, "scale", Vector2(0.1,1), Vector2(1,1), .8,Tween.TRANS_BACK, Tween.EASE_OUT, 0)
-
-	tween.start()
+	var tween = create_tween()
+	tween.tween_property(dialogue_base, "scale", Vector2(1,1), .8).from(Vector2(0.1,1)).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
 	show()
 
 func load_story(path : String): # LOAD COLLECTION OF ALL DIALOGS IN THAT MAP
@@ -134,8 +132,8 @@ func _get_tagged_text(tag : String, text : String):
 func end_conversation():
 	DataResource.temp_dict_player.dialog_complete = true
 
-	tween.interpolate_property(dialogue_base, "scale", Vector2(1,1), Vector2(.1,1), 0.2,Tween.TRANS_BACK, Tween.EASE_IN, 0)
-	tween.start()
+	var tween = create_tween()
+	tween.tween_property(dialogue_base, "scale", Vector2(.1,1), 0.2).from(Vector2(1,1)).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_IN)
 	DataResource.save_rest()
 	emit_signal("release_gui", "dialog")
 

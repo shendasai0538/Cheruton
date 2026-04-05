@@ -4,7 +4,6 @@ extends Control
 const FILLER = "          "
 
 @onready var bar = $Bar
-@onready var tween = $Tween
 @onready var parent_value = get_parent().get_node("Value")
 @onready var parent_rating_value = get_parent().get_node("ValueRating")
 @onready var parent = get_parent().get_parent().get_parent().get_parent().get_parent().get_parent().get_parent()
@@ -46,8 +45,8 @@ func change_bar_colour(value, browse, fix):
 		parent_rating_value.text = ""
 
 func animate_bar(start, end):
-	tween.interpolate_property(bar, "value", start, end, 0.1, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
-	tween.start()
+	var tween = create_tween()
+	tween.tween_property(bar, "value", end, 0.1).from(start).set_trans(Tween.TRANS_LINEAR).set_ease(Tween.EASE_IN_OUT)
 
 
 func _on_Bar_value_changed(value):

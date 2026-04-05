@@ -7,7 +7,6 @@ const HEALTHBAR = "HudLayer/Hud/StatBars/HealthBar"
 @onready var main_menu = self
 @onready var options = $Bg/Options
 @onready var slider = $Bg/Options/Slider
-@onready var tween = $Tween
 @onready var canvas_modulate = $CanvasModulate
 @onready var general_player = $Bg/Cheruton/Player
 @onready var bg_player = $Bg/BgPlayer
@@ -40,28 +39,31 @@ func _ready():
 
 # Gives a fadein effect
 func tween_white_screen():
-	tween.interpolate_property(canvas_modulate, "color", canvas_modulate.color, Color(1,1,1,1), .65, Tween.TRANS_QUAD, Tween.EASE_IN_OUT)
-	#tween.interpolate_property(SceneControl.bg_music, "volume_db", -60, 0, 0.21, Tween.TRANS_QUAD, Tween.EASE_IN_OUT)
-	tween.start()
+	var tween = create_tween()
+	tween.tween_property(canvas_modulate, "color", Color(1,1,1,1), .65).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_IN_OUT)
+	tween.finished.connect(_on_canvas_tween_completed)
 
-# When the tween of the relevant object is completed
-func _on_Tween_tween_completed(object, _key):
-	if(object == canvas_modulate):
-		cheruton_delay.start()
-	elif(object == cheruton):
-		options_delay.start()
-	elif(object == options):
-		enable_options()
+# When the tween of the relevant object is completed — now triggered via signal in each tween call
+func _on_canvas_tween_completed():
+	cheruton_delay.start()
+
+func _on_cheruton_tween_completed():
+	options_delay.start()
+
+func _on_options_tween_completed():
+	enable_options()
 
 
 func _on_CherutonDelay_timeout():
-	tween.interpolate_property(cheruton, "modulate", cheruton.modulate, Color(1,1,1,1), 0.5, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
-	tween.start()
+	var tween = create_tween()
+	tween.tween_property(cheruton, "modulate", Color(1,1,1,1), 0.5).set_trans(Tween.TRANS_LINEAR).set_ease(Tween.EASE_IN_OUT)
+	tween.finished.connect(_on_cheruton_tween_completed)
 
 
 func _on_OptionsDelay_timeout():
-	tween.interpolate_property(options, "modulate", options.modulate, Color(1,1,1,1), 0.5, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
-	tween.start()
+	var tween = create_tween()
+	tween.tween_property(options, "modulate", Color(1,1,1,1), 0.5).set_trans(Tween.TRANS_LINEAR).set_ease(Tween.EASE_IN_OUT)
+	tween.finished.connect(_on_options_tween_completed)
 
 #Enables the Buttons for use
 func enable_options():
@@ -135,8 +137,8 @@ func slide_to_position(new_position):
 		new_position.y += container.position.y
 		var old_position = slider.position
 		if(sliderisActive):
-			tween.interpolate_property(slider, "position", old_position, new_position, 0.075, Tween.TRANS_SINE, Tween.EASE_IN_OUT)
-			tween.start()
+			var tween = create_tween()
+			tween.tween_property(slider, "position", new_position, 0.075).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
 		else:
 			slider.position.y = new_position.y
 			slider.show()

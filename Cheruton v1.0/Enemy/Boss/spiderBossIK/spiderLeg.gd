@@ -158,7 +158,7 @@ func _on_DustSpawner_body_entered(body):
 		emit_dust(col_normal)
 
 func emit_dust(col_normal):
-	var dust_instance = load("res://Effects/Dust/JumpDust/jumpDust.tscn").instance()
+	var dust_instance = load("res://Effects/Dust/JumpDust/jumpDust.tscn").instantiate()
 	dust_instance.global_position = tip.global_position
 	dust_instance.rotation = Vector2.UP.angle_to(col_normal)
 	level.add_child(dust_instance)

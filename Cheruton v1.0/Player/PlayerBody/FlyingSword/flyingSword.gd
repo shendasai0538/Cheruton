@@ -164,7 +164,7 @@ func _physics_process(delta):
 			emit_signal("sword_result", 2, Vector2(), Vector2())
 
 func emit_dust(type : String):
-	var hit_particles_instance = hit_particles.instance()
+	var hit_particles_instance = hit_particles.instantiate()
 	hit_particles_instance.process_material.direction = Vector3(col_normal.x, col_normal.y, 0.0)
 	hit_particles_instance.global_position = col_pos - level.global_position
 

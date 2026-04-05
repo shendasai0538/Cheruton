@@ -20,7 +20,6 @@ const WHITE = Color(1,1,1,1)
 @onready var controls_column = $Settings/Container/Main/Contents/BaseControls/Scroll
 
 @onready var slider = $Settings/Slider
-@onready var tween = $Tween
 @onready var controls = $Settings/Container/Main/Contents/Options/Controls
 @onready var audio = $Settings/Container/Main/Contents/Options/Audio
 @onready var game = $Settings/Container/Main/Contents/Options/Game
@@ -301,8 +300,8 @@ func change_sfx_vol():
 
 func animate_healthbar(bar, end):
 	SceneControl.button_click.play()
-	tween.interpolate_property(bar, "value", bar.value, end, 0.2, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
-	tween.start()
+	var tween = create_tween()
+	tween.tween_property(bar, "value", end, 0.2).set_trans(Tween.TRANS_LINEAR).set_ease(Tween.EASE_IN_OUT)
 
 func _on_MainVolUp_pressed():
 	SceneControl.button_click.play()
@@ -373,8 +372,8 @@ func slide_to_position(new_position, new_offset):
 	new_position.y += new_offset
 	var old_position = slider.position
 	if(sliderisActive):
-		tween.interpolate_property(slider, "position", old_position, new_position, 0.075, Tween.TRANS_SINE, Tween.EASE_IN_OUT)
-		tween.start()
+		var tween = create_tween()
+		tween.tween_property(slider, "position", new_position, 0.075).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
 	else:
 		slider.position.y = new_position.y
 		slider.show()

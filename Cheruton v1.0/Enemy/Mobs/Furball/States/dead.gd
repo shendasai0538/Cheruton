@@ -35,7 +35,7 @@ func update(delta):
 		dust_emit_on_cooldown = true
 		$dustCooldown.start(.05)
 
-		var dust_instance = owner.dust.instance()
+		var dust_instance = owner.dust.instantiate()
 		dust_instance.global_position = col.position
 		dust_instance.rotation = col.normal.angle_to(Vector2.UP)
 		dust_instance.emitting = true

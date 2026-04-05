@@ -32,7 +32,7 @@ var smoothing_speed_goal = 0
 var camera_state = 0
 
 @onready var prev_camera_pos = get_camera_position()
-@onready var tween = $ShiftTween
+var _shift_tween : Tween
 
 # processes screenshake / pan
 func _process( delta ):
@@ -106,8 +106,10 @@ func _check_facing():
 	if new_facing != 0 && facing != new_facing:
 		facing = new_facing
 		var target_offset = get_viewport_rect().size.x * facing * LOOK_AHEAD_FACTOR
-		tween.interpolate_property(self, "position:x", position.x, target_offset, SHIFT_DURATION, SHIFT_TRANS, SHIFT_EASE)
-		tween.start()
+		if _shift_tween:
+			_shift_tween.kill()
+		_shift_tween = create_tween()
+		_shift_tween.tween_property(self, "position:x", target_offset, SHIFT_DURATION).set_trans(SHIFT_TRANS).set_ease(SHIFT_EASE)
 
 func _on_player_camera_command(command, arg):
 	camera_state = command

@@ -145,7 +145,9 @@ func _on_Exit0_area_entered(area):
 	
 func silence_bgm():
 	prev_bg_volume = bg_music_stream.volume_db
-	$AudioTween.interpolate_property(bg_music_stream,"volume_db", bg_music_stream.volume_db, -80, 1.5, Tween.EASE_IN, 0)	
+	var tween = create_tween()
+	tween.tween_property(bg_music_stream, "volume_db", -80, 1.5).set_ease(Tween.EASE_IN)
 
 func restore_bgm():
-	$AudioTween.interpolate_property(bg_music_stream,"volume_db", bg_music_stream.volume_db, prev_bg_volume, 1, Tween.EASE_IN, 0)	
+	var tween = create_tween()
+	tween.tween_property(bg_music_stream, "volume_db", prev_bg_volume, 1.0).set_ease(Tween.EASE_IN)	

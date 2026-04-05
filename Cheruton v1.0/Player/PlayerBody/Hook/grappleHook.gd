@@ -15,7 +15,6 @@ var player : Node
 var level : Node
 
 @onready var chain_state = chain_states.HIDDEN
-@onready var tween = $Tween
 @onready var rope  = $tip/rope
 @onready var tip = $tip
 
@@ -39,8 +38,8 @@ func _on_player_hook_command (com, dir, player_pos):
 		direction = dir.normalized()
 		cur_player_pos = player_pos
 
-		tween.interpolate_property(self, "speed_tip", SPEED_TIP_START, 0, .66, Tween.TRANS_SINE,Tween.EASE_OUT)
-		tween.start()
+		var tween = create_tween()
+		tween.tween_property(self, "speed_tip", 0, .66).from(SPEED_TIP_START).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
 
 		tip.get_node("CollisionShape2D").disabled = false
 	elif com == 1: # END
