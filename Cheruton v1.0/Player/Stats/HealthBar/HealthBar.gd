@@ -7,7 +7,7 @@ extends Control
 var health_max
 
 func _ready():
-	var _conn1 = DataResource.connect("change_health", Callable(self, "change_healthbar"))
+	var _conn1 = DataResource.connect("health_changed", Callable(self, "change_healthbar"))
 	var _conn2 = SceneControl.connect("init_statbar", Callable(self, "init_bar"))
 
 func init_bar():

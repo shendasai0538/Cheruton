@@ -23,7 +23,7 @@ var loaded:= false
 var action_alternate := false
 
 signal update_exp(new_exp, new_exp_max, new_level)
-signal change_health(new_health)
+signal health_changed(new_health)
 
 signal change_audio_master
 signal change_audio_music
@@ -55,20 +55,20 @@ func load_data():
 
 
 func load_dict(FilePath, password:= ""):
-	var DataFile = File.new()
-	if(FilePath == MAIN && !DataFile.file_exists(FilePath)): # create new save
+	if(FilePath == MAIN && !FileAccess.file_exists(FilePath)): # create new save
 		save_data(FilePath, dict_main)
 		reset_all()
+	var DataFile
 	if(password != ""):
-		DataFile.open_encrypted_with_pass(FilePath, File.READ, password)
+		DataFile = FileAccess.open_encrypted_with_pass(FilePath, FileAccess.READ, password)
 	else:
-		DataFile.open(FilePath, File.READ)
+		DataFile = FileAccess.open(FilePath, FileAccess.READ)
 	var test_json_conv = JSON.new()
 	test_json_conv.parse(DataFile.get_as_text())
 	var data = test_json_conv.get_data()
 	DataFile.close()
 	#print("Data Loaded!")
-	return data.result
+	return data
 
 func save_player():
 	dict_player = temp_dict_player
@@ -79,10 +79,7 @@ func save_rest():
 
 
 func save_data(FILE, dictionary):
-	var file = File.new()
-	#file.open(FILE, File.WRITE)
-	var _err_save = file.open_encrypted_with_pass(FILE, File.WRITE,"ginger")
-
+	var file = FileAccess.open_encrypted_with_pass(FILE, FileAccess.WRITE, "ginger")
 	file.store_string(JSON.new().stringify(dictionary))
 	file.close()
 
@@ -104,7 +101,7 @@ func update_input_map():
 
 func modify_event(action, event):
 	var new_input = InputEventKey.new()
-	var keycode = OS.find_keycode_from_string(event)
+	var keycode = OS.find_keycode_from_string(event) if OS.has_method("find_keycode_from_string") else KEY_NONE
 	new_input.set_keycode(keycode)
 	InputMap.action_erase_event(action, InputMap.action_get_events(action)[0])
 	InputMap.action_add_event(action, new_input)
@@ -203,7 +200,7 @@ func increase_specific(type):
 
 func change_health(health_change):
 	temp_dict_player.health_curr = clamp(temp_dict_player.health_curr + health_change, 0, temp_dict_player.health_max)
-	emit_signal("change_health", temp_dict_player.health_curr)
+	emit_signal("health_changed", temp_dict_player.health_curr)
 
 func change_coins(coins_change):
 	temp_dict_player.coins += coins_change

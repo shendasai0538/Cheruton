@@ -149,10 +149,9 @@ func _on_Load_CSV_BTN_pressed():
 
 
 func _on_Load_CSV_file_selected(filepath : String):
-	var csv_file = File.new()
-	var status = csv_file.open(filepath, File.READ)
+	var csv_file = FileAccess.open(filepath, FileAccess.READ)
 
-	if not status == OK:
+	if not csv_file:
 		print_debug("EXP_Story_Editor: Error loading file \"" + filepath + "\".")
 		return
 
@@ -264,10 +263,9 @@ func _on_Save_CSV_BTN_pressed():
 
 
 func _on_Save_CVS_As_file_selected(filepath : String):
-	var csv_file = File.new()
-	var status = csv_file.open(filepath, File.WRITE)
+	var csv_file = FileAccess.open(filepath, FileAccess.WRITE)
 
-	if not status == OK:
+	if not csv_file:
 		print_debug("EXP_Story_Editor: Error saving csv file \"" + filepath + "\".")
 		return
 
