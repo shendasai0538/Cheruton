@@ -18,8 +18,8 @@ func _ready():
 	$leg.leg_controller = self
 
 func force_raycast_update():
-	ray_cast.force_raycast_update()
-	diag_ray_cast.force_raycast_update()
+	ray_cast.force_update()
+	diag_ray_cast.force_update()
 
 # Getters
 func is_step_over(): # note leg is grounded once timer is up not whe actually grouded

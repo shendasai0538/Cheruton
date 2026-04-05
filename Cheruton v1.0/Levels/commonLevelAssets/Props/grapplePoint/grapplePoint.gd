@@ -9,7 +9,7 @@ var active = false: set = setisActive
 func _ready():
 	add_to_group("hook_points")
 
-	$RayCast2D.force_raycast_update()
+	$RayCast2D.force_update()
 	var col_pos = $RayCast2D.get_collision_point()
 	if col_pos:
 		var rope_length = clamp ((global_position - col_pos).length() - 64, 0, INF)
