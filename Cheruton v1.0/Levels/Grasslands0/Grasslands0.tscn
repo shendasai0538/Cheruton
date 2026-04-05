@@ -3621,7 +3621,5 @@ shape = SubResource( 44 )
 stream = ExtResource( 47 )
 volume_db = 2.0
 
-[node name="AudioTween" type="Tween" parent="."]
-
 [connection signal="body_entered" from="NextCutsceneTriger" to="." method="_on_NextCutsceneTriger_body_entered"]
 [connection signal="area_entered" from="Exit0" to="." method="_on_Exit0_area_entered"]

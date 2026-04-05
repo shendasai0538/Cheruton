@@ -307,8 +307,6 @@ one_shot = true
 [node name="CherutonDelay" type="Timer" parent="."]
 wait_time = 0.8
 
-[node name="Tween" type="Tween" parent="."]
-
 [node name="CanvasModulate" type="CanvasModulate" parent="."]
 color = Color( 100, 100, 100, 1 )
 
@@ -321,4 +319,3 @@ color = Color( 100, 100, 100, 1 )
 [connection signal="pressed" from="Bg/Options/VBoxContainer/Quit" to="." method="_on_Quit_pressed"]
 [connection signal="timeout" from="OptionsDelay" to="." method="_on_OptionsDelay_timeout"]
 [connection signal="timeout" from="CherutonDelay" to="." method="_on_CherutonDelay_timeout"]
-[connection signal="tween_completed" from="Tween" to="." method="_on_Tween_tween_completed"]

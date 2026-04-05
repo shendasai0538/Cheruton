@@ -19,8 +19,6 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Tween" type="Tween" parent="."]
-
 [node name="ExpRect" type="VBoxContainer" parent="."]
 offset_left = 10.0
 offset_right = 194.0

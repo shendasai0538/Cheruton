@@ -19,8 +19,6 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Tween" type="Tween" parent="."]
-
 [node name="HealthBarDesign" type="HBoxContainer" parent="."]
 offset_right = 209.0
 offset_bottom = 53.0

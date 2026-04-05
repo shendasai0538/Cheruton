@@ -20,6 +20,3 @@ texture = ExtResource( 2 )
 [node name="CollisionShape2D" type="CollisionShape2D" parent="platformBody"]
 shape = SubResource( 1 )
 one_way_collision = true
-
-[node name="Tween" type="Tween" parent="."]
-[connection signal="tween_completed" from="Tween" to="." method="_on_Tween_tween_completed"]

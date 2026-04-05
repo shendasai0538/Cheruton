@@ -33,6 +33,3 @@ shape = SubResource( 1 )
 [node name="rope" type="Node2D" parent="tip"]
 script = ExtResource( 3 )
 attachment_curve = ExtResource( 4 )
-
-[node name="Tween" type="Tween" parent="."]
-playback_process_mode = 0
