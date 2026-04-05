@@ -88,7 +88,7 @@ func _on_SceneChange_animation_finished(anim_name):
 
 	else:
 		if(anim_name == "scene_in"):
-			scene_change.playback_speed = 1
+			scene_change.speed_scale = 1
 		get_tree().paused = false
 
 func swap_scenes():

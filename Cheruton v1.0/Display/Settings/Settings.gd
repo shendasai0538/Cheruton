@@ -1,7 +1,7 @@
 extends Control
 
-const LMB = "InputEventMouseButton : button_index=MOUSE_BUTTON_LEFT, pressed=false, position=(0, 0), button_mask=0, doubleclick=false"
-const RMB = "InputEventMouseButton : button_index=MOUSE_BUTTON_RIGHT, pressed=false, position=(0, 0), button_mask=0, doubleclick=false"
+const LMB = "InputEventMouseButton: button_index=1, pressed=false, position=((0, 0)), button_mask=0, double_click=false"
+const RMB = "InputEventMouseButton: button_index=2, pressed=false, position=((0, 0)), button_mask=0, double_click=false"
 const UNASSIGN = "Unassigned"
 
 const RED = Color(1,0,0,1)
@@ -153,8 +153,8 @@ func _input(event):
 func align_mouse_event(event):
 	event.position = Vector2(0, 0)
 	event.button_mask= 0
-	event.button_pressed = false
-	event.doubleclick = false
+	event.pressed = false
+	event.double_click = false
 
 # Affixes the new key binding to the action highlighted
 func _edit_key(new_key):

@@ -194,9 +194,9 @@ func play_and_return_anim(string : String):
 		animation_player.play(string)
 		animation_player.queue(previous_anim)
 func stop_anim():
-	if animation_player: animation_player.stop(false)
+	if animation_player: animation_player.stop(true)
 func set_anim_speed (val : float):
-	if animation_player: animation_player.playback_speed = val
+	if animation_player: animation_player.speed_scale = val
 func play_anim_fx(string : String):
 	if animation_player_fx: animation_player_fx.play(string)
 func queue_anim_fx(string : String):

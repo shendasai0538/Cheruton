@@ -76,7 +76,7 @@ func _process( delta ):
 	offset += slowmo_offset
 
 	position = position.round() # prevents half pixel movements
-	force_update_scroll()
+	# force_update_scroll() removed in Godot 4 - camera updates automatically
 
 # CAMERA EFFECTS
 func shake(duration, frequency, amplitude, shakedir = Vector2.ZERO ):

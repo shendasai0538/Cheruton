@@ -22,7 +22,7 @@ func queue_anim(name : String):
 	anim_player.queue(name)
 
 func set_anim_speed(speed : float):
-	anim_player.playback_speed = speed
+	anim_player.speed_scale = speed
 
 func interact(body : Node):
 	if not interact_enabled:

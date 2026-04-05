@@ -103,7 +103,7 @@ func _on_Timer_timeout():
 	var next_char = dialog_left[0]
 	dialogue_text.text += next_char
 
-	dialog_left.erase(0, 1)
+	dialog_left = dialog_left.substr(1)
 	if dialog_left == "":
 		finished_current_node = true
 		$AnimationPlayerVisibility.play("next")
